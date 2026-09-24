@@ -234,7 +234,7 @@ export const testimonials = [
     quote:
       "Over the years we've had the opportunity to work with David on a series of critically important issues for our businesses. We've found him to be very bright, responsive and adept at addressing issues from the securing of copyrights to crafting and negotiating partnership agreements. We highly recommend David to small and midsized businesses.",
     name: 'Ricky Cohen',
-    role: 'Chairman/CEO, ConwayCompanies',
+    role: 'Chairman/CEO, Conway Companies',
   },
   {
     quote:

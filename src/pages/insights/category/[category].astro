@@ -17,7 +17,7 @@ const posts = (await getPublishedPosts()).filter((x) => x.data.category === p.sl
 ---
 <Base title={`${p.name} Insights | Faham Law LLC`} description={`Articles from Faham Law LLC on ${p.name.toLowerCase()}.`}>
   <PageHero eyebrow="Insights" title={p.name} crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights', href: '/insights' }, { name: p.name }]} compact>
-    <a class="link-arrow" href={`/${p.slug}`} style="color:var(--brass-soft)">About our {p.name} practice <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="link-arrow" href={`/${p.slug}`}>About our {p.name} practice <span class="arrow" aria-hidden="true">→</span></a>
   </PageHero>
   <section class="section-tight">
     <div class="container grid">{posts.map((post) => <PostCard post={post} />)}</div>

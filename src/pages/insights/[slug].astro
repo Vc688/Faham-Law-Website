@@ -43,9 +43,11 @@ const article = {
   <section class="hero post-hero">
     <div class="container narrow">
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/insights">Insights</a><span aria-hidden="true">/</span><a href={`/insights/category/${post.data.category}`}>{cat?.name}</a></nav>
+      <p class="eyebrow">{cat?.name}</p>
       <h1 class="post-title serif">{post.data.title}</h1>
       <p class="lead">{post.data.description}</p>
       <p class="byline">
+        <span class="by-av" aria-hidden="true">{hasHeadshot ? <img src="/images/david-faham.jpg" alt="" width="36" height="36" /> : 'DF'}</span>
         <a href="/about">David Faham</a><span aria-hidden="true">·</span>
         <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><span aria-hidden="true">·</span>
         <span>{mins} min read</span>
@@ -86,15 +88,18 @@ const article = {
 </Base>
 <style>
   .narrow { max-width: 860px; }
+  .post-hero { padding-bottom: clamp(32px, 4vw, 48px); }
   .post-hero .container { display: grid; gap: 22px; }
   .post-hero .breadcrumbs { margin-bottom: 0; }
-  .post-title { font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.02em; }
-  .byline { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.92rem; color: rgba(238,244,241,0.7); }
-  .byline a { color: #fff; font-weight: 600; text-decoration: none; }
-  .cover-wrap { max-width: 1100px; margin-top: -1px; }
-  .cover { width: 100%; aspect-ratio: 16/8; object-fit: cover; border-radius: 0 0 24px 24px; }
-  .author { margin-top: 64px; display: grid; grid-template-columns: 72px 1fr; gap: 20px; padding: 28px; background: var(--white); border: 1px solid var(--line); border-radius: 20px; }
-  .av { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--green-700); color: #fff; display: grid; place-items: center; font-size: 1.8rem; }
+  .post-title { font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.025em; color: var(--green-900); }
+  .byline { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 0.92rem; color: var(--muted); padding-top: 20px; border-top: 1px solid var(--line-strong); }
+  .byline a { color: var(--green-900); font-weight: 560; text-decoration: none; }
+  .by-av { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: var(--mint); color: var(--green-800); display: grid; place-items: center; font-family: var(--serif); font-style: italic; }
+  .by-av img { width: 100%; height: 100%; object-fit: cover; }
+  .cover-wrap { max-width: 1100px; }
+  .cover { width: 100%; aspect-ratio: 16/8; object-fit: cover; border-radius: clamp(20px, 3vw, 32px); box-shadow: var(--shadow); }
+  .author { margin-top: 64px; display: grid; grid-template-columns: 72px 1fr; gap: 20px; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+  .av { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--mint); color: var(--green-800); display: grid; place-items: center; font-size: 1.8rem; font-style: italic; }
   .av img { width: 100%; height: 100%; object-fit: cover; }
   .a-name { font-weight: 650; }
   .a-bio { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }

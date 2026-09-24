@@ -11,7 +11,7 @@ const entityTypes = ['Individual', 'LLC', 'Corporation', 'Partnership', 'Nonprof
 >
   <PageHero
     eyebrow="IP & Trademarks"
-    title="File a Trademark"
+    title="File a <em>Trademark</em>"
     lead="Tell us about your mark and who will own it, and we'll follow up with next steps."
     crumbs={[{ name: 'Home', href: '/' }, { name: 'IP & Trademarks', href: '/ip-trademarks' }, { name: 'File a Trademark' }]}
     compact
@@ -124,19 +124,21 @@ const entityTypes = ['Individual', 'LLC', 'Corporation', 'Partnership', 'Nonprof
 </Base>
 <style>
   .grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .tm { gap: 30px; box-shadow: var(--shadow); }
-  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 18px; }
-  legend { display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 1.7rem; margin-bottom: 18px; padding: 0; }
-  .step { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--green-700); color: #fff; font-family: var(--sans); font-size: 0.8rem; font-weight: 600; }
+  .tm { gap: 18px; }
+  fieldset { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-warm); margin: 0; padding: 20px 22px 22px; display: grid; gap: 16px; min-width: 0; }
+  legend { float: left; width: 100%; display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 1.5rem; color: var(--green-900); margin: 0 0 2px; padding: 0; }
+  legend + * { clear: both; }
+  .step { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--green-800); color: #fff; font-family: var(--sans); font-size: 0.82rem; font-weight: 560; }
   .three { grid-template-columns: 1.3fr 1fr 1fr; }
-  .side { position: sticky; top: calc(var(--header-h) + 32px); display: grid; gap: 16px; }
-  .side-card { background: var(--green-800); color: #fff; border-radius: 22px; padding: 32px; display: grid; gap: 20px; }
+  .side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 14px; }
+  .side-card { position: relative; overflow: hidden; isolation: isolate; background: var(--green-800); color: #fff; border-radius: var(--radius); padding: 30px; display: grid; gap: 20px; box-shadow: var(--shadow); }
+  .side-card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(80% 100% at 100% 0%, rgba(233, 220, 193, 0.18), transparent 60%); }
   .side-card .eyebrow { color: var(--brass-soft); }
   .side-card ol { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 18px; }
-  .side-card li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 2px 12px; }
-  .side-card li::before { content: '0' counter(s); grid-row: span 2; font-size: 0.8rem; font-weight: 600; color: var(--brass-soft); padding-top: 3px; }
-  .side-card span { color: rgba(255,255,255,0.72); font-size: 0.95rem; }
-  .side-link { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 22px 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--white); text-decoration: none; font-weight: 550; }
-  .side-link:hover { border-color: var(--green-300); }
+  .side-card li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 2px 12px; }
+  .side-card li::before { content: '0' counter(s); grid-row: span 2; font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1; color: var(--brass-soft); }
+  .side-card span { color: rgba(255,255,255,0.74); font-size: 0.95rem; }
+  .side-link { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm); text-decoration: none; font-weight: 500; color: var(--green-900); }
+  .side-link:hover { border-color: var(--line-strong); }
   @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .side { position: static; } .three { grid-template-columns: 1fr; } }
 </style>

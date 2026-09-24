@@ -3,8 +3,8 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import PostCard from '../../components/PostCard.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import { practices } from '../../data/site';
-import { getPublishedPosts } from '../../lib/posts';
+import { firm, practices, practiceBySlug } from '../../data/site';
+import { getPublishedPosts, formatDate } from '../../lib/posts';
 import { breadcrumbs } from '../../lib/schema';
 const posts = await getPublishedPosts();
 const [featured, ...rest] = posts;
@@ -15,24 +15,41 @@ const counts = Object.fromEntries(practices.map((p) => [p.slug, posts.filter((x)
   description="Practical articles from Faham Law LLC on business formation, contracts, M&A, real estate and trademarks for business owners in NY, NJ and PA."
   jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Insights', path: '/insights' }])]}
 >
-  <PageHero eyebrow="Insights" title="Notes for business owners." lead="Practical articles on forming, running, protecting, buying and selling a business." crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights' }]} compact />
+  <PageHero eyebrow="Insights" title="Notes for <em>business owners.</em>" lead="Practical articles on forming, running, protecting, buying and selling a business." crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights' }]} compact />
   <section class="section-tight">
     <div class="container">
-      <nav class="chips" aria-label="Categories">
-        <a href="/insights" aria-current="page">All</a>
-        {practices.filter((p) => counts[p.slug] > 0).map((p) => <a href={`/insights/category/${p.slug}`}>{p.name}</a>)}
-      </nav>
+      {posts.length > 0 && (
+        <nav class="chips" aria-label="Categories">
+          <a href="/insights" aria-current="page">All <span>{posts.length}</span></a>
+          {practices.filter((p) => counts[p.slug] > 0).map((p) => <a href={`/insights/category/${p.slug}`}>{p.name} <span>{counts[p.slug]}</span></a>)}
+        </nav>
+      )}
       {posts.length === 0 ? (
         <div class="empty">
-          <h2 class="h3">First articles are on the way.</h2>
-          <p>In the meantime, <a href="/contact">contact us</a> with your question.</p>
+          <div class="empty-copy">
+            <span class="pill">Coming soon</span>
+            <h2 class="h2">First articles are <em>on the way.</em></h2>
+            <p class="lead">In the meantime, <a href="/contact">contact us</a> with your question, or follow along on LinkedIn.</p>
+            <div class="empty-btns">
+              <a class="btn" href="/contact">Ask a question <span class="arrow" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href={firm.linkedinDavid} target="_blank" rel="noopener">Follow David on LinkedIn</a>
+            </div>
+          </div>
+          <div class="topics">
+            <p class="kicker">Topics</p>
+            <ul role="list">
+              {practices.map((p, i) => (
+                <li><a href={`/${p.slug}`}><span class="t-num serif">{i + 1}</span><span class="t-name">{p.name}</span><span class="arrow" aria-hidden="true">→</span></a></li>
+              ))}
+            </ul>
+          </div>
         </div>
       ) : (
         <>
           <a class="feature" href={`/insights/${featured.id}`}>
-            <div class="f-media">{featured.data.cover ? <img src={featured.data.cover} alt={featured.data.coverAlt ?? ''} /> : <div class="f-fallback" />}</div>
+            <div class="f-media">{featured.data.cover ? <img src={featured.data.cover} alt={featured.data.coverAlt ?? ''} /> : <div class="f-fallback"><span class="serif">{practiceBySlug[featured.data.category]?.name}</span></div>}</div>
             <div class="f-body">
-              <p class="eyebrow">Latest</p>
+              <p class="f-meta"><span class="pill">Latest</span><span>{practiceBySlug[featured.data.category]?.name}</span><span aria-hidden="true">·</span><time datetime={featured.data.date.toISOString()}>{formatDate(featured.data.date)}</time></p>
               <h2 class="h2">{featured.data.title}</h2>
               <p class="lead">{featured.data.description}</p>
               <span class="link-arrow">Read article <span class="arrow" aria-hidden="true">→</span></span>
@@ -46,18 +63,38 @@ const counts = Object.fromEntries(practices.map((p) => [p.slug, posts.filter((x)
   <CtaBand />
 </Base>
 <style>
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
-  .chips a { padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line-strong); text-decoration: none; font-size: 0.9rem; font-weight: 550; }
-  .chips a:hover { border-color: var(--green-700); }
-  .chips a[aria-current] { background: var(--green-700); color: #fff; border-color: var(--green-700); }
-  .empty { padding: 64px; border: 1px dashed var(--line-strong); border-radius: 22px; display: grid; gap: 10px; text-align: center; }
-  .empty a { color: var(--green-700); }
-  .feature { display: grid; grid-template-columns: 1.2fr 1fr; border-radius: 24px; overflow: hidden; background: var(--white); border: 1px solid var(--line); text-decoration: none; margin-bottom: 20px; transition: box-shadow 0.35s var(--ease); }
-  .feature:hover { box-shadow: var(--shadow); }
-  .f-media { min-height: 360px; background: var(--green-800); }
+  .chips { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-bottom: 36px; padding: 5px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+  .chips a { padding: 8px 16px; border-radius: 999px; text-decoration: none; font-size: 0.92rem; font-weight: 500; color: var(--muted); display: inline-flex; gap: 8px; align-items: center; }
+  .chips a span { font-size: 0.75rem; color: var(--brass); }
+  .chips a:hover { color: var(--green-800); background: var(--mint-2); }
+  .chips a[aria-current] { background: var(--green-800); color: #fff; }
+  .chips a[aria-current] span { color: var(--brass-soft); }
+
+  .empty { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: clamp(24px, 3vw, 36px); padding: clamp(28px, 5vw, 64px); box-shadow: var(--shadow); }
+  .empty-copy { display: grid; gap: 20px; justify-items: start; }
+  .empty-copy .lead a { color: var(--green-700); }
+  .empty-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .topics { display: grid; gap: 10px; }
+  .topics ul { list-style: none; margin: 0; padding: 0; border-radius: var(--radius-md); border: 1px solid var(--line); background: var(--surface-warm); overflow: hidden; }
+  .topics li + li { border-top: 1px solid var(--line); }
+  .topics a { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 12px; padding: 14px 18px; text-decoration: none; transition: background 0.2s; }
+  .topics a:hover { background: var(--mint-2); }
+  .t-num { font-style: italic; color: var(--brass); font-size: 1.3rem; }
+  .t-name { font-weight: 500; color: var(--green-900); }
+  .topics .arrow { color: var(--green-700); }
+
+  .feature { display: grid; grid-template-columns: 1.15fr 1fr; border-radius: clamp(24px, 3vw, 36px); overflow: hidden; background: var(--surface); border: 1px solid var(--line); text-decoration: none; margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease); }
+  .feature:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .f-media { min-height: 380px; background: var(--mint); }
   .f-media img { width: 100%; height: 100%; object-fit: cover; }
-  .f-fallback { height: 100%; background: radial-gradient(80% 120% at 100% 0%, rgba(156,197,184,0.35), transparent 60%), var(--green-800); }
+  .f-fallback { height: 100%; display: grid; place-items: end start; padding: 32px; background: radial-gradient(80% 120% at 100% 0%, var(--brass-wash), transparent 60%), var(--mint); }
+  .f-fallback span { font-size: 2rem; font-style: italic; color: var(--green-800); }
   .f-body { padding: clamp(28px, 4vw, 56px); display: grid; gap: 18px; align-content: center; }
+  .f-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--muted); }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  @media (max-width: 900px) { .feature { grid-template-columns: 1fr; } .f-media { min-height: 220px; } .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) {
+    .empty, .feature { grid-template-columns: 1fr; }
+    .f-media { min-height: 220px; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>

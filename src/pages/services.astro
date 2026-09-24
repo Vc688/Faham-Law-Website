@@ -12,42 +12,74 @@ import { breadcrumbs } from '../lib/schema';
 >
   <PageHero
     eyebrow="What we do"
-    title="Practice Areas"
+    title="Practice <em>Areas</em>"
     lead="Legal services for privately held businesses, from the day you form your company to the day you sell it. Choose an area below, or contact us if you're not sure where your question fits."
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas' }]}
   />
   <section class="section-tight">
-    <div class="container grid">
+    <div class="container list">
       {practices.map((p, i) => (
-        <a class:list={['tile reveal', { wide: i === 0 }]} href={`/${p.slug}`}>
-          <span class="t-num">0{i + 1}</span>
-          <h2 class="t-name serif">{p.name}</h2>
-          <p class="t-sum">{p.short}</p>
-          <span class="link-arrow">Learn more <span class="arrow" aria-hidden="true">→</span></span>
+        <a class="row reveal" href={`/${p.slug}`}>
+          <span class="r-num serif">{i + 1}</span>
+          <div class="r-main">
+            <h2 class="r-name serif">{p.name}</h2>
+            <p class="r-sum">{p.short}</p>
+          </div>
+          <ul class="r-tags" role="list">
+            {p.groups.flatMap((g) => g.items).filter((it) => it.label).slice(0, 4).map((it) => <li>{it.label}</li>)}
+          </ul>
+          <span class="r-go" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
         </a>
       ))}
-      <a class="tile tile-dark reveal" href="/contact">
-        <span class="t-num">?</span>
-        <h2 class="t-name serif">Not sure where your question fits?</h2>
-        <p class="t-sum">Tell us what's going on and we'll point you in the right direction.</p>
-        <span class="link-arrow">Contact us <span class="arrow" aria-hidden="true">→</span></span>
+      <a class="row row-dark reveal" href="/contact">
+        <span class="r-num serif">?</span>
+        <div class="r-main">
+          <h2 class="r-name serif">Not sure where your question fits?</h2>
+          <p class="r-sum">Tell us what's going on and we'll point you in the right direction.</p>
+        </div>
+        <span></span>
+        <span class="r-go" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </span>
       </a>
     </div>
   </section>
   <CtaBand />
 </Base>
 <style>
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .tile { display: grid; gap: 18px; align-content: start; grid-template-rows: auto auto 1fr auto; padding: 34px; min-height: 340px; background: var(--white); border: 1px solid var(--line); border-radius: 22px; text-decoration: none; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.3s; }
-  .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--green-300); }
-  .tile:hover .arrow { transform: translateX(3px); }
-  .wide { grid-column: span 2; background: linear-gradient(135deg, var(--white), var(--mint)); }
-  .t-num { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; color: var(--green-700); }
-  .t-name { font-size: clamp(2rem, 3vw, 2.6rem); line-height: 1.02; }
-  .t-sum { color: var(--muted); }
-  .tile-dark { background: var(--green-800); color: #fff; border-color: transparent; }
-  .tile-dark .t-sum { color: rgba(255,255,255,0.72); }
-  .tile-dark .t-num, .tile-dark .link-arrow { color: var(--brass-soft); }
-  @media (max-width: 980px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: auto; } .tile { min-height: 0; } }
+  .list { display: grid; gap: 14px; }
+  .row {
+    display: grid; grid-template-columns: 56px 1.3fr 1fr 52px; gap: 28px; align-items: center;
+    padding: clamp(22px, 3vw, 34px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); text-decoration: none;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
+  }
+  .row:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line-strong); }
+  .r-num { font-size: 2.6rem; line-height: 1; font-style: italic; color: var(--brass); }
+  .r-main { display: grid; gap: 8px; }
+  .r-name { font-size: clamp(1.7rem, 2.6vw, 2.3rem); line-height: 1.05; color: var(--green-900); letter-spacing: -0.015em; }
+  .r-sum { color: var(--muted); }
+  .r-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .r-tags li { padding: 5px 12px; border-radius: 999px; background: var(--mint-2); border: 1px solid var(--mint); font-size: 0.82rem; color: var(--green-800); }
+  .r-go { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--green-800); transition: background 0.25s, color 0.25s, transform 0.3s var(--ease); }
+  .row:hover .r-go { background: var(--green-800); color: #fff; transform: rotate(-45deg); }
+  .row-dark { background: var(--green-800); border-color: transparent; }
+  .row-dark .r-name { color: #f4f1e8; }
+  .row-dark .r-sum { color: rgba(232, 240, 236, 0.75); }
+  .row-dark .r-num { color: var(--brass-soft); }
+  .row-dark .r-go { background: rgba(255,255,255,0.1); color: #fff; }
+  @media (max-width: 980px) {
+    .row { grid-template-columns: 44px 1fr 52px; }
+    .r-tags { grid-column: 2; grid-row: 2; }
+    .r-go { grid-column: 3; grid-row: 1; }
+    .row-dark > span:empty { display: none; }
+  }
+  @media (max-width: 600px) {
+    .row { grid-template-columns: 1fr auto; gap: 16px; }
+    .r-num { grid-column: 1; }
+    .r-go { grid-column: 2; grid-row: 1; width: 44px; height: 44px; }
+    .r-main, .r-tags { grid-column: 1 / -1; grid-row: auto; }
+  }
 </style>

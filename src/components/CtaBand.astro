@@ -7,12 +7,16 @@ const { title = 'Let’s talk about your business.', text = 'Tell us about your 
   <div class="container">
     <div class="inner reveal">
       <div class="copy">
+        <p class="eyebrow">Book a consultation</p>
         <h2 class="h2">{title}</h2>
-        <p>{text}</p>
+        <p class="txt">{text}</p>
       </div>
-      <div class="btns">
-        <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
-        {secondary ? <a class="btn btn-ghost" href={secondary.href}>{secondary.label}</a> : <a class="btn btn-ghost" href={firm.phoneHref}>Call {firm.phone}</a>}
+      <div class="side">
+        <div class="btns">
+          <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
+          {secondary ? <a class="btn btn-ghost on-dark" href={secondary.href}>{secondary.label}</a> : <a class="btn btn-ghost on-dark" href={firm.phoneHref}>Call {firm.phone}</a>}
+        </div>
+        <p class="mail">Or email <a href={`mailto:${firm.email}`}>{firm.email}</a></p>
       </div>
     </div>
   </div>
@@ -20,20 +24,25 @@ const { title = 'Let’s talk about your business.', text = 'Tell us about your 
 <style>
   .cta-band { padding-block: clamp(56px, 8vw, 104px); }
   .inner {
-    position: relative; overflow: hidden;
-    display: grid; grid-template-columns: 1.4fr auto; gap: 32px; align-items: end;
-    background: var(--green-800); color: #eef4f1;
-    border-radius: 28px; padding: clamp(36px, 6vw, 72px);
-    isolation: isolate;
+    position: relative; overflow: hidden; isolation: isolate;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end;
+    background: var(--green-800); color: #e8f0ec;
+    border-radius: clamp(24px, 3vw, 36px); padding: clamp(32px, 6vw, 72px);
+    box-shadow: var(--shadow);
   }
   .inner::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: radial-gradient(60% 120% at 100% 0%, rgba(194, 163, 107, 0.28), transparent 60%);
+    background:
+      radial-gradient(60% 120% at 100% 0%, rgba(233, 220, 193, 0.2), transparent 60%),
+      radial-gradient(50% 90% at 0% 100%, rgba(159, 196, 183, 0.16), transparent 70%);
   }
-  .copy { display: grid; gap: 14px; max-width: 640px; }
-  .copy p { color: rgba(238, 244, 241, 0.78); font-size: 1.08rem; }
-  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn-ghost { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .btn-ghost:hover { background: rgba(255,255,255,0.08); }
-  @media (max-width: 860px) { .inner { grid-template-columns: 1fr; align-items: start; } }
+  .eyebrow { color: var(--brass-soft); }
+  .copy { display: grid; gap: 16px; max-width: 680px; }
+  .h2 { color: #f4f1e8; font-size: clamp(1.9rem, 3.6vw, 3rem); }
+  .txt { color: rgba(232, 240, 236, 0.78); font-size: 1.08rem; }
+  .side { display: grid; gap: 16px; justify-items: end; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+  .mail { font-size: 0.9rem; color: rgba(232, 240, 236, 0.66); }
+  .mail a { color: #fff; }
+  @media (max-width: 860px) { .inner { grid-template-columns: 1fr; align-items: start; } .side, .btns { justify-items: start; justify-content: flex-start; } }
 </style>

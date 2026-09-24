@@ -4,18 +4,20 @@ import { firm } from '../data/site';
 ---
 <Base title="Thank you | Faham Law LLC" description="Your message has been sent." noindex>
   <section class="hero ty">
-    <div class="container narrow inner">
-      <div class="check" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
-      <h1 class="display">Thank you.</h1>
-      <p class="lead">We've received your submission and will be in touch shortly. If your matter is time-sensitive, call us at <a href={firm.phoneHref}>{firm.phone}</a>.</p>
-      <div class="btns"><a class="btn btn-light" href="/">Back to home</a><a class="btn btn-ghost" style="color:#fff" href="/services">Practice areas</a></div>
+    <div class="container">
+      <div class="card inner">
+        <div class="check" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+        <h1 class="display">Thank <em>you.</em></h1>
+        <p class="lead">We've received your submission and will be in touch shortly. If your matter is time-sensitive, call us at <a href={firm.phoneHref}>{firm.phone}</a>.</p>
+        <div class="btns"><a class="btn" href="/">Back to home</a><a class="btn btn-ghost" href="/services">Practice areas</a></div>
+      </div>
     </div>
   </section>
 </Base>
 <style>
   .ty { min-height: 78vh; display: grid; align-items: center; }
-  .inner { display: grid; gap: 24px; }
-  .check { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--brass); color: var(--green-950); }
-  .lead a { color: #fff; }
-  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .inner { max-width: 720px; margin-inline: auto; display: grid; gap: 22px; justify-items: center; text-align: center; padding: clamp(32px, 6vw, 64px); }
+  .check { width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--green-800); }
+  .lead a { color: var(--green-700); font-weight: 500; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 </style>

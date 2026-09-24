@@ -147,7 +147,7 @@ function shell(active: string, inner: string) {
   const tab = (href: string, label: string, key: string) => `<a href="${href}" class="${active === key ? 'on' : ''}">${label}</a>`;
   app.innerHTML = `
     <header class="top"><div class="top-in">
-      <a class="brand" href="#/">FAHAM LAW <small>Admin</small></a>
+      <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true">F</span>FAHAM LAW <small>Admin</small></a>
       <nav class="tabs" aria-label="Admin">
         ${tab('#/', 'Dashboard', 'dash')}${tab('#/posts', 'Posts', 'posts')}${tab('#/inquiries/contact', 'Inquiries', 'inq')}
       </nav>
@@ -193,21 +193,17 @@ function renderLogin(message = '') {
   leaveGuard = null;
   app.innerHTML = `
     <div class="login">
-      <div class="login-art">
-        <div class="brand" style="color:#fff">FAHAM LAW</div>
-        <div><h1>Website admin</h1><p>Write and publish Insights, and review contact and trademark inquiries.</p></div>
-        <p style="font-size:.8rem">fahamlaw.com</p>
-      </div>
-      <div class="login-form">
-        <form class="login-card" id="login-form">
-          <h2>Sign in</h2>
-          ${message ? `<div class="warn">${esc(message)}</div>` : ''}
-          <div id="login-err"></div>
-          <div class="field"><label for="pw">Password</label><input type="password" id="pw" name="password" autocomplete="current-password" required autofocus /></div>
-          <button class="btn btn-block" type="submit">Sign in</button>
-          <a href="/" class="muted" style="font-size:.85rem">← Back to fahamlaw.com</a>
-        </form>
-      </div>
+      <form class="login-card" id="login-form">
+        <span class="login-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+        <p class="eyebrow">Faham Law LLC</p>
+        <h1>Website admin</h1>
+        <p class="muted login-sub">Write and publish Insights, and review contact and trademark inquiries.</p>
+        ${message ? `<div class="warn">${esc(message)}</div>` : ''}
+        <div id="login-err"></div>
+        <input type="password" id="pw" name="password" autocomplete="current-password" placeholder="Admin password" aria-label="Password" required autofocus />
+        <button class="btn btn-block" type="submit">Sign in</button>
+        <a href="/" class="muted back">← Back to fahamlaw.com</a>
+      </form>
     </div>`;
   const form = $('#login-form') as HTMLFormElement;
   form.addEventListener('submit', async (e) => {

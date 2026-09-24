@@ -12,7 +12,7 @@ import { breadcrumbs } from '../lib/schema';
 >
   <PageHero
     eyebrow="Contact"
-    title="Let's chat."
+    title="Let's <em>chat.</em>"
     lead="Use the form to tell us about your legal inquiry, and we'll call you back to schedule an appointment. To help us serve you best, describe the issue you're having first, then what you want to achieve."
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Contact' }]}
     compact
@@ -20,7 +20,10 @@ import { breadcrumbs } from '../lib/schema';
   <section class="section-tight">
     <div class="container grid">
       <div class="card form-card">
-        <h2 class="h3">Book an appointment</h2>
+        <div class="fc-head">
+          <h2 class="h3">Book an appointment</h2>
+          <span class="pill">We'll call you back</span>
+        </div>
         <ContactForm />
       </div>
       <aside class="info">
@@ -51,15 +54,16 @@ import { breadcrumbs } from '../lib/schema';
 </Base>
 <style>
   .grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .form-card { display: grid; gap: 24px; box-shadow: var(--shadow); }
-  .info { display: grid; gap: 0; }
-  .info-block { padding: 22px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
-  .info-block:first-child { padding-top: 0; }
-  .k { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--green-700); }
-  .v { font-size: 1.7rem; line-height: 1.2; text-decoration: none; word-break: break-word; }
-  a.v:hover { color: var(--green-700); }
-  .fees { margin-top: 28px; padding: 26px; border-radius: 18px; background: var(--green-800); color: rgba(255,255,255,0.82); display: grid; gap: 10px; }
-  .fees .k { color: var(--brass-soft); }
-  .lic { margin-top: 20px; font-size: 0.88rem; color: var(--muted); }
+  .form-card { display: grid; gap: 24px; }
+  .fc-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .fc-head .h3 { color: var(--green-900); }
+  .info { display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 28px 28px; box-shadow: var(--shadow-sm); }
+  .info-block { padding: 20px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+  .k { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 560; color: var(--muted); }
+  .v { font-size: 1.6rem; line-height: 1.2; text-decoration: none; overflow-wrap: anywhere; color: var(--green-900); }
+  a.v:hover { color: var(--green-700); text-decoration: underline; }
+  .fees { margin-top: 22px; padding: 22px; border-radius: var(--radius-md); background: var(--brass-wash); color: var(--ink-2); display: grid; gap: 8px; }
+  .fees .k { color: var(--brass); }
+  .lic { margin-top: 18px; font-size: 0.88rem; color: var(--muted); }
   @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 </style>

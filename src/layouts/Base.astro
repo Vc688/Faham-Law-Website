@@ -4,7 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { firm } from '../data/site';
 import { legalService } from '../lib/schema';
-import { getPublishedPosts } from '../lib/posts';
 
 interface Props {
   title: string;
@@ -18,7 +17,8 @@ const { title, description, image = '/images/og-default.png', noindex = false, j
 const rawPath = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '').replace(/\/$/, '');
 const canonical = firm.url + (rawPath || '/');
 const ogImage = new URL(image, firm.url).href;
-const showInsights = (await getPublishedPosts()).length > 0;
+// Insights (the blog) is always linked in the nav and footer, even before the first post is published.
+const showInsights = true;
 const schemas = [legalService, ...jsonld];
 ---
 <!doctype html>
@@ -30,7 +30,7 @@ const schemas = [legalService, ...jsonld];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#003d32" />
+    <meta name="theme-color" content="#f7f4ec" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
