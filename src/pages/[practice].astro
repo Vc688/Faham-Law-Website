@@ -31,10 +31,11 @@ const others = practices.filter((x) => x.slug !== p.slug);
   ]}
 >
   <PageHero
-    eyebrow={`Practice area ${idx + 1} of ${practices.length} · ${p.name}`}
+    eyebrow={`Practice area ${idx + 1} of ${practices.length}`}
     title={emph(p.h1)}
     lead={p.intro}
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas', href: '/services' }, { name: p.name }]}
+    compact
   >
     <div class="hero-btns">
       <a class="btn" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>

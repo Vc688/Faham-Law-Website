@@ -37,6 +37,7 @@ export function validateSite(site) {
   const s = site.settings;
   if (typeof s.showTestimonials !== 'boolean' || typeof s.showInsights !== 'boolean') return 'Settings: toggles must be on or off.';
   if (!str(s.headshot) || !IMAGE_RE.test(s.headshot)) return 'Settings: headshot must be an uploaded image.';
+  if (s.headingAccent != null && !['plain', 'color', 'italic'].includes(s.headingAccent)) return 'Settings: headline accent style is invalid.';
   if (!isObj(s.headerCta) || !str(s.headerCta.label) || !s.headerCta.label.trim() || !str(s.headerCta.href)) return 'Settings: header button needs a label and a link.';
 
   if (!site.practices.length) return 'Add at least one practice area.';

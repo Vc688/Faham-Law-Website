@@ -94,7 +94,10 @@ p { margin: 0; }
   letter-spacing: -0.028em;
   color: var(--green-900);
 }
-.display em, .h2 em { font-style: italic; color: var(--green-700); }
+/* Headline accent (the *phrase* in a heading). Chosen in Admin → Site → Settings. */
+.display em, .h2 em { font-style: normal; color: inherit; }
+[data-accent='color'] .display em, [data-accent='color'] .h2 em { font-style: normal; color: var(--green-700); }
+[data-accent='italic'] .display em, [data-accent='italic'] .h2 em { font-style: italic; color: var(--green-700); }
 .h2 {
   font-family: var(--serif);
   font-weight: 400;
@@ -147,7 +150,7 @@ em, .italic { font-style: italic; }
 .dark .eyebrow { color: var(--brass-soft); }
 .dark .lead { color: rgba(232, 240, 236, 0.78); }
 .dark .h2, .dark .display { color: #f4f1e8; }
-.dark .h2 em, .dark .display em { color: var(--brass-soft); }
+[data-accent='color'] .dark .h2 em, [data-accent='color'] .dark .display em, [data-accent='italic'] .dark .h2 em, [data-accent='italic'] .dark .display em { color: var(--brass-soft); }
 
 /* Buttons: pill controls */
 .btn {

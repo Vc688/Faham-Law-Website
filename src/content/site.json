@@ -11,8 +11,20 @@
     "url": "https://www.fahamlaw.com",
     "hourlyRate": "$495",
     "offices": [
-      { "label": "Oakhurst, NJ", "street": "294 Maplewood Avenue", "city": "Oakhurst", "state": "NJ", "zip": "07755" },
-      { "label": "New York, NY", "street": "", "city": "New York", "state": "NY", "zip": "" }
+      {
+        "label": "Oakhurst, NJ",
+        "street": "294 Maplewood Avenue",
+        "city": "Oakhurst",
+        "state": "NJ",
+        "zip": "07755"
+      },
+      {
+        "label": "New York, NY",
+        "street": "",
+        "city": "New York",
+        "state": "NY",
+        "zip": ""
+      }
     ],
     "licensed": "Licensed in New York, New Jersey & Pennsylvania",
     "linkedinFirm": "https://www.linkedin.com/company/fahamlaw/",
@@ -24,38 +36,78 @@
   "settings": {
     "showTestimonials": true,
     "showInsights": false,
+    "headingAccent": "plain",
     "headshot": "/images/david-faham.jpg",
     "headshotAlt": "David Faham, partner at Faham Law LLC",
-    "headerCta": { "label": "Book a consultation", "href": "/contact" }
+    "headerCta": {
+      "label": "Book a consultation",
+      "href": "/contact"
+    }
   },
   "home": {
     "seoTitle": "Faham Law LLC | Fractional General Counsel in NY & NJ",
     "seoDescription": "Faham Law LLC serves as fractional general counsel to privately held companies in New York and New Jersey, and handles trademarks, contracts, M&A and real estate under one roof.",
     "eyebrow": "Fractional general counsel · Since 2011",
     "kicker": "New York, NY · Oakhurst, NJ",
-    "title": "Your company's general counsel, *on a fractional basis.*",
+    "title": "Your general counsel, *without the full-time hire.*",
     "lead": "The legal support of an in-house lawyer, without the full-time hire. Contracts, employment, compliance and deals, handled by one lawyer who knows your business. Trademarks, real estate and M&A under the same roof.",
-    "primaryCta": { "label": "Book a consultation", "href": "/contact" },
-    "secondaryCta": { "label": "How it works", "href": "/fractional-general-counsel" },
+    "primaryCta": {
+      "label": "Book a consultation",
+      "href": "/contact"
+    },
+    "secondaryCta": {
+      "label": "How it works",
+      "href": "/fractional-general-counsel"
+    },
     "routerTitle": "Where is your business today?",
     "stages": [
-      { "need": "Growing without an in-house lawyer", "slug": "fractional-general-counsel" },
-      { "need": "Protecting a brand name or logo", "slug": "ip-trademarks" },
-      { "need": "Starting a business", "slug": "startups-small-business" },
-      { "need": "Buying or selling a business", "slug": "mergers-acquisitions" },
-      { "need": "Buying, selling or leasing property", "slug": "real-estate" }
+      {
+        "need": "Growing without an in-house lawyer",
+        "slug": "fractional-general-counsel"
+      },
+      {
+        "need": "Protecting a brand name or logo",
+        "slug": "ip-trademarks"
+      },
+      {
+        "need": "Starting a business",
+        "slug": "startups-small-business"
+      },
+      {
+        "need": "Buying or selling a business",
+        "slug": "mergers-acquisitions"
+      },
+      {
+        "need": "Buying, selling or leasing property",
+        "slug": "real-estate"
+      }
     ],
     "gc": {
       "eyebrow": "Fractional General Counsel",
       "title": "Legal support that works *like an in-house department.*",
       "lead": "Most growing companies have more legal work than an occasional lawyer can keep up with, but not enough to hire a full-time general counsel. We fill that role.",
       "points": [
-        { "title": "A retainer sized to your business", "text": "A monthly retainer covers the range of your everyday legal needs, so a question about a contract or an employee is a phone call, not a new engagement." },
-        { "title": "One lawyer who knows your business", "text": "You work with the same lawyer every time, who learns your contracts, your people and your priorities." },
-        { "title": "In-house experience", "text": "David has served as general counsel for companies large and small. He gives practical advice that fits how a business actually runs, not a memo." },
-        { "title": "A network for everything else", "text": "For matters outside our practice, we bring in trusted firms from our network and manage the work for you." }
+        {
+          "title": "A retainer sized to your business",
+          "text": "A monthly retainer covers the range of your everyday legal needs, so a question about a contract or an employee is a phone call, not a new engagement."
+        },
+        {
+          "title": "One lawyer who knows your business",
+          "text": "You work with the same lawyer every time, who learns your contracts, your people and your priorities."
+        },
+        {
+          "title": "In-house experience",
+          "text": "David has served as general counsel for companies large and small. He gives practical advice that fits how a business actually runs, not a memo."
+        },
+        {
+          "title": "A network for everything else",
+          "text": "For matters outside our practice, we bring in trusted firms from our network and manage the work for you."
+        }
       ],
-      "cta": { "label": "How fractional general counsel works", "href": "/fractional-general-counsel" }
+      "cta": {
+        "label": "How fractional general counsel works",
+        "href": "/fractional-general-counsel"
+      }
     },
     "practicesEyebrow": "Also under one roof",
     "practicesTitle": "The rest of what your business needs, *from the same lawyer.*",
@@ -64,16 +116,31 @@
       "eyebrow": "IP & Trademarks",
       "title": "Protect your brand *before someone else claims it.*",
       "text": "Trademark searches, U.S. and international filings, Amazon Brand Registry and renewals, on published flat fees.",
-      "primaryCta": { "label": "File a trademark", "href": "/file-a-trademark" },
-      "secondaryCta": { "label": "See the fee schedule", "href": "/fees" }
+      "primaryCta": {
+        "label": "File a trademark",
+        "href": "/file-a-trademark"
+      },
+      "secondaryCta": {
+        "label": "See the fee schedule",
+        "href": "/fees"
+      }
     },
     "about": {
       "eyebrow": "Meet the partner",
       "lead": "A born-and-raised New Yorker, David has advised businesses of every size since 2011. Having served as general counsel for companies large and small, he brings an in-house perspective to outside counsel work: practical advice that fits how a business actually runs.",
       "creds": [
-        { "label": "J.D., Intellectual Property", "value": "Fordham University School of Law" },
-        { "label": "B.S., Business Management & Finance, Economics", "value": "Brooklyn College, CUNY" },
-        { "label": "Bar admissions", "value": "New York · New Jersey · Pennsylvania" }
+        {
+          "label": "J.D., Intellectual Property",
+          "value": "Fordham University School of Law"
+        },
+        {
+          "label": "B.S., Business Management & Finance, Economics",
+          "value": "Brooklyn College, CUNY"
+        },
+        {
+          "label": "Bar admissions",
+          "value": "New York · New Jersey · Pennsylvania"
+        }
       ],
       "cta": "Read David's bio"
     },
@@ -98,13 +165,29 @@
     ],
     "personal": "David is a father of four and when work and family are not the priority, enjoys bowling in a local league and considers himself a foodie and scotch and wine aficionado.",
     "education": [
-      { "school": "Fordham University School of Law", "degree": "Juris Doctor, Intellectual Property, 2011" },
-      { "school": "Brooklyn College, City University of New York", "degree": "B.S., Business Management and Finance, Economics, 2008" }
+      {
+        "school": "Fordham University School of Law",
+        "degree": "Juris Doctor, Intellectual Property, 2011"
+      },
+      {
+        "school": "Brooklyn College, City University of New York",
+        "degree": "B.S., Business Management and Finance, Economics, 2008"
+      }
     ],
-    "barAdmissions": ["New York", "New Jersey", "Pennsylvania"],
+    "barAdmissions": [
+      "New York",
+      "New Jersey",
+      "Pennsylvania"
+    ],
     "licenses": [
-      { "label": "Notary", "value": "New York, New Jersey" },
-      { "label": "Real Estate", "value": "New York" }
+      {
+        "label": "Notary",
+        "value": "New York, New Jersey"
+      },
+      {
+        "label": "Real Estate",
+        "value": "New York"
+      }
     ]
   },
   "services": {
@@ -123,39 +206,84 @@
       "short": "Outside general counsel for companies that need regular legal support without an in-house legal department. We draft, review and negotiate your agreements and advise on employment, compliance and business decisions, usually on a monthly retainer.",
       "seoTitle": "Fractional General Counsel for Businesses in NY & NJ",
       "seoDescription": "Fractional and outside general counsel for privately held companies in New York and New Jersey: monthly retainers, contract drafting and negotiation, employment matters and day-to-day legal advice.",
-      "h1": "Fractional General Counsel for Growing Companies",
+      "h1": "Fractional General Counsel",
       "intro": "Many growing companies have more legal work than an occasional lawyer can keep up with, but not enough to hire a full-time general counsel. We fill that role. With general counsel experience at companies large and small, David learns how your business works and gives practical advice that fits it. For matters outside our practice, we bring in trusted firms from our network and manage the work for you.",
       "groups": [
         {
           "title": "How it works",
           "items": [
-            { "label": "A conversation first", "text": "We start with a consultation about your business, the legal work you have today and what keeps coming up. From that we propose a scope." },
-            { "label": "A monthly retainer", "text": "The retainer is sized to that scope and covers your everyday legal needs, so a question about a contract or an employee is a phone call, not a new engagement." },
-            { "label": "One lawyer, every time", "text": "You work with David directly. He learns your contracts, your people and your priorities, and the advice gets faster and better as he does." },
-            { "label": "Matter by matter, if you prefer", "text": "If a retainer isn't the right fit, we also handle work one matter at a time, hourly or on a flat fee where the matter allows." }
+            {
+              "label": "A conversation first",
+              "text": "We start with a consultation about your business, the legal work you have today and what keeps coming up. From that we propose a scope."
+            },
+            {
+              "label": "A monthly retainer",
+              "text": "The retainer is sized to that scope and covers your everyday legal needs, so a question about a contract or an employee is a phone call, not a new engagement."
+            },
+            {
+              "label": "One lawyer, every time",
+              "text": "You work with David directly. He learns your contracts, your people and your priorities, and the advice gets faster and better as he does."
+            },
+            {
+              "label": "Matter by matter, if you prefer",
+              "text": "If a retainer isn't the right fit, we also handle work one matter at a time, hourly or on a flat fee where the matter allows."
+            }
           ]
         },
         {
           "title": "What's included",
           "items": [
-            { "label": "Commercial agreements", "text": "Master services, professional services and consulting agreements; reseller, distribution and marketing agreements; supply and factory agreements; and technology agreements." },
-            { "label": "Contract review and negotiation", "text": "Reviewing the other side's paper, flagging risk and negotiating better terms." },
-            { "label": "Confidentiality", "text": "Non-disclosure and confidentiality agreements." },
-            { "label": "Employment", "text": "Offer letters, employee handbooks, wage and hour compliance, workplace investigations and terminations." },
-            { "label": "Compliance and disputes", "text": "Corporate compliance, and resolving disputes before they become lawsuits." },
-            { "label": "Managing outside counsel", "text": "When a matter needs a specialist or a litigator, we bring in the right firm, brief them and manage the work and the budget." }
+            {
+              "label": "Commercial agreements",
+              "text": "Master services, professional services and consulting agreements; reseller, distribution and marketing agreements; supply and factory agreements; and technology agreements."
+            },
+            {
+              "label": "Contract review and negotiation",
+              "text": "Reviewing the other side's paper, flagging risk and negotiating better terms."
+            },
+            {
+              "label": "Confidentiality",
+              "text": "Non-disclosure and confidentiality agreements."
+            },
+            {
+              "label": "Employment",
+              "text": "Offer letters, employee handbooks, wage and hour compliance, workplace investigations and terminations."
+            },
+            {
+              "label": "Compliance and disputes",
+              "text": "Corporate compliance, and resolving disputes before they become lawsuits."
+            },
+            {
+              "label": "Managing outside counsel",
+              "text": "When a matter needs a specialist or a litigator, we bring in the right firm, brief them and manage the work and the budget."
+            }
           ]
         }
       ],
       "who": "Small and mid-sized, privately held companies with steady legal needs and no in-house lawyer: consumer products and wholesale companies, licensing companies, technology companies, restaurants, apparel brands, and Amazon and e-commerce businesses.",
       "faqs": [
-        { "q": "What does a fractional general counsel do?", "a": "The same work as an in-house lawyer, on a part-time basis: contracts, employment questions, compliance, managing outside counsel and advice on business decisions." },
-        { "q": "Is that the same as outside general counsel?", "a": "Yes. \"Fractional\" and \"outside\" general counsel are two names for the same arrangement: an outside lawyer who serves as your company's general counsel part time, instead of a full-time in-house hire." },
-        { "q": "How is it billed?", "a": "Most clients use a monthly retainer sized to the scope of their everyday legal needs. We quote it after a consultation, once we understand your business. Work outside the retainer, and matter-by-matter work, is billed at $495 per hour or on a flat fee where the matter allows." },
-        { "q": "Can we start with a single matter?", "a": "Yes. Many retainer clients started with one contract or one employment question. If the relationship makes sense for both sides, we move to a retainer from there." }
+        {
+          "q": "What does a fractional general counsel do?",
+          "a": "The same work as an in-house lawyer, on a part-time basis: contracts, employment questions, compliance, managing outside counsel and advice on business decisions."
+        },
+        {
+          "q": "Is that the same as outside general counsel?",
+          "a": "Yes. \"Fractional\" and \"outside\" general counsel are two names for the same arrangement: an outside lawyer who serves as your company's general counsel part time, instead of a full-time in-house hire."
+        },
+        {
+          "q": "How is it billed?",
+          "a": "Most clients use a monthly retainer sized to the scope of their everyday legal needs. We quote it after a consultation, once we understand your business. Work outside the retainer, and matter-by-matter work, is billed at $495 per hour or on a flat fee where the matter allows."
+        },
+        {
+          "q": "Can we start with a single matter?",
+          "a": "Yes. Many retainer clients started with one contract or one employment question. If the relationship makes sense for both sides, we move to a retainer from there."
+        }
       ],
       "cta": "Need a lawyer who knows your business? Book a consultation.",
-      "ctaSecondary": { "label": "Call (212) 961-7503", "href": "tel:+12129617503" }
+      "ctaSecondary": {
+        "label": "Call (212) 961-7503",
+        "href": "tel:+12129617503"
+      }
     },
     {
       "slug": "ip-trademarks",
@@ -163,46 +291,91 @@
       "short": "Trademark searches, filings, registration, maintenance and renewals on published flat fees, plus copyright, licensing and Amazon Brand Registry matters.",
       "seoTitle": "Trademark & Amazon Brand Registry Attorney | Flat Fees",
       "seoDescription": "Trademark searches, USPTO filings, registration, maintenance and renewals, copyright, IP licensing, and Amazon Brand Registry and infringement matters for businesses, on published flat fees.",
-      "h1": "Trademark & Intellectual Property Counsel",
+      "h1": "Trademarks & Intellectual Property",
       "intro": "Your brand name, logo and creative work are often your most valuable assets. We protect them from the first clearance search through registration and every renewal after. When someone infringes, or you need to license your IP, we handle that too. Trademark and copyright work is done on flat fees, published on our fee schedule.",
       "groups": [
         {
           "title": "Trademarks",
           "items": [
-            { "label": "Clearance", "text": "Searches and opinions on whether a proposed name or logo is available." },
-            { "label": "Filing and prosecution", "text": "Preparing U.S. and international applications and responding to USPTO office actions through registration." },
-            { "label": "Maintenance and renewals", "text": "Tracking deadlines and filing maintenance declarations and renewals so registrations stay alive." },
-            { "label": "Enforcement", "text": "Monitoring and enforcement strategy, and recording registrations with U.S. Customs to block counterfeit imports." },
-            { "label": "Portfolio management", "text": "Managing domestic and international portfolios and advising on branding strategy." }
+            {
+              "label": "Clearance",
+              "text": "Searches and opinions on whether a proposed name or logo is available."
+            },
+            {
+              "label": "Filing and prosecution",
+              "text": "Preparing U.S. and international applications and responding to USPTO office actions through registration."
+            },
+            {
+              "label": "Maintenance and renewals",
+              "text": "Tracking deadlines and filing maintenance declarations and renewals so registrations stay alive."
+            },
+            {
+              "label": "Enforcement",
+              "text": "Monitoring and enforcement strategy, and recording registrations with U.S. Customs to block counterfeit imports."
+            },
+            {
+              "label": "Portfolio management",
+              "text": "Managing domestic and international portfolios and advising on branding strategy."
+            }
           ]
         },
         {
           "title": "Amazon Brand Registry & E-commerce",
           "note": "We help Amazon and e-commerce sellers protect their brands on the platform.",
           "items": [
-            { "text": "Brand Registry enrollment, including appeals when a request is denied." },
-            { "text": "Reporting infringing and counterfeit listings, ASIN hijackers and inauthentic products." },
-            { "text": "Responding to Amazon infringement complaints, fraud accusations and account suspensions through Amazon's own processes." }
+            {
+              "text": "Brand Registry enrollment, including appeals when a request is denied."
+            },
+            {
+              "text": "Reporting infringing and counterfeit listings, ASIN hijackers and inauthentic products."
+            },
+            {
+              "text": "Responding to Amazon infringement complaints, fraud accusations and account suspensions through Amazon's own processes."
+            }
           ]
         },
         {
           "title": "Copyright, Licensing & Fashion",
           "items": [
-            { "label": "Copyright", "text": "Registration searches, applications and maintenance." },
-            { "label": "Licensing", "text": "For licensors and licensees, including royalty or flat-fee structures, exclusivity, territory, term, indemnification and sub-licensing." },
-            { "label": "Fashion and apparel", "text": "Protecting designs and brands through trademark, copyright and licensing." }
+            {
+              "label": "Copyright",
+              "text": "Registration searches, applications and maintenance."
+            },
+            {
+              "label": "Licensing",
+              "text": "For licensors and licensees, including royalty or flat-fee structures, exclusivity, territory, term, indemnification and sub-licensing."
+            },
+            {
+              "label": "Fashion and apparel",
+              "text": "Protecting designs and brands through trademark, copyright and licensing."
+            }
           ]
         }
       ],
       "who": "",
       "faqs": [
-        { "q": "How much does a trademark application cost?", "a": "Our fee for a standard U.S. application is $995, plus the USPTO filing fee of $350 per class. Searches, office action responses and renewals are listed on our fee schedule." },
-        { "q": "How long does trademark registration take?", "a": "The USPTO reports an average of about 10 months from filing, depending on its backlog and whether the examiner raises issues." },
-        { "q": "When do I need to renew?", "a": "A maintenance declaration is due between the 5th and 6th year after registration, then a combined declaration and renewal every 10 years." },
-        { "q": "Can I join Amazon Brand Registry before my trademark registers?", "a": "Yes. Amazon accepts either an active registered trademark or a pending application, as long as it's a word mark or a design mark with words, letters or numbers, from a government trademark office. The trademark owner must be the one who applies. Amazon's IP Accelerator program is optional." }
+        {
+          "q": "How much does a trademark application cost?",
+          "a": "Our fee for a standard U.S. application is $995, plus the USPTO filing fee of $350 per class. Searches, office action responses and renewals are listed on our fee schedule."
+        },
+        {
+          "q": "How long does trademark registration take?",
+          "a": "The USPTO reports an average of about 10 months from filing, depending on its backlog and whether the examiner raises issues."
+        },
+        {
+          "q": "When do I need to renew?",
+          "a": "A maintenance declaration is due between the 5th and 6th year after registration, then a combined declaration and renewal every 10 years."
+        },
+        {
+          "q": "Can I join Amazon Brand Registry before my trademark registers?",
+          "a": "Yes. Amazon accepts either an active registered trademark or a pending application, as long as it's a word mark or a design mark with words, letters or numbers, from a government trademark office. The trademark owner must be the one who applies. Amazon's IP Accelerator program is optional."
+        }
       ],
       "cta": "Protect your brand before someone else claims it. Book a consultation or file a trademark.",
-      "ctaSecondary": { "label": "File a trademark", "href": "/file-a-trademark" }
+      "ctaSecondary": {
+        "label": "File a trademark",
+        "href": "/file-a-trademark"
+      }
     },
     {
       "slug": "startups-small-business",
@@ -210,27 +383,57 @@
       "short": "Starting a business? We form your LLC or corporation and draft the documents it runs on: operating and shareholder agreements, employment and consultant agreements, employee handbooks, website terms and privacy policies, and SaaS and end-user license agreements.",
       "seoTitle": "Business Formation & Startup Lawyer in NY & NJ",
       "seoDescription": "LLC and corporation formation, operating and shareholder agreements, employment and consultant agreements, employee handbooks, website terms, privacy policies, and SaaS agreements for startups and small businesses.",
-      "h1": "Legal Foundations for Startups & Small Businesses",
+      "h1": "Startups & Small Business",
       "intro": "The decisions you make when you start a business, like how it's structured, who owns what, and what your customers agree to, are much cheaper to get right at the start than to fix later. We help founders set up their companies properly and put the core documents in place.",
       "groups": [
         {
           "title": "What we handle",
           "items": [
-            { "label": "Entity formation", "text": "Choosing between an LLC, corporation, partnership or nonprofit; preparing and filing formation documents; obtaining an EIN; and advising on ownership and governance." },
-            { "label": "Founder and ownership documents", "text": "Operating agreements and shareholders' agreements." },
-            { "label": "Your team", "text": "Employment, consultant and independent contractor agreements for the people who work with you, plus employee handbooks and workplace policies." },
-            { "label": "Website and app documents", "text": "Terms of Use, Privacy Policies and other user agreements." },
-            { "label": "Software agreements", "text": "SaaS agreements and end-user license agreements (EULAs)." },
-            { "label": "Everyday contracts", "text": "Vendor, supplier and confidentiality agreements." },
-            { "label": "Nonprofits", "text": "Forming and dissolving New York not-for-profit corporations, including work with the Attorney General's Office." }
+            {
+              "label": "Entity formation",
+              "text": "Choosing between an LLC, corporation, partnership or nonprofit; preparing and filing formation documents; obtaining an EIN; and advising on ownership and governance."
+            },
+            {
+              "label": "Founder and ownership documents",
+              "text": "Operating agreements and shareholders' agreements."
+            },
+            {
+              "label": "Your team",
+              "text": "Employment, consultant and independent contractor agreements for the people who work with you, plus employee handbooks and workplace policies."
+            },
+            {
+              "label": "Website and app documents",
+              "text": "Terms of Use, Privacy Policies and other user agreements."
+            },
+            {
+              "label": "Software agreements",
+              "text": "SaaS agreements and end-user license agreements (EULAs)."
+            },
+            {
+              "label": "Everyday contracts",
+              "text": "Vendor, supplier and confidentiality agreements."
+            },
+            {
+              "label": "Nonprofits",
+              "text": "Forming and dissolving New York not-for-profit corporations, including work with the Attorney General's Office."
+            }
           ]
         }
       ],
       "who": "First-time founders, technology startups, restaurants, apparel and consumer brands, Amazon and e-commerce sellers, and small businesses formalizing an existing operation.",
       "faqs": [
-        { "q": "Should I form an LLC or a corporation?", "a": "It depends on how you plan to raise money, pay yourself and handle taxes. Many small businesses start as LLCs, and companies planning to raise venture capital often form corporations." },
-        { "q": "Do I need an operating agreement?", "a": "New York requires LLCs to adopt a written operating agreement. Even where it isn't required, it sets out who owns what and what happens if a member leaves." },
-        { "q": "What is New York's LLC publication requirement?", "a": "New York LLCs must publish notice of formation in two newspapers within 120 days of forming, or lose the authority to do business in the state until they comply." }
+        {
+          "q": "Should I form an LLC or a corporation?",
+          "a": "It depends on how you plan to raise money, pay yourself and handle taxes. Many small businesses start as LLCs, and companies planning to raise venture capital often form corporations."
+        },
+        {
+          "q": "Do I need an operating agreement?",
+          "a": "New York requires LLCs to adopt a written operating agreement. Even where it isn't required, it sets out who owns what and what happens if a member leaves."
+        },
+        {
+          "q": "What is New York's LLC publication requirement?",
+          "a": "New York LLCs must publish notice of formation in two newspapers within 120 days of forming, or lose the authority to do business in the state until they comply."
+        }
       ],
       "cta": "Starting something new? Book a consultation to set it up right.",
       "ctaSecondary": null
@@ -247,19 +450,43 @@
         {
           "title": "What we handle",
           "items": [
-            { "label": "Deal structure", "text": "Asset purchases, stock or membership interest purchases, mergers and joint ventures." },
-            { "label": "Letters of intent", "text": "Negotiating price, structure and key terms before the deal is papered." },
-            { "label": "Due diligence", "text": "Organizing a seller's records, or reviewing a target's contracts, liabilities and IP for a buyer." },
-            { "label": "Purchase agreements", "text": "Drafting and negotiating the purchase agreements, ancillary agreements and closing documents." },
-            { "label": "Financing documents", "text": "Promissory notes, security agreements and other documents for seller-financed and lender-financed deals." },
-            { "label": "Closing and after", "text": "Employment, consulting and transition agreements for owners and key staff." }
+            {
+              "label": "Deal structure",
+              "text": "Asset purchases, stock or membership interest purchases, mergers and joint ventures."
+            },
+            {
+              "label": "Letters of intent",
+              "text": "Negotiating price, structure and key terms before the deal is papered."
+            },
+            {
+              "label": "Due diligence",
+              "text": "Organizing a seller's records, or reviewing a target's contracts, liabilities and IP for a buyer."
+            },
+            {
+              "label": "Purchase agreements",
+              "text": "Drafting and negotiating the purchase agreements, ancillary agreements and closing documents."
+            },
+            {
+              "label": "Financing documents",
+              "text": "Promissory notes, security agreements and other documents for seller-financed and lender-financed deals."
+            },
+            {
+              "label": "Closing and after",
+              "text": "Employment, consulting and transition agreements for owners and key staff."
+            }
           ]
         }
       ],
       "who": "Owners selling their businesses, companies buying competitors or suppliers, and partners buying each other out, across consumer products, wholesale, technology, restaurants, apparel and e-commerce.",
       "faqs": [
-        { "q": "What's the difference between an asset sale and a stock sale?", "a": "In an asset sale the buyer picks which assets and liabilities it takes. In a stock sale the buyer takes the whole company, including its liabilities. Each choice has different tax and risk consequences." },
-        { "q": "Is a letter of intent binding?", "a": "Usually only in part. Price and deal terms are often non-binding, while confidentiality and exclusivity provisions typically are binding." }
+        {
+          "q": "What's the difference between an asset sale and a stock sale?",
+          "a": "In an asset sale the buyer picks which assets and liabilities it takes. In a stock sale the buyer takes the whole company, including its liabilities. Each choice has different tax and risk consequences."
+        },
+        {
+          "q": "Is a letter of intent binding?",
+          "a": "Usually only in part. Price and deal terms are often non-binding, while confidentiality and exclusivity provisions typically are binding."
+        }
       ],
       "cta": "Thinking about buying or selling? Talk to us early, before the letter of intent is signed.",
       "ctaSecondary": null
@@ -270,24 +497,45 @@
       "short": "Residential and commercial closings, purchases and sales, refinances and loans, and lease and sublease reviews in New York, New Jersey and Pennsylvania.",
       "seoTitle": "NJ & NY Real Estate Attorney: Closings & Leases",
       "seoDescription": "Residential and commercial real estate closings, purchase and sale contracts, refinances and loans, and lease and sublease reviews in New Jersey, New York and Pennsylvania.",
-      "h1": "Real Estate Attorney for Residential & Commercial Transactions",
+      "h1": "Real Estate Transactions",
       "intro": "Whether you're buying a home, selling a building or signing a lease for your business, we review the documents, negotiate the terms and see the deal through to closing. We represent buyers, sellers, landlords and tenants in New Jersey, New York and Pennsylvania.",
       "groups": [
         {
           "title": "What we handle",
           "items": [
-            { "label": "Residential", "text": "Purchase and sale contracts, attorney review and closings for buyers and sellers." },
-            { "label": "Commercial", "text": "Acquisitions and sales of single properties and portfolios, financing documents, and joint ventures." },
-            { "label": "Refinances and loans", "text": "Refinances and loan closings for residential and commercial properties, including reviewing the loan documents before you sign." },
-            { "label": "Leases and subleases", "text": "Drafting, reviewing and negotiating leases for retail stores, office space, warehouses and residences, for landlords and tenants." }
+            {
+              "label": "Residential",
+              "text": "Purchase and sale contracts, attorney review and closings for buyers and sellers."
+            },
+            {
+              "label": "Commercial",
+              "text": "Acquisitions and sales of single properties and portfolios, financing documents, and joint ventures."
+            },
+            {
+              "label": "Refinances and loans",
+              "text": "Refinances and loan closings for residential and commercial properties, including reviewing the loan documents before you sign."
+            },
+            {
+              "label": "Leases and subleases",
+              "text": "Drafting, reviewing and negotiating leases for retail stores, office space, warehouses and residences, for landlords and tenants."
+            }
           ]
         }
       ],
       "who": "Homebuyers and sellers, business owners leasing or buying space, property owners and investors, and companies whose other legal work we already handle.",
       "faqs": [
-        { "q": "What is attorney review in New Jersey?", "a": "In New Jersey, a residential contract prepared by a real estate agent has a three-business-day attorney review period, during which either side's attorney can approve, change or cancel it." },
-        { "q": "Should a lawyer review my commercial lease?", "a": "Yes. Commercial leases are usually drafted for the landlord, and terms like rent increases, repairs, personal guarantees and early exit are negotiable before you sign." },
-        { "q": "Can I sublease my space?", "a": "It depends on your lease. Most commercial leases require the landlord's written consent, and some prohibit subleasing outright." }
+        {
+          "q": "What is attorney review in New Jersey?",
+          "a": "In New Jersey, a residential contract prepared by a real estate agent has a three-business-day attorney review period, during which either side's attorney can approve, change or cancel it."
+        },
+        {
+          "q": "Should a lawyer review my commercial lease?",
+          "a": "Yes. Commercial leases are usually drafted for the landlord, and terms like rent increases, repairs, personal guarantees and early exit are negotiable before you sign."
+        },
+        {
+          "q": "Can I sublease my space?",
+          "a": "It depends on your lease. Most commercial leases require the landlord's written consent, and some prohibit subleasing outright."
+        }
       ],
       "cta": "Buying, selling or leasing? Book a consultation before you sign.",
       "ctaSecondary": null
@@ -297,8 +545,8 @@
     "seoTitle": "Fees: Hourly Rate and Trademark & Copyright Fee Schedule",
     "seoDescription": "Faham Law LLC's hourly rate and flat-fee schedule for trademark searches, applications, office actions, renewals and copyright registrations.",
     "eyebrow": "Fees",
-    "title": "Fees, *stated plainly.*",
-    "lead": "Hourly and flat-fee work is billed at the rates below. Fractional general counsel retainers are sized to each company's needs and quoted after a consultation.",
+    "title": "Fees",
+    "lead": "Our hourly rate and the flat fees for trademark and copyright work are below. Fractional general counsel retainers are sized to each company's needs and quoted after a consultation.",
     "hourly": {
       "label": "Hourly rate",
       "value": "$495 per hour",
@@ -308,9 +556,16 @@
       "label": "Fractional general counsel",
       "value": "Monthly retainer",
       "text": "Sized to the scope of your everyday legal needs and quoted after a consultation, once we understand your business. Work outside the retainer is billed hourly or on a flat fee.",
-      "cta": { "label": "How it works", "href": "/fractional-general-counsel" }
+      "cta": {
+        "label": "How it works",
+        "href": "/fractional-general-counsel"
+      }
     },
-    "columns": ["Service", "Our fee", "Government fee"],
+    "columns": [
+      "Service",
+      "Our fee",
+      "Government fee"
+    ],
     "sections": [
       {
         "title": "Trademarks",
@@ -318,38 +573,126 @@
           {
             "title": "Searching",
             "rows": [
-              { "service": "Identical mark search", "fee": "$90", "gov": "" },
-              { "service": "In-house screening (knockout) search", "fee": "$325 minimum", "gov": "" },
-              { "service": "U.S. availability search (Thomson Reuters), standard three-business-day turnaround", "fee": "$1,500 to $2,000, including the search cost", "gov": "" },
-              { "service": "Design, in-use, expedited and custom searches", "fee": "Please call", "gov": "" }
+              {
+                "service": "Identical mark search",
+                "fee": "$90",
+                "gov": ""
+              },
+              {
+                "service": "In-house screening (knockout) search",
+                "fee": "$325 minimum",
+                "gov": ""
+              },
+              {
+                "service": "U.S. availability search (Thomson Reuters), standard three-business-day turnaround",
+                "fee": "$1,500 to $2,000, including the search cost",
+                "gov": ""
+              },
+              {
+                "service": "Design, in-use, expedited and custom searches",
+                "fee": "Please call",
+                "gov": ""
+              }
             ]
           },
           {
             "title": "Filing and prosecution",
             "rows": [
-              { "service": "Regular (§1(a)) or intent-to-use (§1(b)) application", "fee": "$995", "gov": "$350 per class" },
-              { "service": "Each additional class in a multi-class application", "fee": "$155", "gov": "$350 per class" },
-              { "service": "Review and reporting of Notice of Publication", "fee": "Included", "gov": "" },
-              { "service": "Forwarding registration and docketing for renewals", "fee": "Included", "gov": "" },
-              { "service": "Intent-to-use applications: reporting Notice of Allowance and docketing for Statement of Use", "fee": "Included", "gov": "" },
-              { "service": "Filing Allegation or Statement of Use", "fee": "$500", "gov": "$150 per class" },
-              { "service": "Preparing Application to Divide", "fee": "$500", "gov": "$100, plus $350 per class" },
-              { "service": "Filing Extension of Time for Statement of Use", "fee": "$500", "gov": "$125 per class" },
-              { "service": "Reporting and responding to Office Actions", "fee": "$425 minimum", "gov": "" },
-              { "service": "State trademark application", "fee": "$500", "gov": "State filing fee" },
-              { "service": "Trademark application outside the U.S.", "fee": "Quoted per country", "gov": "Government and foreign agent fees" },
-              { "service": "Preparation and recordation of assignment or security interest", "fee": "$500", "gov": "$40 for the first mark, $25 for each additional" },
-              { "service": "U.S. Customs recordation or renewal", "fee": "$995", "gov": "At cost" }
+              {
+                "service": "Regular (§1(a)) or intent-to-use (§1(b)) application",
+                "fee": "$995",
+                "gov": "$350 per class"
+              },
+              {
+                "service": "Each additional class in a multi-class application",
+                "fee": "$155",
+                "gov": "$350 per class"
+              },
+              {
+                "service": "Review and reporting of Notice of Publication",
+                "fee": "Included",
+                "gov": ""
+              },
+              {
+                "service": "Forwarding registration and docketing for renewals",
+                "fee": "Included",
+                "gov": ""
+              },
+              {
+                "service": "Intent-to-use applications: reporting Notice of Allowance and docketing for Statement of Use",
+                "fee": "Included",
+                "gov": ""
+              },
+              {
+                "service": "Filing Allegation or Statement of Use",
+                "fee": "$500",
+                "gov": "$150 per class"
+              },
+              {
+                "service": "Preparing Application to Divide",
+                "fee": "$500",
+                "gov": "$100, plus $350 per class"
+              },
+              {
+                "service": "Filing Extension of Time for Statement of Use",
+                "fee": "$500",
+                "gov": "$125 per class"
+              },
+              {
+                "service": "Reporting and responding to Office Actions",
+                "fee": "$425 minimum",
+                "gov": ""
+              },
+              {
+                "service": "State trademark application",
+                "fee": "$500",
+                "gov": "State filing fee"
+              },
+              {
+                "service": "Trademark application outside the U.S.",
+                "fee": "Quoted per country",
+                "gov": "Government and foreign agent fees"
+              },
+              {
+                "service": "Preparation and recordation of assignment or security interest",
+                "fee": "$500",
+                "gov": "$40 for the first mark, $25 for each additional"
+              },
+              {
+                "service": "U.S. Customs recordation or renewal",
+                "fee": "$995",
+                "gov": "At cost"
+              }
             ]
           },
           {
             "title": "Post-registration",
             "rows": [
-              { "service": "Sections 8 & 15 affidavit (use and incontestability)", "fee": "$650", "gov": "$575 per class, plus $100 per class in the grace period" },
-              { "service": "Sections 8 & 15: each additional class", "fee": "$100", "gov": "$575 per class" },
-              { "service": "Sections 9 & 8 affidavit (renewal and use)", "fee": "$750", "gov": "$650 per class, plus $200 per class in the grace period" },
-              { "service": "Sections 9 & 8: each additional class", "fee": "$100", "gov": "$650 per class" },
-              { "service": "Opinions, amendments and litigation", "fee": "Hourly", "gov": "" }
+              {
+                "service": "Sections 8 & 15 affidavit (use and incontestability)",
+                "fee": "$650",
+                "gov": "$575 per class, plus $100 per class in the grace period"
+              },
+              {
+                "service": "Sections 8 & 15: each additional class",
+                "fee": "$100",
+                "gov": "$575 per class"
+              },
+              {
+                "service": "Sections 9 & 8 affidavit (renewal and use)",
+                "fee": "$750",
+                "gov": "$650 per class, plus $200 per class in the grace period"
+              },
+              {
+                "service": "Sections 9 & 8: each additional class",
+                "fee": "$100",
+                "gov": "$650 per class"
+              },
+              {
+                "service": "Opinions, amendments and litigation",
+                "fee": "Hourly",
+                "gov": ""
+              }
             ]
           }
         ]
@@ -360,11 +703,31 @@
           {
             "title": "",
             "rows": [
-              { "service": "Filing a copyright application and reporting registration", "fee": "$500", "gov": "$45" },
-              { "service": "Reporting and responding to Office Actions", "fee": "Hourly, $500 minimum", "gov": "" },
-              { "service": "Recordation of assignment or security interest", "fee": "$500", "gov": "$80 for the first work, $20 for each additional" },
-              { "service": "U.S. Customs recordation or renewal", "fee": "$500", "gov": "At cost" },
-              { "service": "Opinions, searches, amendments and litigation", "fee": "Hourly", "gov": "" }
+              {
+                "service": "Filing a copyright application and reporting registration",
+                "fee": "$500",
+                "gov": "$45"
+              },
+              {
+                "service": "Reporting and responding to Office Actions",
+                "fee": "Hourly, $500 minimum",
+                "gov": ""
+              },
+              {
+                "service": "Recordation of assignment or security interest",
+                "fee": "$500",
+                "gov": "$80 for the first work, $20 for each additional"
+              },
+              {
+                "service": "U.S. Customs recordation or renewal",
+                "fee": "$500",
+                "gov": "At cost"
+              },
+              {
+                "service": "Opinions, searches, amendments and litigation",
+                "fee": "Hourly",
+                "gov": ""
+              }
             ]
           }
         ]
@@ -383,7 +746,10 @@
     "formPill": "We'll call you back",
     "feesLabel": "Fees",
     "feesText": "Fractional general counsel retainers are quoted after a consultation. Hourly work is billed at $495 per hour, and trademark and copyright work is on published flat fees.",
-    "feesCta": { "label": "See the fee schedule", "href": "/fees" }
+    "feesCta": {
+      "label": "See the fee schedule",
+      "href": "/fees"
+    }
   },
   "industries": [
     "Consumer products & wholesale",
