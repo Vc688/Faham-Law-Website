@@ -70,7 +70,8 @@ const [colService, colFee, colGov] = fees.columns;
   .sum-dark .sum-t { color: rgba(232, 240, 236, 0.8); }
   .sum-dark .link-arrow { color: var(--brass-soft); margin-top: 6px; }
 
-  .fee-sec { display: grid; gap: 22px; margin-bottom: clamp(48px, 6vw, 72px); }
+  .fee-sec { display: grid; gap: 22px; padding-block: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line-strong); }
+  .fee-sec:last-of-type { padding-bottom: 0; }
   .fee-group { display: grid; gap: 12px; }
   .fee-gt { font-family: var(--sans); font-size: 0.78rem; font-weight: 560; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-700); padding-top: 8px; }
   .fee-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
@@ -82,7 +83,7 @@ const [colService, colFee, colGov] = fees.columns;
   .fee { font-family: var(--serif); font-size: 1.15rem; color: var(--green-900); white-space: nowrap; }
   .gov { font-size: 0.95rem; }
   .dash { color: var(--line-strong); }
-  .footnote { font-size: 0.88rem; line-height: 1.6; color: var(--muted); max-width: 820px; padding-top: 8px; border-top: 1px solid var(--line-strong); }
+  .footnote { font-size: 0.88rem; line-height: 1.6; color: var(--muted); max-width: 820px; margin-top: clamp(32px, 4vw, 48px); padding-top: 20px; border-top: 1px solid var(--line-strong); }
 
   @media (max-width: 760px) {
     .summary { grid-template-columns: 1fr; }

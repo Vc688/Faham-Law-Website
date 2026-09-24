@@ -14,12 +14,6 @@ export function getStaticPaths() {
 const { p } = Astro.props as { p: Practice };
 const idx = practices.findIndex((x) => x.slug === p.slug);
 const related = (await getPublishedPosts()).filter((post) => post.data.category === p.slug).slice(0, 3);
-const toc = [
-  ...p.groups.map((g) => ({ id: g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), label: g.title })),
-  ...(p.who ? [{ id: 'who-we-work-with', label: 'Who we work with' }] : []),
-  { id: 'common-questions', label: 'Common questions' },
-  ...(related.length ? [{ id: 'insights', label: 'Insights' }] : []),
-];
 const others = practices.filter((x) => x.slug !== p.slug);
 ---
 <Base
@@ -31,7 +25,7 @@ const others = practices.filter((x) => x.slug !== p.slug);
   ]}
 >
   <PageHero
-    eyebrow={`Practice area ${idx + 1} of ${practices.length}`}
+    eyebrow="Practice area"
     title={emph(p.h1)}
     lead={p.intro}
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas', href: '/services' }, { name: p.name }]}
@@ -44,19 +38,6 @@ const others = practices.filter((x) => x.slug !== p.slug);
   </PageHero>
 
   <div class="container layout section-tight">
-    <aside class="toc" aria-label="On this page">
-      <div class="toc-card">
-        <p class="kicker">On this page</p>
-        <ul role="list">
-          {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
-        </ul>
-      </div>
-      <div class="ask">
-        <p class="serif">Have a question about {p.name}?</p>
-        <a class="link-arrow" href="/contact">Contact us <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-    </aside>
-
     <div class="content">
       {p.groups.map((g) => (
         <section class="block" id={g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
@@ -129,17 +110,10 @@ const others = practices.filter((x) => x.slug !== p.slug);
 
 <style>
   .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
-  .layout { display: grid; grid-template-columns: 270px 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
-  .toc { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 14px; }
-  .toc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 20px 20px 14px; box-shadow: var(--shadow-sm); display: grid; gap: 10px; }
-  .toc ul { list-style: none; margin: 0; padding: 0; }
-  .toc li a { display: block; padding: 8px 12px; margin-inline: -12px; border-radius: 10px; text-decoration: none; color: var(--ink-2); font-size: 0.96rem; }
-  .toc li a:hover { color: var(--green-800); background: var(--mint-2); }
-  .ask { padding: 20px; border-radius: var(--radius-md); background: var(--brass-wash); display: grid; gap: 12px; }
-  .ask p { font-size: 1.25rem; line-height: 1.25; color: var(--green-900); }
-
-  .content { display: grid; gap: clamp(64px, 8vw, 104px); min-width: 0; }
-  .block { display: grid; gap: 26px; }
+  .layout { max-width: 960px; }
+  .content { display: grid; min-width: 0; }
+  .block { display: grid; gap: 26px; padding-block: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line-strong); }
+  .block:first-child { border-top: 0; padding-top: 0; }
   .items { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
   .item { display: grid; grid-template-columns: minmax(170px, 0.8fr) 1.6fr; gap: 12px 32px; padding: 24px 28px; }
   .item + .item { border-top: 1px solid var(--line); }
@@ -167,9 +141,6 @@ const others = practices.filter((x) => x.slug !== p.slug);
   .o-name { font-size: 1.25rem; line-height: 1.15; }
 
   @media (max-width: 980px) {
-    .layout { grid-template-columns: 1fr; }
-    .toc { position: static; }
-    .toc { display: none; }
     .rel-grid { grid-template-columns: 1fr; }
     .o-list { grid-template-columns: 1fr 1fr; }
   }

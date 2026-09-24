@@ -35,7 +35,7 @@
   },
   "settings": {
     "showTestimonials": true,
-    "showInsights": false,
+    "showInsights": true,
     "headshot": "/images/david-faham.jpg",
     "headshotAlt": "David Faham, partner at Faham Law LLC",
     "headerCta": {
