@@ -983,7 +983,7 @@ const SITE_SECTIONS: Section[] = [
   {
     id: 'about', label: 'About page', path: 'about',
     fields: [
-      ...seo(), t('eyebrow', 'Small line'), t('title', 'Headline', EMPH), ta('lead', 'Intro'),
+      ...seo(), t('title', 'Headline', EMPH), ta('lead', 'Intro'),
       { key: 'bio', label: 'Biography paragraphs', type: 'strings', big: true, itemName: 'paragraph' },
       ta('personal', 'Personal note', 'Shown as a pull quote. Leave empty to hide.'),
       { key: 'education', label: 'Education', type: 'list', itemName: 'school', itemLabel: (e) => e.school || 'School', fields: [t('school', 'School'), t('degree', 'Degree and year')] },

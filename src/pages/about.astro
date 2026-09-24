@@ -14,7 +14,7 @@ import { davidPerson, breadcrumbs } from '../lib/schema';
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">About</span></nav>
       <div class="ah-grid">
         <div class="ah-copy">
-          <p class="eyebrow">{about.eyebrow}</p>
+          <p class="eyebrow">{firm.partnerTitle} · {firm.name}</p>
           <h1 class="display" set:html={emph(about.title)} />
           <p class="lead">{about.lead}</p>
           <div class="ah-links">
@@ -70,7 +70,7 @@ import { davidPerson, breadcrumbs } from '../lib/schema';
   .ah-copy .display { font-size: clamp(3rem, 8vw, 7rem); }
   .ah-links { display: flex; flex-wrap: wrap; gap: 12px; }
   .ah-photo { background: var(--surface); border: 1px solid var(--line); border-radius: clamp(24px, 3vw, 36px); padding: 12px; box-shadow: var(--shadow); transform: rotate(1deg); }
-  .ah-photo img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: 50% 30%; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); }
+  .ah-photo img { width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; object-position: 50% 30%; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); }
   .ah-cap { padding: 14px 8px 4px; text-align: center; color: var(--muted); font-style: italic; font-size: 1.1rem; }
   .bio-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; padding-top: clamp(32px, 4vw, 56px); border-top: 1px solid var(--line-strong); }
   .bio > p:first-child::first-letter { font-family: var(--serif); float: left; font-size: 5rem; line-height: 0.8; padding: 8px 12px 0 0; color: var(--green-700); font-style: italic; }
