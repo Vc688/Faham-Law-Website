@@ -5,6 +5,9 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # GITHUB_BRANCH ("main") and GITHUB_REPO aren't secrets, and "main" appears throughout the code,
+  # so exclude them from Netlify's secret scan. GITHUB_TOKEN etc. are still scanned.
+  SECRETS_SCAN_OMIT_KEYS = "GITHUB_BRANCH,GITHUB_REPO"
 
 # ---- Redirects: keep old Squarespace URLs working ----
 [[redirects]]
