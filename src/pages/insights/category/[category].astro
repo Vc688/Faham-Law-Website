@@ -1,0 +1,30 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import PostCard from '../../../components/PostCard.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { practices, type Practice } from '../../../data/site';
+import { getPublishedPosts } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return practices
+    .filter((p) => posts.some((x) => x.data.category === p.slug))
+    .map((p) => ({ params: { category: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Practice };
+const posts = (await getPublishedPosts()).filter((x) => x.data.category === p.slug);
+---
+<Base title={`${p.name} Insights | Faham Law LLC`} description={`Articles from Faham Law LLC on ${p.name.toLowerCase()}.`}>
+  <PageHero eyebrow="Insights" title={p.name} crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights', href: '/insights' }, { name: p.name }]} compact>
+    <a class="link-arrow" href={`/${p.slug}`} style="color:var(--brass-soft)">About our {p.name} practice <span class="arrow" aria-hidden="true">→</span></a>
+  </PageHero>
+  <section class="section-tight">
+    <div class="container grid">{posts.map((post) => <PostCard post={post} />)}</div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>

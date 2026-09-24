@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.netlify/
+.mock-blobs/
+.env
+.DS_Store

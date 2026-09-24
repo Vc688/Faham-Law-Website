@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+import { firm, practices, showTestimonials } from '../data/site';
+interface Props { showInsights: boolean }
+const { showInsights } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <Logo tone="light" tagline />
+        <p class="blurb">{firm.blurb}</p>
+        <a class="li" href={firm.linkedinFirm} rel="noopener" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.52 4.78 5.8V21h-4v-5.1c0-1.22-.02-2.79-1.75-2.79-1.75 0-2.02 1.3-2.02 2.7V21h-4z"/></svg>
+          Follow Faham Law on LinkedIn
+        </a>
+      </div>
+
+      <nav class="cols" aria-label="Footer">
+        <div>
+          <p class="col-title">Practice Areas</p>
+          <ul role="list">
+            {practices.map((p) => <li><a href={`/${p.slug}`}>{p.name}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="col-title">Firm</p>
+          <ul role="list">
+            <li><a href="/about">About</a></li>
+            {showInsights && <li><a href="/insights">Insights</a></li>}
+            {showTestimonials && <li><a href="/testimonials">Testimonials</a></li>}
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/file-a-trademark">File a Trademark</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="col-title">Contact</p>
+          <ul role="list">
+            <li><a href={firm.phoneHref}>{firm.phone}</a></li>
+            <li><a href={`mailto:${firm.email}`}>{firm.email}</a></li>
+            {firm.offices.map((o) => <li class="muted">{o}</li>)}
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="legal">
+      <p class="adv"><strong>Attorney Advertising.</strong> Prior results do not guarantee a similar outcome.</p>
+      <p>{firm.disclaimer}</p>
+      <div class="bottom">
+        <span>© {year} {firm.name}. {firm.licensed}.</span>
+        <span>Offices in New York, NY and Oakhurst, NJ</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--green-950); color: rgba(234, 241, 238, 0.78); padding: clamp(64px, 8vw, 104px) 0 36px; font-size: 0.94rem; }
+  .top { display: grid; grid-template-columns: 1.1fr 1.6fr; gap: clamp(40px, 6vw, 96px); padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .brand { display: grid; gap: 24px; align-content: start; max-width: 420px; }
+  .blurb { line-height: 1.7; }
+  .li { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 550; }
+  .li:hover { color: var(--brass-soft); }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .col-title { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--brass-soft); margin-bottom: 18px; }
+  .cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .cols a { text-decoration: none; color: rgba(255,255,255,0.86); }
+  .cols a:hover { color: #fff; text-decoration: underline; }
+  .muted { color: rgba(234, 241, 238, 0.6); }
+  .legal { padding-top: 32px; display: grid; gap: 12px; font-size: 0.83rem; line-height: 1.6; color: rgba(234, 241, 238, 0.6); }
+  .adv strong { color: rgba(255,255,255,0.88); font-weight: 600; }
+  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 16px; }
+  @media (max-width: 900px) {
+    .top { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .cols { grid-template-columns: 1fr 1fr; }
+    .cols > div:first-child { grid-column: 1 / -1; }
+  }
+</style>

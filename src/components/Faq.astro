@@ -1,0 +1,26 @@
+---
+interface Props { faqs: { q: string; a: string }[] }
+const { faqs } = Astro.props;
+---
+<div class="faq">
+  {faqs.map((f, i) => (
+    <details open={i === 0}>
+      <summary><span>{f.q}</span><span class="icon" aria-hidden="true"></span></summary>
+      <div class="a"><p>{f.a}</p></div>
+    </details>
+  ))}
+</div>
+<style>
+  .faq { border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    padding: 26px 0; font-family: var(--serif); font-size: clamp(1.35rem, 2vw, 1.7rem); line-height: 1.2;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .icon { position: relative; flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-strong); }
+  .icon::before, .icon::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--green-700); transform: translate(-50%, -50%); transition: transform 0.3s var(--ease); }
+  .icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  details[open] .icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .a { padding: 0 64px 28px 0; color: var(--ink-2); font-size: 1.05rem; max-width: 760px; }
+</style>

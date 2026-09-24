@@ -1,0 +1,163 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import PostCard from '../components/PostCard.astro';
+import { practices, type Practice } from '../data/site';
+import { breadcrumbs, faqPage } from '../lib/schema';
+import { getPublishedPosts } from '../lib/posts';
+
+export function getStaticPaths() {
+  return practices.map((p) => ({ params: { practice: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Practice };
+const idx = practices.findIndex((x) => x.slug === p.slug);
+const next = practices[(idx + 1) % practices.length];
+const related = (await getPublishedPosts()).filter((post) => post.data.category === p.slug).slice(0, 3);
+const toc = [
+  ...p.groups.map((g) => ({ id: g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), label: g.title })),
+  ...(p.who ? [{ id: 'who-we-work-with', label: 'Who we work with' }] : []),
+  { id: 'common-questions', label: 'Common questions' },
+  ...(related.length ? [{ id: 'insights', label: 'Insights' }] : []),
+];
+const others = practices.filter((x) => x.slug !== p.slug);
+---
+<Base
+  title={p.seoTitle}
+  description={p.seoDescription}
+  jsonld={[
+    breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Practice Areas', path: '/services' }, { name: p.name, path: `/${p.slug}` }]),
+    faqPage(p.faqs),
+  ]}
+>
+  <PageHero
+    eyebrow={`Practice area · 0${idx + 1}`}
+    title={p.h1}
+    lead={p.intro}
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas', href: '/services' }, { name: p.name }]}
+  >
+    <div class="hero-btns">
+      <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
+      {p.ctaSecondary && <a class="btn btn-ghost" href={p.ctaSecondary.href} style="color:#fff">{p.ctaSecondary.label}</a>}
+    </div>
+  </PageHero>
+
+  <div class="container layout section-tight">
+    <aside class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ul role="list">
+        {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
+      </ul>
+      <div class="toc-card">
+        <p class="serif">Have a question about {p.name.toLowerCase()}?</p>
+        <a class="link-arrow" href="/contact">Contact us <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+
+    <div class="content">
+      {p.groups.map((g) => (
+        <section class="block" id={g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+          <h2 class="h2 reveal">{g.title}</h2>
+          {g.note && <p class="lead reveal">{g.note}</p>}
+          <ul role="list" class="items">
+            {g.items.map((it) => (
+              <li class="item reveal">
+                <span class="dot" aria-hidden="true"></span>
+                <div>
+                  {it.label && <h3 class="item-label">{it.label}</h3>}
+                  <p>{it.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {p.slug === 'ip-trademarks' && g.title === 'Trademarks' && (
+            <a class="tm-cta reveal" href="/file-a-trademark">
+              <span><strong>Ready to file?</strong> Start with our File a Trademark form.</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          )}
+        </section>
+      ))}
+
+      {p.who && (
+        <section class="block" id="who-we-work-with">
+          <h2 class="h2 reveal">Who we work with</h2>
+          <p class="who serif reveal">{p.who}</p>
+        </section>
+      )}
+
+      <section class="block" id="common-questions">
+        <h2 class="h2 reveal">Common questions</h2>
+        <div class="reveal"><Faq faqs={p.faqs} /></div>
+        <p class="faq-note">General information only, not legal advice for your situation.</p>
+      </section>
+
+      {related.length > 0 && (
+        <section class="block" id="insights">
+          <h2 class="h2">Insights</h2>
+          <div class="rel-grid">{related.map((post) => <PostCard post={post} />)}</div>
+        </section>
+      )}
+    </div>
+  </div>
+
+  <CtaBand title={p.cta} text="Tell us about your matter and we'll call you back to schedule a consultation." secondary={p.ctaSecondary} />
+
+  <section class="section-tight others">
+    <div class="container">
+      <p class="eyebrow">Other practice areas</p>
+      <ul role="list" class="o-list">
+        {others.map((o) => <li><a href={`/${o.slug}`}><span class="serif">{o.name}</span><span class="arrow" aria-hidden="true">→</span></a></li>)}
+      </ul>
+      <a class="next" href={`/${next.slug}`}>
+        <span class="eyebrow">Next</span>
+        <span class="serif next-name">{next.name}</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .layout { display: grid; grid-template-columns: 260px 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .toc { position: sticky; top: calc(var(--header-h) + 32px); display: grid; gap: 18px; }
+  .toc-title { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+  .toc ul { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc li a { display: block; padding: 8px 0 8px 18px; margin-left: -1px; border-left: 1px solid transparent; text-decoration: none; color: var(--ink-2); font-size: 0.95rem; }
+  .toc li a:hover { color: var(--green-700); border-left-color: var(--green-700); }
+  .toc-card { margin-top: 12px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 22px; display: grid; gap: 12px; }
+  .toc-card p { font-size: 1.3rem; line-height: 1.2; }
+
+  .content { display: grid; gap: clamp(64px, 8vw, 104px); min-width: 0; }
+  .block { display: grid; gap: 28px; }
+  .items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .item { display: grid; grid-template-columns: 14px 1fr; gap: 16px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 24px 24px 26px; transition: border-color 0.3s, transform 0.3s var(--ease); }
+  .item:hover { border-color: var(--green-300); transform: translateY(-2px); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-top: 9px; }
+  .item-label { font-family: var(--sans); font-size: 1.05rem; font-weight: 650; margin-bottom: 6px; }
+  .item p { color: var(--ink-2); font-size: 0.98rem; }
+  .who { font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.3; }
+  .faq-note { font-size: 0.85rem; color: var(--muted); }
+  .tm-cta { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; border-radius: 16px; background: var(--green-800); color: #fff; text-decoration: none; }
+  .tm-cta:hover .arrow { transform: translateX(4px); }
+  .tm-cta .arrow { transition: transform 0.25s var(--ease); font-size: 1.2rem; }
+  .rel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  .others { border-top: 1px solid var(--line); }
+  .o-list { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .o-list a { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 14px; text-decoration: none; background: var(--white); height: 100%; transition: background 0.3s, color 0.3s; }
+  .o-list a:hover { background: var(--green-800); color: #fff; }
+  .o-list .serif { font-size: 1.35rem; line-height: 1.1; }
+  .next { display: none; }
+
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .toc ul, .toc-card { display: none; }
+    .toc-title { display: none; }
+    .items, .rel-grid { grid-template-columns: 1fr; }
+    .o-list { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) { .o-list { grid-template-columns: 1fr; } }
+</style>

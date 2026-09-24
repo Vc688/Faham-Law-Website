@@ -1,0 +1,34 @@
+---
+import { practiceBySlug } from '../data/site';
+import { formatDate, type Post } from '../lib/posts';
+interface Props { post: Post }
+const { post } = Astro.props;
+const cat = practiceBySlug[post.data.category];
+---
+<article class="post-card">
+  <a href={`/insights/${post.id}`} class="pc-link">
+    <div class="pc-media">
+      {post.data.cover
+        ? <img src={post.data.cover} alt={post.data.coverAlt ?? ''} loading="lazy" decoding="async" />
+        : <div class="pc-fallback"><span class="serif">{cat?.name}</span></div>}
+    </div>
+    <div class="pc-body">
+      <p class="pc-meta"><span>{cat?.name}</span><span aria-hidden="true">·</span><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time></p>
+      <h3 class="pc-title">{post.data.title}</h3>
+      <p class="pc-desc">{post.data.description}</p>
+    </div>
+  </a>
+</article>
+<style>
+  .post-card { height: 100%; }
+  .pc-link { display: grid; grid-template-rows: auto 1fr; height: 100%; text-decoration: none; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
+  .pc-link:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .pc-media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--green-800); }
+  .pc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .pc-link:hover img { transform: scale(1.03); }
+  .pc-fallback { height: 100%; display: grid; place-items: end start; padding: 24px; color: var(--brass-soft); font-size: 1.6rem; background: radial-gradient(80% 120% at 100% 0%, rgba(156,197,184,0.3), transparent 60%), var(--green-800); }
+  .pc-body { padding: 24px 26px 28px; display: grid; gap: 10px; align-content: start; }
+  .pc-meta { display: flex; gap: 8px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-700); }
+  .pc-title { font-family: var(--serif); font-size: 1.65rem; line-height: 1.12; }
+  .pc-desc { color: var(--muted); font-size: 0.96rem; }
+</style>

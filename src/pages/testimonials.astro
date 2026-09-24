@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { testimonials, showTestimonials } from '../data/site';
+import { breadcrumbs } from '../lib/schema';
+if (!showTestimonials) return Astro.redirect('/about');
+---
+<Base
+  title="Client Testimonials"
+  description="What business owners say about working with David Faham and Faham Law LLC."
+  jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Testimonials', path: '/testimonials' }])]}
+>
+  <PageHero eyebrow="Client perspectives" title="In their words." crumbs={[{ name: 'Home', href: '/' }, { name: 'Testimonials' }]} compact />
+  <section class="section-tight">
+    <div class="container">
+      <div class="masonry">
+        {testimonials.map((t, i) => (
+          <figure class:list={['t reveal', { feature: i === 0 }]}>
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption><strong>{t.name}</strong><span>{t.role}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="note">Prior results do not guarantee a similar outcome.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .masonry { columns: 2; column-gap: 20px; }
+  .t { break-inside: avoid; margin: 0 0 20px; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 36px; display: grid; gap: 22px; }
+  .t blockquote { margin: 0; font-family: var(--serif); font-size: 1.6rem; line-height: 1.3; }
+  .feature { background: var(--green-800); color: #fff; border-color: transparent; }
+  .feature figcaption span { color: rgba(255,255,255,0.65) !important; }
+  .t figcaption { display: grid; gap: 2px; }
+  .t figcaption span { color: var(--muted); font-size: 0.92rem; }
+  .note { font-size: 0.88rem; color: var(--muted); margin-top: 8px; }
+  @media (max-width: 800px) { .masonry { columns: 1; } }
+</style>

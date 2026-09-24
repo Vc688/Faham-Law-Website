@@ -1,0 +1,316 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import PostCard from '../components/PostCard.astro';
+import { firm, practices, industries, testimonials, showTestimonials } from '../data/site';
+import { getPublishedPosts } from '../lib/posts';
+import { davidPerson } from '../lib/schema';
+import { existsSync } from 'node:fs';
+
+const posts = (await getPublishedPosts()).slice(0, 3);
+const hasHeadshot = existsSync('public/images/david-faham.jpg');
+const years = new Date().getFullYear() - firm.since;
+---
+<Base
+  title="Faham Law LLC | Business, Real Estate & IP Attorney in NY & NJ"
+  description="Faham Law LLC advises businesses of every size in New York, New Jersey and Pennsylvania on entity formation, contracts, M&A, real estate and trademarks."
+  jsonld={[davidPerson]}
+>
+  <!-- HERO -->
+  <section class="hero home-hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Boutique business law firm · Since {firm.since}</p>
+        <h1 class="display">Business, Real Estate &amp; IP Counsel for Companies at <em>Every Stage</em></h1>
+        <p class="lead">From forming your company and filing your first trademark to closings, contracts and acquisitions.</p>
+        <div class="hero-btns">
+          <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/services">Explore practice areas</a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Firm at a glance">
+        <dl>
+          <div><dt>Established</dt><dd><span class="serif big">{firm.since}</span></dd></div>
+          <div><dt>Licensed in</dt><dd>New York · New Jersey · Pennsylvania</dd></div>
+          <div><dt>Offices</dt><dd>New York, NY &amp; Oakhurst, NJ</dd></div>
+          <div><dt>Partner</dt><dd>David Faham, J.D., Fordham Law</dd></div>
+        </dl>
+        <a class="panel-call" href={firm.phoneHref}>
+          <span>Speak with us</span>
+          <strong>{firm.phone}</strong>
+        </a>
+      </aside>
+    </div>
+
+    <div class="ticker" aria-label="Industries we serve">
+      <div class="ticker-track">
+        {[0, 1].map((dup) => (
+          <ul role="list" aria-hidden={dup === 1 ? 'true' : undefined}>
+            {industries.map((i) => <li>{i}</li>)}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="section intro">
+    <div class="container intro-grid">
+      <div class="reveal">
+        <p class="eyebrow">The firm</p>
+      </div>
+      <div class="intro-copy reveal">
+        <p class="statement serif">Faham Law LLC is a boutique business law firm with offices in New York and New Jersey. Since {firm.since}, we have advised companies at every stage, from founders forming their first business to established companies buying, selling and growing.</p>
+        <div class="facts">
+          <div><span class="serif n">{years}+</span><span>years advising businesses</span></div>
+          <div><span class="serif n">3</span><span>state bar admissions: NY, NJ &amp; PA</span></div>
+          <div><span class="serif n">5</span><span>practice areas under one roof</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE AREAS -->
+  <section class="section practices-sec" id="practice-areas">
+    <div class="container">
+      <div class="split-head reveal">
+        <div class="section-head">
+          <p class="eyebrow">How we help</p>
+          <h2 class="h2">Five practice areas, one point of contact.</h2>
+        </div>
+        <a class="link-arrow" href="/services">All practice areas <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <ol class="p-list" role="list">
+        {practices.map((p, i) => (
+          <li class="reveal">
+            <a href={`/${p.slug}`} class="p-row">
+              <span class="p-num">0{i + 1}</span>
+              <span class="p-name serif">{p.name}</span>
+              <span class="p-sum">{p.short}</span>
+              <span class="p-go" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="section dark approach">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Working with us</p>
+        <h2 class="h2">Straightforward from the first call.</h2>
+      </div>
+      <ol class="steps" role="list">
+        <li class="reveal">
+          <span class="step-n">01</span>
+          <h3 class="h3">Tell us about your matter</h3>
+          <p>Use the form, email or call. Describe the issue you're facing first, then what you want to achieve.</p>
+        </li>
+        <li class="reveal">
+          <span class="step-n">02</span>
+          <h3 class="h3">We call you back</h3>
+          <p>We'll reach out to schedule a consultation at a time that works for you. Office hours are on demand.</p>
+        </li>
+        <li class="reveal">
+          <span class="step-n">03</span>
+          <h3 class="h3">A fee structure that fits</h3>
+          <p>We offer various payment and fee structures, and we only work for as long as a matter requires.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ABOUT DAVID -->
+  <section class="section about-teaser">
+    <div class="container at-grid">
+      <div class="portrait reveal">
+        {hasHeadshot
+          ? <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="800" height="1000" loading="lazy" decoding="async" />
+          : <div class="portrait-fallback"><span class="serif">DF</span></div>}
+      </div>
+      <div class="at-copy reveal">
+        <p class="eyebrow">Meet the partner</p>
+        <h2 class="h2">David Faham</h2>
+        <p class="lead">A born-and-raised New Yorker, David has advised businesses of every size since {firm.since}. Having served as general counsel for companies large and small, he brings an in-house perspective to outside counsel work: practical advice that fits how a business actually runs.</p>
+        <ul class="creds" role="list">
+          <li><span>J.D., Intellectual Property</span><span>Fordham University School of Law</span></li>
+          <li><span>B.S., Business Management &amp; Finance, Economics</span><span>Brooklyn College, CUNY</span></li>
+          <li><span>Bar admissions</span><span>New York · New Jersey · Pennsylvania</span></li>
+        </ul>
+        <a class="link-arrow" href="/about">Read David's bio <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  {showTestimonials && (
+    <section class="section-tight testi">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Client perspectives</p>
+          <h2 class="h2">In their words.</h2>
+        </div>
+        <div class="t-scroller reveal" tabindex="0" aria-label="Client testimonials">
+          {testimonials.map((t) => (
+            <figure class="t-card">
+              <svg class="q" width="34" height="26" viewBox="0 0 34 26" aria-hidden="true"><path fill="currentColor" d="M0 26V15.6C0 6.9 4.6 1.7 13.2 0l1.5 3.3C9.8 4.7 7.5 7.6 7.2 12H14v14zm19 0V15.6C19 6.9 23.6 1.7 32.2 0l1.5 3.3c-4.9 1.4-7.2 4.3-7.5 8.7H33v14z"/></svg>
+              <blockquote>{t.quote}</blockquote>
+              <figcaption><strong>{t.name}</strong><span>{t.role}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="t-note">Prior results do not guarantee a similar outcome. <a href="/testimonials">All testimonials</a></p>
+      </div>
+    </section>
+  )}
+
+  {posts.length > 0 && (
+    <section class="section-tight">
+      <div class="container">
+        <div class="split-head reveal">
+          <div class="section-head">
+            <p class="eyebrow">Insights</p>
+            <h2 class="h2">Notes for business owners.</h2>
+          </div>
+          <a class="link-arrow" href="/insights">All insights <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="posts-grid">
+          {posts.map((post) => <div class="reveal"><PostCard post={post} /></div>)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CONTACT -->
+  <section class="section contact-sec" id="contact">
+    <div class="container c-grid">
+      <div class="c-copy reveal">
+        <p class="eyebrow">Book a consultation</p>
+        <h2 class="h2">Tell us what you're working on.</h2>
+        <p class="lead">We'll call you back to schedule an appointment. You may also email or call us directly.</p>
+        <dl class="c-list">
+          <div><dt>Phone</dt><dd><a href={firm.phoneHref}>{firm.phone}</a></dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${firm.email}`}>{firm.email}</a></dd></div>
+          <div><dt>Offices</dt><dd>New York, NY · Oakhurst, NJ</dd></div>
+        </dl>
+      </div>
+      <div class="c-form card reveal">
+        <ContactForm idPrefix="home" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .home-hero { padding-bottom: 0; }
+  .hero-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: end; padding-bottom: clamp(56px, 8vw, 96px); }
+  .hero-copy { display: grid; gap: 28px; }
+  .hero-copy .lead { max-width: 560px; }
+  .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .hero-btns .btn-ghost { color: #fff; }
+
+  .hero-panel {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-radius: 22px; padding: 10px 28px 28px;
+  }
+  .hero-panel dl { margin: 0; }
+  .hero-panel dl > div { display: grid; gap: 4px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .hero-panel dt { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(238,244,241,0.6); font-weight: 600; }
+  .hero-panel dd { margin: 0; font-size: 1.02rem; color: #fff; }
+  .big { font-size: 2.6rem; line-height: 1; }
+  .panel-call { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; padding: 16px 20px; border-radius: 14px; background: var(--paper); color: var(--green-900); text-decoration: none; transition: transform 0.25s var(--ease); }
+  .panel-call:hover { transform: translateY(-2px); }
+  .panel-call span { font-size: 0.85rem; font-weight: 600; }
+  .panel-call strong { font-size: 1.08rem; }
+
+  .ticker { border-top: 1px solid rgba(255,255,255,0.12); overflow: hidden; padding: 22px 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .ticker-track { display: flex; width: max-content; animation: tick 48s linear infinite; }
+  .ticker ul { display: flex; list-style: none; margin: 0; padding: 0; }
+  .ticker li { font-family: var(--serif); font-size: 1.5rem; color: rgba(238,244,241,0.72); white-space: nowrap; padding: 0 28px; display: flex; align-items: center; gap: 56px; }
+  .ticker li::after { content: '✦'; font-size: 0.7rem; color: var(--brass); margin-left: 28px; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+
+  .intro-grid { display: grid; grid-template-columns: 1fr 3fr; gap: 40px; }
+  .intro-copy { display: grid; gap: 56px; }
+  .statement { font-size: clamp(1.75rem, 3.2vw, 2.7rem); line-height: 1.22; letter-spacing: -0.01em; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 1px solid var(--line); padding-top: 32px; }
+  .facts > div { display: grid; gap: 6px; }
+  .facts .n { font-size: clamp(2.8rem, 5vw, 4rem); line-height: 1; color: var(--green-700); }
+  .facts span:last-child { color: var(--muted); font-size: 0.95rem; }
+
+  .practices-sec { padding-top: 0; }
+  .split-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
+  .split-head .section-head { margin-bottom: 0; }
+  .p-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-strong); }
+  .p-row {
+    display: grid; grid-template-columns: 60px 1.1fr 1.6fr 48px; gap: 24px; align-items: center;
+    padding: 34px 8px; border-bottom: 1px solid var(--line-strong); text-decoration: none;
+    transition: background 0.35s var(--ease), padding 0.35s var(--ease);
+  }
+  .p-row:hover { background: var(--white); padding-inline: 24px; }
+  .p-num { font-size: 0.8rem; font-weight: 600; color: var(--green-700); letter-spacing: 0.08em; }
+  .p-name { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.05; }
+  .p-sum { color: var(--muted); font-size: 0.98rem; }
+  .p-go { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--green-700); transition: background 0.3s, color 0.3s, transform 0.3s var(--ease); }
+  .p-row:hover .p-go { background: var(--green-700); color: #fff; transform: rotate(-45deg); }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .steps li { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 28px; display: grid; gap: 14px; align-content: start; }
+  .step-n { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; color: var(--brass-soft); }
+  .steps p { color: rgba(234,241,238,0.75); }
+
+  .at-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+  .portrait { aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden; background: var(--green-800); }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .portrait-fallback { height: 100%; display: grid; place-items: center; background: radial-gradient(70% 70% at 70% 20%, rgba(156,197,184,0.35), transparent 70%), var(--green-800); }
+  .portrait-fallback span { font-size: 9rem; color: rgba(255,255,255,0.9); letter-spacing: -0.02em; }
+  .at-copy { display: grid; gap: 24px; }
+  .creds { list-style: none; margin: 8px 0; padding: 0; border-top: 1px solid var(--line); }
+  .creds li { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .creds li span:first-child { font-weight: 600; }
+  .creds li span:last-child { color: var(--muted); }
+
+  .testi { background: var(--paper-2); }
+  .t-scroller { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 40%); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; }
+  .t-card { scroll-snap-align: start; margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: grid; gap: 20px; align-content: start; }
+  .q { color: var(--brass); }
+  .t-card blockquote { margin: 0; font-family: var(--serif); font-size: 1.45rem; line-height: 1.3; }
+  .t-card figcaption { display: grid; gap: 2px; font-size: 0.9rem; }
+  .t-card figcaption span { color: var(--muted); }
+  .t-note { margin-top: 20px; font-size: 0.85rem; color: var(--muted); }
+  .t-note a { color: var(--green-700); margin-left: 8px; }
+
+  .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  .c-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .c-copy { display: grid; gap: 22px; position: sticky; top: calc(var(--header-h) + 32px); }
+  .c-list { margin: 16px 0 0; border-top: 1px solid var(--line); }
+  .c-list > div { display: grid; grid-template-columns: 110px 1fr; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .c-list dt { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-top: 3px; }
+  .c-list dd { margin: 0; }
+  .c-list a { text-decoration: none; color: var(--green-700); font-weight: 550; }
+
+  @media (max-width: 980px) {
+    .hero-grid, .at-grid, .c-grid { grid-template-columns: 1fr; }
+    .intro-grid { grid-template-columns: 1fr; gap: 16px; }
+    .p-row { grid-template-columns: 44px 1fr 48px; }
+    .p-sum { grid-column: 2 / 3; grid-row: 2; }
+    .p-go { grid-column: 3; grid-row: 1 / 3; }
+    .steps { grid-template-columns: 1fr; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .c-copy { position: static; }
+    .t-scroller { grid-auto-columns: 85%; }
+    .portrait { max-width: 480px; }
+  }
+  @media (max-width: 600px) {
+    .facts { grid-template-columns: 1fr; }
+    .creds li { grid-template-columns: 1fr; gap: 2px; }
+    .p-row { gap: 12px 16px; padding: 26px 0; }
+    .p-row:hover { padding-inline: 0; background: none; }
+  }
+</style>

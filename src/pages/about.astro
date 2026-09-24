@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { firm } from '../data/site';
+import { davidPerson, breadcrumbs } from '../lib/schema';
+import { existsSync } from 'node:fs';
+const hasHeadshot = existsSync('public/images/david-faham.jpg');
+---
+<Base
+  title="David Faham, Corporate & IP Attorney"
+  description="David Faham, partner at Faham Law LLC, has advised businesses since 2011 on formation, contracts, M&A, real estate and trademarks. Licensed in NY, NJ and PA."
+  jsonld={[davidPerson, breadcrumbs([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])]}
+>
+  <section class="hero about-hero">
+    <div class="container ah-grid">
+      <div class="ah-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">About</span></nav>
+        <p class="eyebrow">Partner</p>
+        <h1 class="display">David Faham</h1>
+        <p class="lead">A born-and-raised New Yorker and the partner of Faham Law LLC. Since {firm.since}, he has advised businesses of every size, from founders forming their first company to established companies, on the legal work that keeps them growing.</p>
+        <div class="ah-links">
+          <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" style="color:#fff" href={firm.linkedinDavid} target="_blank" rel="noopener">LinkedIn profile</a>
+        </div>
+      </div>
+      <div class="ah-photo">
+        {hasHeadshot
+          ? <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="800" height="1000" />
+          : <div class="ph-fallback"><span class="serif">DF</span></div>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container bio-grid">
+      <div class="bio prose">
+        <p>David's practice covers five areas. He helps entrepreneurs start new businesses, handling entity formation, operating agreements, website terms, and SaaS and end-user agreements. He serves as outside corporate counsel to mid-sized companies, drafting, reviewing and negotiating their agreements. He represents buyers and sellers in mergers and acquisitions. He handles commercial and residential real estate transactions, including closings and lease and sublease reviews. And he protects intellectual property, from trademark searches and filings through registration, maintenance and renewals, including Amazon Brand Registry matters.</p>
+        <p>His transactions range from a few hundred thousand to a few million dollars. Clients include consumer products and wholesale companies, licensing companies, technology companies and startups, restaurants, apparel brands, Amazon and e-commerce sellers, and real estate clients. Having served as general counsel for companies large and small, David brings an in-house perspective to outside counsel work: practical advice that fits how a business actually runs.</p>
+        <blockquote>David is a father of four and when work and family are not the priority, enjoys bowling in a local league and considers himself a foodie and scotch and wine aficionado.</blockquote>
+      </div>
+      <aside class="facts-card">
+        <div>
+          <h2 class="fc-title">Education</h2>
+          <ul role="list">
+            <li><strong>Fordham University School of Law</strong><span>Juris Doctor, Intellectual Property, 2011</span></li>
+            <li><strong>Brooklyn College, City University of New York</strong><span>B.S., Business Management and Finance, Economics, 2008</span></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="fc-title">Bar admissions</h2>
+          <ul role="list"><li><strong>New York · New Jersey · Pennsylvania</strong></li></ul>
+        </div>
+        <div>
+          <h2 class="fc-title">Licenses</h2>
+          <ul role="list">
+            <li><strong>Notary</strong><span>New York, New Jersey</span></li>
+            <li><strong>Real Estate</strong><span>New York</span></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .about-hero { padding-bottom: 0; }
+  .ah-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: end; }
+  .ah-copy { display: grid; gap: 24px; padding-bottom: clamp(56px, 8vw, 104px); }
+  .ah-copy .breadcrumbs { margin-bottom: 0; }
+  .ah-links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .ah-photo { align-self: end; aspect-ratio: 4 / 5; border-radius: 24px 24px 0 0; overflow: hidden; background: var(--green-700); }
+  .ah-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .ph-fallback { height: 100%; display: grid; place-items: center; background: radial-gradient(70% 70% at 70% 20%, rgba(156,197,184,0.35), transparent 70%), var(--green-700); }
+  .ph-fallback span { font-size: 10rem; color: rgba(255,255,255,0.9); }
+  .bio-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .bio > p:first-child::first-letter { font-family: var(--serif); float: left; font-size: 4.6rem; line-height: 0.8; padding: 6px 12px 0 0; color: var(--green-700); }
+  .facts-card { position: sticky; top: calc(var(--header-h) + 32px); background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 32px; display: grid; gap: 28px; }
+  .fc-title { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--green-700); font-family: var(--sans); margin-bottom: 12px; }
+  .facts-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .facts-card li { display: grid; gap: 2px; }
+  .facts-card strong { font-weight: 600; }
+  .facts-card span { color: var(--muted); font-size: 0.93rem; }
+  @media (max-width: 900px) {
+    .ah-grid, .bio-grid { grid-template-columns: 1fr; }
+    .ah-copy { padding-bottom: 0; }
+    .ah-photo { max-width: 420px; }
+    .facts-card { position: static; }
+  }
+</style>

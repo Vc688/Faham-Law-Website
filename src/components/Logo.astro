@@ -1,0 +1,33 @@
+---
+interface Props { tone?: 'light' | 'dark'; size?: 'sm' | 'md'; tagline?: boolean; href?: string | null }
+const { tone = 'dark', size = 'md', tagline = false, href = '/' } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+<Tag href={href ?? undefined} class:list={['logo', `logo-${tone}`, `logo-${size}`]} aria-label={href ? 'Faham Law LLC, home' : undefined}>
+  <svg class="mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false">
+    <rect x="1" y="1" width="42" height="42" rx="1" fill="none" stroke-width="1.6" class="mark-box" />
+    <path class="mark-f" d="M14 10.5h17v3.4H17.6v6.9H28v3.4H17.6v9.3H14z" />
+  </svg>
+  <span class="wm">
+    <span class="wm-name"><span class="faham">FAHAM</span><span class="law">LAW</span></span>
+    {tagline && <span class="wm-tag">Experience. Diligence. Results.</span>}
+  </span>
+</Tag>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; line-height: 1; }
+  .mark { width: 38px; height: 38px; flex: none; }
+  .logo-sm .mark { width: 32px; height: 32px; }
+  .mark-box { stroke: var(--logo-grey); }
+  .mark-f { fill: var(--green-700); }
+  .wm { display: grid; gap: 6px; }
+  .wm-name { font-family: var(--sans); font-weight: 600; font-size: 1.12rem; letter-spacing: 0.3em; display: inline-flex; gap: 0.45em; }
+  .logo-sm .wm-name { font-size: 1rem; }
+  .faham { color: var(--green-700); }
+  .law { color: var(--logo-grey); }
+  .wm-tag { font-family: var(--serif); font-style: italic; font-size: 0.92rem; letter-spacing: 0.01em; color: var(--muted); }
+  .logo-light .mark-box { stroke: rgba(255,255,255,0.45); }
+  .logo-light .mark-f { fill: #fff; }
+  .logo-light .faham { color: #fff; }
+  .logo-light .law { color: rgba(255,255,255,0.6); }
+  .logo-light .wm-tag { color: rgba(255,255,255,0.6); }
+</style>

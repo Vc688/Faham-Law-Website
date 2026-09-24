@@ -1,0 +1,30 @@
+---
+interface Props { eyebrow?: string; title: string; lead?: string; crumbs?: { name: string; href?: string }[]; compact?: boolean }
+const { eyebrow, title, lead, crumbs = [], compact = false } = Astro.props;
+---
+<section class:list={['hero', { compact }]}>
+  <div class="container">
+    {crumbs.length > 0 && (
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        {crumbs.map((c, i) => (
+          <>
+            {c.href ? <a href={c.href}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+            {i < crumbs.length - 1 && <span aria-hidden="true">/</span>}
+          </>
+        ))}
+      </nav>
+    )}
+    <div class="ph">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1 class="display" set:html={title} />
+      {lead && <p class="lead">{lead}</p>}
+      <slot />
+    </div>
+  </div>
+</section>
+<style>
+  .ph { display: grid; gap: 24px; max-width: 900px; }
+  .ph .lead { max-width: 680px; }
+  .compact { padding-bottom: clamp(48px, 6vw, 80px); }
+  .compact .display { font-size: clamp(2.6rem, 5.4vw, 4.6rem); }
+</style>

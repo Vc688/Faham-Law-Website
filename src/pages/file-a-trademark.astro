@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { breadcrumbs } from '../lib/schema';
+const entityTypes = ['Individual', 'LLC', 'Corporation', 'Partnership', 'Nonprofit', 'Other'];
+---
+<Base
+  title="File a Trademark Application | NY & NJ"
+  description="Start a U.S. trademark application with Faham Law LLC. Share your mark, the owner's details and your goods or services, and we'll follow up with next steps."
+  jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'File a Trademark', path: '/file-a-trademark' }])]}
+>
+  <PageHero
+    eyebrow="IP & Trademarks"
+    title="File a Trademark"
+    lead="Tell us about your mark and who will own it, and we'll follow up with next steps."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'IP & Trademarks', href: '/ip-trademarks' }, { name: 'File a Trademark' }]}
+    compact
+  />
+  <section class="section-tight">
+    <div class="container grid">
+      <form class="form card tm" name="trademark" method="POST" action="/thank-you?form=trademark" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="trademark" />
+        <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+        <fieldset>
+          <legend><span class="step">1</span> Owner</legend>
+          <div class="form-row">
+            <div class="field">
+              <label for="owner">Owner name <span class="req" aria-hidden="true">*</span></label>
+              <input id="owner" name="owner_name" type="text" required />
+              <span class="hint">An individual or a company.</span>
+            </div>
+            <div class="field">
+              <label for="etype">Entity type <span class="req" aria-hidden="true">*</span></label>
+              <select id="etype" name="entity_type" required>
+                <option value="" disabled selected>Select one</option>
+                {entityTypes.map((t) => <option>{t}</option>)}
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="tm-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="tm-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="tm-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input id="tm-phone" name="phone" type="tel" autocomplete="tel" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">2</span> Address</legend>
+          <div class="field">
+            <label for="country">Country <span class="req" aria-hidden="true">*</span></label>
+            <input id="country" name="country" type="text" autocomplete="country-name" value="United States" required />
+          </div>
+          <div class="field">
+            <label for="line1">Address line 1 <span class="req" aria-hidden="true">*</span></label>
+            <input id="line1" name="address_line1" type="text" autocomplete="address-line1" required />
+          </div>
+          <div class="field">
+            <label for="line2">Address line 2</label>
+            <input id="line2" name="address_line2" type="text" autocomplete="address-line2" />
+          </div>
+          <div class="form-row three">
+            <div class="field">
+              <label for="city">City <span class="req" aria-hidden="true">*</span></label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" required />
+            </div>
+            <div class="field">
+              <label for="state">State / province <span class="req" aria-hidden="true">*</span></label>
+              <input id="state" name="state" type="text" autocomplete="address-level1" required />
+            </div>
+            <div class="field">
+              <label for="zip">ZIP / postal code <span class="req" aria-hidden="true">*</span></label>
+              <input id="zip" name="zip" type="text" autocomplete="postal-code" required />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">3</span> The mark</legend>
+          <div class="field">
+            <label for="mark">Exact words of the mark <span class="req" aria-hidden="true">*</span></label>
+            <input id="mark" name="mark_words" type="text" required />
+            <span class="hint">Type it exactly as it should appear. If a logo is included, add "and logo".</span>
+          </div>
+          <div class="field">
+            <label for="logo">Logo file (optional)</label>
+            <input id="logo" name="logo" type="file" accept="image/*,.pdf" />
+            <span class="hint">JPG, PNG or PDF, up to 8 MB.</span>
+          </div>
+          <div class="field">
+            <label for="goods">Goods and/or services <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="goods" name="goods_services" required placeholder="What do you sell or provide under this mark?"></textarea>
+          </div>
+          <div class="field">
+            <label for="firstuse">Date of first use</label>
+            <input id="firstuse" name="first_use" type="text" placeholder="MM/DD/YYYY, or N/A if not yet in use" />
+          </div>
+        </fieldset>
+
+        <p class="notice">Please don't include confidential information. Submitting this form does not create an attorney-client relationship.</p>
+        <div><button class="btn" type="submit">Submit trademark details <span class="arrow" aria-hidden="true">→</span></button></div>
+      </form>
+
+      <aside class="side">
+        <div class="side-card">
+          <p class="eyebrow">What happens next</p>
+          <ol role="list">
+            <li><strong>We review your details</strong><span>the owner, the mark and the goods or services.</span></li>
+            <li><strong>We contact you</strong><span>to confirm the details and discuss next steps and fees.</span></li>
+          </ol>
+        </div>
+        <a class="side-link" href="/ip-trademarks">
+          <span>Learn about our trademark and Amazon Brand Registry work</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </aside>
+    </div>
+  </section>
+</Base>
+<style>
+  .grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .tm { gap: 30px; box-shadow: var(--shadow); }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 18px; }
+  legend { display: flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 1.7rem; margin-bottom: 18px; padding: 0; }
+  .step { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--green-700); color: #fff; font-family: var(--sans); font-size: 0.8rem; font-weight: 600; }
+  .three { grid-template-columns: 1.3fr 1fr 1fr; }
+  .side { position: sticky; top: calc(var(--header-h) + 32px); display: grid; gap: 16px; }
+  .side-card { background: var(--green-800); color: #fff; border-radius: 22px; padding: 32px; display: grid; gap: 20px; }
+  .side-card .eyebrow { color: var(--brass-soft); }
+  .side-card ol { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 18px; }
+  .side-card li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 2px 12px; }
+  .side-card li::before { content: '0' counter(s); grid-row: span 2; font-size: 0.8rem; font-weight: 600; color: var(--brass-soft); padding-top: 3px; }
+  .side-card span { color: rgba(255,255,255,0.72); font-size: 0.95rem; }
+  .side-link { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 22px 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--white); text-decoration: none; font-weight: 550; }
+  .side-link:hover { border-color: var(--green-300); }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .side { position: static; } .three { grid-template-columns: 1fr; } }
+</style>

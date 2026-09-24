@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PostCard from '../../components/PostCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { practices } from '../../data/site';
+import { getPublishedPosts } from '../../lib/posts';
+import { breadcrumbs } from '../../lib/schema';
+const posts = await getPublishedPosts();
+const [featured, ...rest] = posts;
+const counts = Object.fromEntries(practices.map((p) => [p.slug, posts.filter((x) => x.data.category === p.slug).length]));
+---
+<Base
+  title="Business & Trademark Law Insights"
+  description="Practical articles from Faham Law LLC on business formation, contracts, M&A, real estate and trademarks for business owners in NY, NJ and PA."
+  jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Insights', path: '/insights' }])]}
+>
+  <PageHero eyebrow="Insights" title="Notes for business owners." lead="Practical articles on forming, running, protecting, buying and selling a business." crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights' }]} compact />
+  <section class="section-tight">
+    <div class="container">
+      <nav class="chips" aria-label="Categories">
+        <a href="/insights" aria-current="page">All</a>
+        {practices.filter((p) => counts[p.slug] > 0).map((p) => <a href={`/insights/category/${p.slug}`}>{p.name}</a>)}
+      </nav>
+      {posts.length === 0 ? (
+        <div class="empty">
+          <h2 class="h3">First articles are on the way.</h2>
+          <p>In the meantime, <a href="/contact">contact us</a> with your question.</p>
+        </div>
+      ) : (
+        <>
+          <a class="feature" href={`/insights/${featured.id}`}>
+            <div class="f-media">{featured.data.cover ? <img src={featured.data.cover} alt={featured.data.coverAlt ?? ''} /> : <div class="f-fallback" />}</div>
+            <div class="f-body">
+              <p class="eyebrow">Latest</p>
+              <h2 class="h2">{featured.data.title}</h2>
+              <p class="lead">{featured.data.description}</p>
+              <span class="link-arrow">Read article <span class="arrow" aria-hidden="true">→</span></span>
+            </div>
+          </a>
+          {rest.length > 0 && <div class="grid">{rest.map((post) => <PostCard post={post} />)}</div>}
+        </>
+      )}
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+<style>
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .chips a { padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line-strong); text-decoration: none; font-size: 0.9rem; font-weight: 550; }
+  .chips a:hover { border-color: var(--green-700); }
+  .chips a[aria-current] { background: var(--green-700); color: #fff; border-color: var(--green-700); }
+  .empty { padding: 64px; border: 1px dashed var(--line-strong); border-radius: 22px; display: grid; gap: 10px; text-align: center; }
+  .empty a { color: var(--green-700); }
+  .feature { display: grid; grid-template-columns: 1.2fr 1fr; border-radius: 24px; overflow: hidden; background: var(--white); border: 1px solid var(--line); text-decoration: none; margin-bottom: 20px; transition: box-shadow 0.35s var(--ease); }
+  .feature:hover { box-shadow: var(--shadow); }
+  .f-media { min-height: 360px; background: var(--green-800); }
+  .f-media img { width: 100%; height: 100%; object-fit: cover; }
+  .f-fallback { height: 100%; background: radial-gradient(80% 120% at 100% 0%, rgba(156,197,184,0.35), transparent 60%), var(--green-800); }
+  .f-body { padding: clamp(28px, 4vw, 56px); display: grid; gap: 18px; align-content: center; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .feature { grid-template-columns: 1fr; } .f-media { min-height: 220px; } .grid { grid-template-columns: 1fr; } }
+</style>

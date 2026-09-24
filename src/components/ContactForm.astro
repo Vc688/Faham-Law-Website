@@ -1,0 +1,45 @@
+---
+import { inquiryReasons } from '../data/site';
+interface Props { idPrefix?: string; preselect?: string }
+const { idPrefix = 'c', preselect } = Astro.props;
+const id = (s: string) => `${idPrefix}-${s}`;
+---
+<form class="form contact-form" name="contact" method="POST" action="/thank-you" data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+  <div class="form-row">
+    <div class="field">
+      <label for={id('first')}>First name <span class="req" aria-hidden="true">*</span></label>
+      <input id={id('first')} type="text" name="first_name" autocomplete="given-name" required />
+    </div>
+    <div class="field">
+      <label for={id('last')}>Last name <span class="req" aria-hidden="true">*</span></label>
+      <input id={id('last')} type="text" name="last_name" autocomplete="family-name" required />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="field">
+      <label for={id('email')}>Email <span class="req" aria-hidden="true">*</span></label>
+      <input id={id('email')} type="email" name="email" autocomplete="email" required />
+    </div>
+    <div class="field">
+      <label for={id('phone')}>Phone</label>
+      <input id={id('phone')} type="tel" name="phone" autocomplete="tel" />
+    </div>
+  </div>
+  <div class="field">
+    <label for={id('reason')}>Reason of inquiry <span class="req" aria-hidden="true">*</span></label>
+    <select id={id('reason')} name="reason" required>
+      <option value="" disabled selected={!preselect}>Select one</option>
+      {inquiryReasons.map((r) => <option selected={r === preselect}>{r}</option>)}
+    </select>
+  </div>
+  <div class="field">
+    <label for={id('message')}>How can we help? <span class="req" aria-hidden="true">*</span></label>
+    <textarea id={id('message')} name="message" required placeholder="Describe the issue first, then what you'd like to achieve."></textarea>
+  </div>
+  <p class="notice">Please don't include confidential information. Submitting this form does not create an attorney-client relationship.</p>
+  <div>
+    <button class="btn" type="submit">Send message <span class="arrow" aria-hidden="true">→</span></button>
+  </div>
+</form>

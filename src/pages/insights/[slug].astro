@@ -1,0 +1,107 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import PostCard from '../../components/PostCard.astro';
+import { firm, practiceBySlug } from '../../data/site';
+import { getPublishedPosts, formatDate, readingTime, type Post } from '../../lib/posts';
+import { breadcrumbs, orgId, davidId } from '../../lib/schema';
+import { existsSync } from 'node:fs';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props as { post: Post };
+const { Content } = await render(post);
+const cat = practiceBySlug[post.data.category];
+const mins = readingTime(post.body);
+const related = (await getPublishedPosts()).filter((p) => p.id !== post.id && p.data.category === post.data.category).slice(0, 2);
+const hasHeadshot = existsSync('public/images/david-faham.jpg');
+const url = `${firm.url}/insights/${post.id}`;
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
+  author: { '@id': davidId, '@type': 'Person', name: 'David Faham', url: `${firm.url}/about` },
+  publisher: { '@id': orgId },
+  mainEntityOfPage: url,
+  ...(post.data.cover ? { image: new URL(post.data.cover, firm.url).href } : {}),
+  articleSection: cat?.name,
+};
+---
+<Base
+  title={`${post.data.title} | Faham Law LLC`}
+  description={post.data.description}
+  image={post.data.cover}
+  type="article"
+  jsonld={[article, breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Insights', path: '/insights' }, { name: post.data.title, path: `/insights/${post.id}` }])]}
+>
+  <section class="hero post-hero">
+    <div class="container narrow">
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/insights">Insights</a><span aria-hidden="true">/</span><a href={`/insights/category/${post.data.category}`}>{cat?.name}</a></nav>
+      <h1 class="post-title serif">{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+      <p class="byline">
+        <a href="/about">David Faham</a><span aria-hidden="true">·</span>
+        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><span aria-hidden="true">·</span>
+        <span>{mins} min read</span>
+      </p>
+    </div>
+  </section>
+
+  {post.data.cover && (
+    <div class="container cover-wrap"><img class="cover" src={post.data.cover} alt={post.data.coverAlt ?? ''} /></div>
+  )}
+
+  <article class="section-tight">
+    <div class="container narrow">
+      <div class="prose"><Content /></div>
+
+      <aside class="author">
+        <div class="av">{hasHeadshot ? <img src="/images/david-faham.jpg" alt="" width="72" height="72" /> : <span class="serif">DF</span>}</div>
+        <div>
+          <p class="a-name">David Faham</p>
+          <p class="a-bio">Partner at Faham Law LLC. Advising businesses in New York, New Jersey and Pennsylvania since 2011 on formation, contracts, M&amp;A, real estate and trademarks.</p>
+          <div class="a-links"><a href="/about">Full bio</a><a href={firm.linkedinDavid} target="_blank" rel="noopener">Connect on LinkedIn</a></div>
+        </div>
+      </aside>
+
+      <p class="disclaimer"><strong>Disclaimer:</strong> This article is for general informational purposes only and is not legal advice. Reading it does not create an attorney-client relationship. Laws change and every situation is different; speak with an attorney about your specific matter. Attorney Advertising.</p>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="section-tight rel">
+      <div class="container narrow">
+        <p class="eyebrow">More on {cat?.name}</p>
+        <div class="rel-grid">{related.map((p) => <PostCard post={p} />)}</div>
+      </div>
+    </section>
+  )}
+  <CtaBand title={cat ? cat.cta : undefined} />
+</Base>
+<style>
+  .narrow { max-width: 860px; }
+  .post-hero .container { display: grid; gap: 22px; }
+  .post-hero .breadcrumbs { margin-bottom: 0; }
+  .post-title { font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .byline { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.92rem; color: rgba(238,244,241,0.7); }
+  .byline a { color: #fff; font-weight: 600; text-decoration: none; }
+  .cover-wrap { max-width: 1100px; margin-top: -1px; }
+  .cover { width: 100%; aspect-ratio: 16/8; object-fit: cover; border-radius: 0 0 24px 24px; }
+  .author { margin-top: 64px; display: grid; grid-template-columns: 72px 1fr; gap: 20px; padding: 28px; background: var(--white); border: 1px solid var(--line); border-radius: 20px; }
+  .av { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--green-700); color: #fff; display: grid; place-items: center; font-size: 1.8rem; }
+  .av img { width: 100%; height: 100%; object-fit: cover; }
+  .a-name { font-weight: 650; }
+  .a-bio { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+  .a-links { display: flex; gap: 18px; margin-top: 10px; font-size: 0.92rem; font-weight: 600; }
+  .a-links a { color: var(--green-700); }
+  .disclaimer { margin-top: 28px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .rel { border-top: 1px solid var(--line); }
+  .rel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  @media (max-width: 700px) { .rel-grid { grid-template-columns: 1fr; } .author { grid-template-columns: 1fr; } }
+</style>
