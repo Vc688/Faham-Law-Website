@@ -6,7 +6,6 @@ import PostCard from '../../components/PostCard.astro';
 import { firm, practiceBySlug } from '../../data/site';
 import { getPublishedPosts, formatDate, readingTime, type Post } from '../../lib/posts';
 import { breadcrumbs, orgId, davidId } from '../../lib/schema';
-import { existsSync } from 'node:fs';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -17,7 +16,6 @@ const { Content } = await render(post);
 const cat = practiceBySlug[post.data.category];
 const mins = readingTime(post.body);
 const related = (await getPublishedPosts()).filter((p) => p.id !== post.id && p.data.category === post.data.category).slice(0, 2);
-const hasHeadshot = existsSync('public/images/david-faham.jpg');
 const url = `${firm.url}/insights/${post.id}`;
 const article = {
   '@context': 'https://schema.org',
@@ -47,7 +45,7 @@ const article = {
       <h1 class="post-title serif">{post.data.title}</h1>
       <p class="lead">{post.data.description}</p>
       <p class="byline">
-        <span class="by-av" aria-hidden="true">{hasHeadshot ? <img src="/images/david-faham.jpg" alt="" width="36" height="36" /> : 'DF'}</span>
+        <span class="by-av" aria-hidden="true"><img src="/images/david-faham.jpg" alt="" width="36" height="36" /></span>
         <a href="/about">David Faham</a><span aria-hidden="true">·</span>
         <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><span aria-hidden="true">·</span>
         <span>{mins} min read</span>
@@ -64,7 +62,7 @@ const article = {
       <div class="prose"><Content /></div>
 
       <aside class="author">
-        <div class="av">{hasHeadshot ? <img src="/images/david-faham.jpg" alt="" width="72" height="72" /> : <span class="serif">DF</span>}</div>
+        <div class="av"><img src="/images/david-faham.jpg" alt="" width="72" height="72" /></div>
         <div>
           <p class="a-name">David Faham</p>
           <p class="a-bio">Partner at Faham Law LLC. Advising businesses in New York, New Jersey and Pennsylvania since 2011 on formation, contracts, M&amp;A, real estate and trademarks.</p>

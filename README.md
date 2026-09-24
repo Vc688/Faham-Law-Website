@@ -65,7 +65,8 @@ Netlify Free includes 300 credits/month; each publish uses 15. If the site ever 
 - Firm facts, practice-area copy, FAQs, testimonials: `src/data/site.ts`
 - Pages: `src/pages/` · Components: `src/components/` · Styles: `src/styles/global.css`
 - Hide testimonials site-wide: set `showTestimonials = false` in `src/data/site.ts`.
-- David's headshot: add `public/images/david-faham.jpg` (portrait, ~800×1000). The site uses it automatically.
+- David's headshot: `public/images/david-faham.jpg` (currently 500×750; replace with a larger export of the same photo, ~1000×1500, when available).
+- Logo files: `public/images/logo.png` (light backgrounds), `logo-light.png` (dark backgrounds), `logo-tagline.png`, `logo-mark.png`. Favicons in `public/` are cut from the same mark.
 
 Local preview: `npm install`, `npm run build`, then `ADMIN_PASSWORD=anything123 npm run preview` → http://localhost:4321 (admin runs in local test mode and saves to your computer, not GitHub).
 

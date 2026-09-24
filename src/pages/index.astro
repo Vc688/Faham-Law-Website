@@ -5,10 +5,8 @@ import PostCard from '../components/PostCard.astro';
 import { firm, practices, industries, testimonials, showTestimonials, practiceBySlug } from '../data/site';
 import { getPublishedPosts } from '../lib/posts';
 import { davidPerson } from '../lib/schema';
-import { existsSync } from 'node:fs';
 
 const posts = (await getPublishedPosts()).slice(0, 3);
-const hasHeadshot = existsSync('public/images/david-faham.jpg');
 const years = new Date().getFullYear() - firm.since;
 
 // "Where is your business today?" routes a visitor to the right practice page.
@@ -198,9 +196,7 @@ const [featured, ...moreTestimonials] = testimonials;
     <div class="container">
       <div class="at-card reveal">
         <div class="portrait">
-          {hasHeadshot
-            ? <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="800" height="1000" loading="lazy" decoding="async" />
-            : <div class="portrait-fallback"><span class="serif">DF</span></div>}
+          <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="500" height="750" loading="lazy" decoding="async" />
         </div>
         <div class="at-copy">
           <p class="eyebrow">Meet the partner</p>
@@ -356,7 +352,7 @@ const [featured, ...moreTestimonials] = testimonials;
 
   /* Trademark path */
   .tm-sec { position: relative; overflow: hidden; isolation: isolate; border-radius: clamp(24px, 3vw, 40px); margin-inline: clamp(8px, 1.4vw, 20px); }
-  .tm-sec::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(800px 420px at 100% 0%, rgba(159, 196, 183, 0.18), transparent 65%), radial-gradient(700px 400px at 0% 100%, rgba(168, 131, 74, 0.16), transparent 65%); }
+  .tm-sec::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(800px 420px at 100% 0%, rgba(158, 196, 198, 0.18), transparent 65%), radial-gradient(700px 400px at 0% 100%, rgba(168, 131, 74, 0.16), transparent 65%); }
   .tm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
   .tm-copy { display: grid; gap: 24px; position: sticky; top: calc(var(--header-h) + 24px); }
   .tm-btns { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -385,10 +381,8 @@ const [featured, ...moreTestimonials] = testimonials;
   /* About teaser */
   .at-card { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 5vw, 80px); align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: clamp(24px, 3vw, 36px); padding: clamp(16px, 2vw, 24px); box-shadow: var(--shadow); }
   .at-copy { display: grid; gap: 22px; padding: clamp(8px, 3vw, 40px) clamp(8px, 3vw, 40px) clamp(8px, 3vw, 40px) 0; }
-  .portrait { aspect-ratio: 4 / 5; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); overflow: hidden; background: var(--mint); }
-  .portrait img { width: 100%; height: 100%; object-fit: cover; }
-  .portrait-fallback { height: 100%; display: grid; place-items: center; background: radial-gradient(70% 70% at 70% 20%, var(--brass-wash), transparent 70%), var(--mint); }
-  .portrait-fallback span { font-size: 9rem; color: var(--green-800); font-style: italic; letter-spacing: -0.02em; }
+  .portrait { aspect-ratio: 2 / 3; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); overflow: hidden; background: var(--mint); }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
   .creds { list-style: none; margin: 4px 0; padding: 0; border-top: 1px solid var(--line); }
   .creds li { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
   .creds li span:first-child { font-weight: 540; color: var(--green-900); }

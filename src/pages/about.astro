@@ -3,8 +3,6 @@ import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { firm } from '../data/site';
 import { davidPerson, breadcrumbs } from '../lib/schema';
-import { existsSync } from 'node:fs';
-const hasHeadshot = existsSync('public/images/david-faham.jpg');
 ---
 <Base
   title="David Faham, Corporate & IP Attorney"
@@ -25,9 +23,7 @@ const hasHeadshot = existsSync('public/images/david-faham.jpg');
           </div>
         </div>
         <div class="ah-photo">
-          {hasHeadshot
-            ? <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="800" height="1000" />
-            : <div class="ph-fallback"><span class="serif">DF</span></div>}
+          <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="500" height="750" fetchpriority="high" />
           <p class="ah-cap"><span class="serif">{firm.tagline}</span></p>
         </div>
       </div>
@@ -71,9 +67,7 @@ const hasHeadshot = existsSync('public/images/david-faham.jpg');
   .ah-copy .display { font-size: clamp(3rem, 8vw, 7rem); }
   .ah-links { display: flex; flex-wrap: wrap; gap: 12px; }
   .ah-photo { background: var(--surface); border: 1px solid var(--line); border-radius: clamp(24px, 3vw, 36px); padding: 12px; box-shadow: var(--shadow); transform: rotate(1deg); }
-  .ah-photo img, .ph-fallback { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); }
-  .ph-fallback { display: grid; place-items: center; background: radial-gradient(70% 70% at 70% 20%, var(--brass-wash), transparent 70%), var(--mint); }
-  .ph-fallback span { font-size: 10rem; color: var(--green-800); font-style: italic; }
+  .ah-photo img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: 50% 30%; border-radius: calc(clamp(24px, 3vw, 36px) - 10px); }
   .ah-cap { padding: 14px 8px 4px; text-align: center; color: var(--muted); font-style: italic; font-size: 1.1rem; }
   .bio-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: start; padding-top: clamp(32px, 4vw, 56px); border-top: 1px solid var(--line-strong); }
   .bio > p:first-child::first-letter { font-family: var(--serif); float: left; font-size: 5rem; line-height: 0.8; padding: 8px 12px 0 0; color: var(--green-700); font-style: italic; }
