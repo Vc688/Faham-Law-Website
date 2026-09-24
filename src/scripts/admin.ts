@@ -148,7 +148,7 @@ function shell(active: string, inner: string) {
   const tab = (href: string, label: string, key: string) => `<a href="${href}" class="${active === key ? 'on' : ''}">${label}</a>`;
   app.innerHTML = `
     <header class="top"><div class="top-in">
-      <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true">F</span>FAHAM LAW <small>Admin</small></a>
+      <a class="brand" href="#/"><img src="/images/logo.png" alt="Faham Law" width="1323" height="353" /><small>Admin</small></a>
       <nav class="tabs" aria-label="Admin">
         ${tab('#/', 'Dashboard', 'dash')}${tab('#/site', 'Site', 'site')}${tab('#/posts', 'Posts', 'posts')}${tab('#/inquiries/contact', 'Inquiries', 'inq')}
       </nav>
@@ -195,8 +195,7 @@ function renderLogin(message = '') {
   app.innerHTML = `
     <div class="login">
       <form class="login-card" id="login-form">
-        <span class="login-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
-        <p class="eyebrow">Faham Law LLC</p>
+        <img class="login-logo" src="/images/logo.png" alt="Faham Law LLC" width="1323" height="353" />
         <h1>Website admin</h1>
         <p class="muted login-sub">Write and publish Insights, and review contact and trademark inquiries.</p>
         ${message ? `<div class="warn">${esc(message)}</div>` : ''}

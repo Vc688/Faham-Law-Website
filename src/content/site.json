@@ -114,7 +114,7 @@
     "trademark": {
       "eyebrow": "IP & Trademarks",
       "title": "Trademark registration and protection",
-      "text": "Trademark searches, U.S. and international filings, Amazon Brand Registry and renewals, on flat fees published on the fee schedule.",
+      "text": "Trademark searches, U.S. and international filings and renewals, on flat fees published on the fee schedule. A trademark application is also the first step to Amazon Brand Registry.",
       "primaryCta": {
         "label": "File a trademark",
         "href": "/file-a-trademark"
@@ -159,7 +159,7 @@
     "lead": "A born-and-raised New Yorker and the partner of Faham Law LLC. Since 2011, he has advised businesses of every size, from founders forming their first company to established companies, on the legal work that keeps them growing.",
     "bio": [
       "David serves as fractional general counsel to privately held companies, handling the contracts, employment questions, compliance and day-to-day legal decisions that an in-house lawyer would. Having served as general counsel for companies large and small, he brings that perspective to outside counsel work: practical advice that fits how a business actually runs.",
-      "His practice also covers the transactions those companies run into. He helps entrepreneurs start new businesses, handling entity formation, operating agreements, website terms, and SaaS and end-user agreements. He represents buyers and sellers in mergers and acquisitions, with transactions ranging from a few hundred thousand to a few million dollars. He handles commercial and residential real estate transactions, including closings and lease reviews. And he protects intellectual property, from trademark searches and filings through registration, maintenance and renewals, including Amazon Brand Registry matters.",
+      "His practice also covers the transactions those companies run into. He helps entrepreneurs start new businesses, handling entity formation, operating agreements, website terms, and SaaS and end-user agreements. He represents buyers and sellers in mergers and acquisitions, with transactions ranging from a few hundred thousand to a few million dollars. He handles commercial and residential real estate transactions, including closings and lease reviews. And he protects intellectual property, from trademark searches and filings through registration, maintenance and renewals.",
       "Clients include consumer products and wholesale companies, licensing companies, technology companies and startups, restaurants, apparel brands, Amazon and e-commerce sellers, and real estate clients."
     ],
     "personal": "David is a father of four and when work and family are not the priority, enjoys bowling in a local league and considers himself a foodie and scotch and wine aficionado.",
@@ -287,11 +287,11 @@
     {
       "slug": "ip-trademarks",
       "name": "IP & Trademarks",
-      "short": "Trademark searches, filings, registration, maintenance and renewals on published flat fees, plus copyright, licensing and Amazon Brand Registry matters.",
-      "seoTitle": "Trademark & Amazon Brand Registry Attorney | Flat Fees",
-      "seoDescription": "Trademark searches, USPTO filings, registration, maintenance and renewals, copyright, IP licensing, and Amazon Brand Registry and infringement matters for businesses, on published flat fees.",
+      "short": "Trademark searches, filings, registration, maintenance and renewals on published flat fees, plus copyright and licensing.",
+      "seoTitle": "Trademark Attorney in NY & NJ | Flat Fees",
+      "seoDescription": "Trademark searches, USPTO filings, registration, maintenance and renewals, copyright and IP licensing for businesses, on published flat fees. A trademark application is also the first step to Amazon Brand Registry.",
       "h1": "Trademarks & Intellectual Property",
-      "intro": "Your brand name, logo and creative work are often your most valuable assets. We protect them from the first clearance search through registration and every renewal after. When someone infringes, or you need to license your IP, we handle that too. Trademark and copyright work is done on flat fees, published on our fee schedule.",
+      "intro": "Your brand name, logo and creative work are often your most valuable assets. We protect them from the first clearance search through registration and every renewal after. When you need to license your IP, we handle that too. Trademark and copyright work is done on flat fees, published on our fee schedule.",
       "groups": [
         {
           "title": "Trademarks",
@@ -315,21 +315,10 @@
             {
               "label": "Portfolio management",
               "text": "Managing domestic and international portfolios and advising on branding strategy."
-            }
-          ]
-        },
-        {
-          "title": "Amazon Brand Registry & E-commerce",
-          "note": "We help Amazon and e-commerce sellers protect their brands on the platform.",
-          "items": [
-            {
-              "text": "Brand Registry enrollment, including appeals when a request is denied."
             },
             {
-              "text": "Reporting infringing and counterfeit listings, ASIN hijackers and inauthentic products."
-            },
-            {
-              "text": "Responding to Amazon infringement complaints, fraud accusations and account suspensions through Amazon's own processes."
+              "label": "Amazon Brand Registry",
+              "text": "Amazon requires a pending or registered trademark before it will enroll a brand. We file the application and, once it's on file, help you complete the enrollment."
             }
           ]
         },
@@ -366,8 +355,8 @@
           "a": "A maintenance declaration is due between the 5th and 6th year after registration, then a combined declaration and renewal every 10 years."
         },
         {
-          "q": "Can I join Amazon Brand Registry before my trademark registers?",
-          "a": "Yes. Amazon accepts either an active registered trademark or a pending application, as long as it's a word mark or a design mark with words, letters or numbers, from a government trademark office. The trademark owner must be the one who applies. Amazon's IP Accelerator program is optional."
+          "q": "Do I need a trademark for Amazon Brand Registry?",
+          "a": "Yes. Amazon requires a pending application or an active registration for a word mark, or a design mark that includes words, from a government trademark office, and the trademark owner must be the one who enrolls. Filing the application is the first step."
         }
       ],
       "cta": "Book a consultation or file a trademark",
@@ -787,7 +776,6 @@
     "Startups & Small Business",
     "Mergers & Acquisitions",
     "Real Estate",
-    "Amazon",
     "Other"
   ]
 }
