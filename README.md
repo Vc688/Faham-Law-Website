@@ -51,7 +51,7 @@ Redeploy once after adding variables (Deploys → Trigger deploy).
 ## Using the admin
 Go to `https://www.fahamlaw.com/admin` and sign in with `ADMIN_PASSWORD`.
 
-- **Site.** Every word, list and image on the public site: firm details and address, home page, practice areas (add, remove, reorder), fees page, about page, contact page, testimonials and lists. **Save & publish** commits one change to GitHub and the site rebuilds in about 1–2 minutes. Headings can italicize a phrase by wrapping it in `*asterisks*`.
+- **Site.** Every word, list and image on the public site: firm details and address, home page, practice areas (add, remove, reorder), fees page, about page, contact page, testimonials and lists. **Save & publish** commits one change to GitHub and the site rebuilds in about 1–2 minutes.
 - **Posts → New post.** Write in the editor (pasting from Word/Google Docs keeps headings, bold and lists). Add a category, summary and optional cover image.
   - **Save draft**: private; does **not** rebuild the site (no Netlify credits used).
   - **Publish / Update**: the site rebuilds and the post is live in about 1–2 minutes (~15 Netlify credits).

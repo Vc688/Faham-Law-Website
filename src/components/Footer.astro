@@ -4,12 +4,11 @@ import { firm, practices, showTestimonials, officeLine } from '../data/site';
 interface Props { showInsights: boolean }
 const { showInsights } = Astro.props;
 const year = new Date().getFullYear();
-const [w1, w2, ...rest] = firm.tagline.split(' ');
 ---
 <footer class="footer">
   <div class="container">
     <div class="sign">
-      <p class="motto serif">{w1} <em>{w2}</em> {rest.join(' ')}</p>
+      <p class="motto serif">{firm.tagline}</p>
       <div class="sign-cta">
         <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost on-dark" href={firm.phoneHref}>{firm.phone}</a>
@@ -85,7 +84,6 @@ const [w1, w2, ...rest] = firm.tagline.split(' ');
   }
   .sign { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; padding-bottom: clamp(48px, 6vw, 72px); border-bottom: 1px solid rgba(255,255,255,0.12); }
   .motto { font-size: clamp(2.4rem, 6vw, 5.2rem); line-height: 1; letter-spacing: -0.03em; color: #f4f1e8; }
-  .motto em { color: var(--brass-soft); }
   .sign-cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
   .top { display: grid; grid-template-columns: 1.1fr 1.6fr; gap: clamp(40px, 6vw, 96px); padding: clamp(48px, 6vw, 64px) 0; border-bottom: 1px solid rgba(255,255,255,0.12); }

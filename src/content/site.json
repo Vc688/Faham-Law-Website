@@ -36,7 +36,6 @@
   "settings": {
     "showTestimonials": true,
     "showInsights": false,
-    "headingAccent": "plain",
     "headshot": "/images/david-faham.jpg",
     "headshotAlt": "David Faham, partner at Faham Law LLC",
     "headerCta": {
@@ -47,10 +46,10 @@
   "home": {
     "seoTitle": "Faham Law LLC | Fractional General Counsel in NY & NJ",
     "seoDescription": "Faham Law LLC serves as fractional general counsel to privately held companies in New York and New Jersey, and handles trademarks, contracts, M&A and real estate under one roof.",
-    "eyebrow": "Fractional general counsel · Since 2011",
+    "eyebrow": "Faham Law LLC · Since 2011",
     "kicker": "New York, NY · Oakhurst, NJ",
-    "title": "Your general counsel, *without the full-time hire.*",
-    "lead": "The legal support of an in-house lawyer, without the full-time hire. Contracts, employment, compliance and deals, handled by one lawyer who knows your business. Trademarks, real estate and M&A under the same roof.",
+    "title": "Fractional General Counsel in New York, New Jersey & Pennsylvania",
+    "lead": "Faham Law serves as outside general counsel to privately held companies: contracts, employment, compliance and transactions, handled by one lawyer who knows your business. Trademark, real estate and M&A work under the same roof.",
     "primaryCta": {
       "label": "Book a consultation",
       "href": "/contact"
@@ -84,7 +83,7 @@
     ],
     "gc": {
       "eyebrow": "Fractional General Counsel",
-      "title": "Legal support that works *like an in-house department.*",
+      "title": "How the retainer works",
       "lead": "Most growing companies have more legal work than an occasional lawyer can keep up with, but not enough to hire a full-time general counsel. We fill that role.",
       "points": [
         {
@@ -109,13 +108,13 @@
         "href": "/fractional-general-counsel"
       }
     },
-    "practicesEyebrow": "Also under one roof",
-    "practicesTitle": "The rest of what your business needs, *from the same lawyer.*",
+    "practicesEyebrow": "Practice areas",
+    "practicesTitle": "Other practice areas",
     "industriesLabel": "Industries we serve",
     "trademark": {
       "eyebrow": "IP & Trademarks",
-      "title": "Protect your brand *before someone else claims it.*",
-      "text": "Trademark searches, U.S. and international filings, Amazon Brand Registry and renewals, on published flat fees.",
+      "title": "Trademark registration and protection",
+      "text": "Trademark searches, U.S. and international filings, Amazon Brand Registry and renewals, on flat fees published on the fee schedule.",
       "primaryCta": {
         "label": "File a trademark",
         "href": "/file-a-trademark"
@@ -145,10 +144,10 @@
       "cta": "Read David's bio"
     },
     "testimonialsEyebrow": "Client perspectives",
-    "testimonialsTitle": "In their words.",
+    "testimonialsTitle": "Client testimonials",
     "contact": {
       "eyebrow": "Book a consultation",
-      "title": "Tell us what you're *working on.*",
+      "title": "Book a consultation",
       "lead": "We'll call you back to schedule an appointment. You may also email or call us directly."
     }
   },
@@ -156,7 +155,7 @@
     "seoTitle": "David Faham, Fractional General Counsel & IP Attorney",
     "seoDescription": "David Faham, partner at Faham Law LLC, has advised businesses since 2011 as outside general counsel and on trademarks, contracts, M&A and real estate. Licensed in NY, NJ and PA.",
     "eyebrow": "Partner · Faham Law LLC",
-    "title": "David *Faham*",
+    "title": "David Faham",
     "lead": "A born-and-raised New Yorker and the partner of Faham Law LLC. Since 2011, he has advised businesses of every size, from founders forming their first company to established companies, on the legal work that keeps them growing.",
     "bio": [
       "David serves as fractional general counsel to privately held companies, handling the contracts, employment questions, compliance and day-to-day legal decisions that an in-house lawyer would. Having served as general counsel for companies large and small, he brings that perspective to outside counsel work: practical advice that fits how a business actually runs.",
@@ -194,7 +193,7 @@
     "seoTitle": "Practice Areas: Fractional General Counsel, Trademarks, M&A & Real Estate",
     "seoDescription": "Fractional general counsel, trademark and IP, business formation, mergers and acquisitions, and real estate services for businesses in NY, NJ and PA.",
     "eyebrow": "What we do",
-    "title": "Practice *Areas*",
+    "title": "Practice Areas",
     "lead": "Legal services for privately held businesses, from the day you form your company to the day you sell it. Choose an area below, or contact us if you're not sure where your question fits.",
     "notSureTitle": "Not sure where your question fits?",
     "notSureText": "Tell us what's going on and we'll point you in the right direction."
@@ -279,7 +278,7 @@
           "a": "Yes. Many retainer clients started with one contract or one employment question. If the relationship makes sense for both sides, we move to a retainer from there."
         }
       ],
-      "cta": "Need a lawyer who knows your business? Book a consultation.",
+      "cta": "Book a consultation",
       "ctaSecondary": {
         "label": "Call (212) 961-7503",
         "href": "tel:+12129617503"
@@ -371,7 +370,7 @@
           "a": "Yes. Amazon accepts either an active registered trademark or a pending application, as long as it's a word mark or a design mark with words, letters or numbers, from a government trademark office. The trademark owner must be the one who applies. Amazon's IP Accelerator program is optional."
         }
       ],
-      "cta": "Protect your brand before someone else claims it. Book a consultation or file a trademark.",
+      "cta": "Book a consultation or file a trademark",
       "ctaSecondary": {
         "label": "File a trademark",
         "href": "/file-a-trademark"
@@ -435,7 +434,7 @@
           "a": "New York LLCs must publish notice of formation in two newspapers within 120 days of forming, or lose the authority to do business in the state until they comply."
         }
       ],
-      "cta": "Starting something new? Book a consultation to set it up right.",
+      "cta": "Book a consultation",
       "ctaSecondary": null
     },
     {
@@ -488,7 +487,7 @@
           "a": "Usually only in part. Price and deal terms are often non-binding, while confidentiality and exclusivity provisions typically are binding."
         }
       ],
-      "cta": "Thinking about buying or selling? Talk to us early, before the letter of intent is signed.",
+      "cta": "Book a consultation",
       "ctaSecondary": null
     },
     {
@@ -537,7 +536,7 @@
           "a": "It depends on your lease. Most commercial leases require the landlord's written consent, and some prohibit subleasing outright."
         }
       ],
-      "cta": "Buying, selling or leasing? Book a consultation before you sign.",
+      "cta": "Book a consultation",
       "ctaSecondary": null
     }
   ],
@@ -740,7 +739,7 @@
     "seoTitle": "Contact a NY & NJ Business Attorney",
     "seoDescription": "Contact Faham Law LLC in Oakhurst, NJ and New York, NY. Tell us about your legal matter and we'll call you back to schedule a consultation.",
     "eyebrow": "Contact",
-    "title": "Get in *touch.*",
+    "title": "Contact",
     "lead": "Use the form to tell us about your legal inquiry, and we'll call you back to schedule an appointment. To help us serve you best, describe the issue you're having first, then what you want to achieve.",
     "formHeading": "Book a consultation",
     "formPill": "We'll call you back",

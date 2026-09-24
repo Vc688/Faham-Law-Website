@@ -844,7 +844,7 @@ type Field = {
 };
 type Section = { id: string; label: string; path: string; intro?: string; fields: Field[] };
 
-const EMPH = 'Wrap a phrase in *asterisks* to show it in italic, in the brand color.';
+const EMPH = undefined;
 const t = (key: string, label: string, hint?: string): Field => ({ key, label, type: 'text', hint });
 const ta = (key: string, label: string, hint?: string, big = false): Field => ({ key, label, type: 'textarea', hint, big });
 const link = (key: string, label: string, hint?: string, optional = false): Field => ({
@@ -885,11 +885,6 @@ const SITE_SECTIONS: Section[] = [
     fields: [
       { key: 'showTestimonials', label: 'Show testimonials on the site', type: 'bool', hint: 'Turn off to hide the testimonials section and page. Before showing a testimonial, confirm you have the client\'s written permission (NY Rule 7.1).' },
       { key: 'showInsights', label: 'Show the Insights link in the menu', type: 'bool', hint: 'Insights appears automatically once a post is published. Turn this on to show it earlier.' },
-      { key: 'headingAccent', label: 'Headline accent style', type: 'select', hint: 'How the *phrase* marked with asterisks in a headline is shown.', options: () => [
-        { value: 'plain', label: 'Plain: same weight and color as the rest of the headline' },
-        { value: 'color', label: 'Color: upright, in the brand green' },
-        { value: 'italic', label: 'Italic: italic, in the brand green' },
-      ] },
       { key: 'headshot', label: "David's photo", type: 'image', hint: 'Portrait orientation works best (about 1000 × 1500 pixels).' },
       t('headshotAlt', 'Photo description (alt text)'),
       link('headerCta', 'Header button', 'The button at the top right of every page.'),

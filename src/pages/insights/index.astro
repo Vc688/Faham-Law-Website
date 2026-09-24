@@ -15,7 +15,7 @@ const counts = Object.fromEntries(practices.map((p) => [p.slug, posts.filter((x)
   description="Practical articles from Faham Law LLC on business formation, contracts, M&A, real estate and trademarks for business owners in NY, NJ and PA."
   jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Insights', path: '/insights' }])]}
 >
-  <PageHero eyebrow="Insights" title="Notes for <em>business owners.</em>" lead="Practical articles on forming, running, protecting, buying and selling a business." crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights' }]} compact />
+  <PageHero eyebrow="Faham Law LLC" title="Insights" lead="Articles on forming, running, protecting, buying and selling a business." crumbs={[{ name: 'Home', href: '/' }, { name: 'Insights' }]} compact />
   <section class="section-tight">
     <div class="container">
       {posts.length > 0 && (
@@ -28,7 +28,7 @@ const counts = Object.fromEntries(practices.map((p) => [p.slug, posts.filter((x)
         <div class="empty">
           <div class="empty-copy">
             <span class="pill">Coming soon</span>
-            <h2 class="h2">First articles are <em>on the way.</em></h2>
+            <h2 class="h2">First articles are on the way.</h2>
             <p class="lead">In the meantime, <a href="/contact">contact us</a> with your question, or follow along on LinkedIn.</p>
             <div class="empty-btns">
               <a class="btn" href="/contact">Ask a question <span class="arrow" aria-hidden="true">→</span></a>
