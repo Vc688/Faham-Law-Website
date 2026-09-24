@@ -26,7 +26,7 @@ import { breadcrumbs } from '../lib/schema';
             <p class="r-sum">{p.short}</p>
           </div>
           <ul class="r-tags" role="list">
-            {p.groups.flatMap((g) => g.items).filter((it) => it.label).slice(0, 4).map((it) => <li>{it.label}</li>)}
+            {p.groups.filter((g) => g.title !== 'How it works').flatMap((g) => g.items).filter((it) => it.label).slice(0, 4).map((it) => <li>{it.label}</li>)}
           </ul>
           <span class="r-go" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>

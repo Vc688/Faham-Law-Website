@@ -60,10 +60,10 @@ export const practices: Practice[] = [
     slug: 'startups-small-business',
     name: 'Startups & Small Business',
     short:
-      'Starting a business? We form your LLC or corporation and draft the documents it runs on: operating and shareholder agreements, website terms and privacy policies, and SaaS and end-user license agreements.',
+      'Starting a business? We form your LLC or corporation and draft the documents it runs on: operating and shareholder agreements, employment and consultant agreements, employee handbooks, website terms and privacy policies, and SaaS and end-user license agreements.',
     seoTitle: 'Business Formation & Startup Lawyer in NY & NJ',
     seoDescription:
-      'LLC and corporation formation, operating and shareholder agreements, website terms, privacy policies, and SaaS and end-user agreements for startups and small businesses.',
+      'LLC and corporation formation, operating and shareholder agreements, employment and consultant agreements, employee handbooks, website terms, privacy policies, and SaaS agreements for startups and small businesses.',
     h1: 'Legal Foundations for Startups & Small Businesses',
     intro:
       "The decisions you make when you start a business, like how it's structured, who owns what, and what your customers agree to, are much cheaper to get right at the start than to fix later. We help founders set up their companies properly and put the core documents in place.",
@@ -73,9 +73,10 @@ export const practices: Practice[] = [
         items: [
           { label: 'Entity formation', text: 'Choosing between an LLC, corporation, partnership or nonprofit; preparing and filing formation documents; obtaining an EIN; and advising on ownership and governance.' },
           { label: 'Founder and ownership documents', text: "Operating agreements and shareholders' agreements." },
+          { label: 'Your team', text: 'Employment, consultant and independent contractor agreements for the people who work with you, plus employee handbooks and workplace policies.' },
           { label: 'Website and app documents', text: 'Terms of Use, Privacy Policies and other user agreements.' },
           { label: 'Software agreements', text: 'SaaS agreements and end-user license agreements (EULAs).' },
-          { label: 'Everyday contracts', text: 'Vendor, supplier, independent contractor and confidentiality agreements.' },
+          { label: 'Everyday contracts', text: 'Vendor, supplier and confidentiality agreements.' },
           { label: 'Nonprofits', text: "Forming and dissolving New York not-for-profit corporations, including work with the Attorney General's Office." },
         ],
       },
@@ -92,14 +93,22 @@ export const practices: Practice[] = [
     slug: 'corporate-counsel',
     name: 'Corporate Counsel',
     short:
-      'Outside general counsel for mid-sized companies that need regular legal support without an in-house legal department. We draft, review and negotiate your agreements.',
+      'Outside general counsel for mid-sized companies that need regular legal support without an in-house legal department. We draft, review and negotiate your agreements, often on a retainer that covers the range of your everyday legal needs.',
     seoTitle: 'Outside General Counsel for Businesses in NY & NJ',
     seoDescription:
-      'Outside general counsel for mid-sized companies: drafting, reviewing and negotiating commercial agreements, employment matters and day-to-day legal advice.',
+      'Outside and fractional general counsel for mid-sized companies: retainer arrangements, drafting, reviewing and negotiating commercial agreements, employment matters and day-to-day legal advice.',
     h1: 'Outside General Counsel for Growing Companies',
     intro:
-      'Many companies have regular legal needs but no in-house legal department. We fill that role on demand. With general counsel experience at companies large and small, David learns how your business works and gives practical advice that fits it. For matters outside our practice, we bring in trusted firms from our network and manage the work for you.',
+      'Many growing companies have more legal work than an occasional lawyer can keep up with, but not enough to hire a full-time general counsel. We fill that role as your outside general counsel. With general counsel experience at companies large and small, David learns how your business works and gives practical advice that fits it. For matters outside our practice, we bring in trusted firms from our network and manage the work for you.',
     groups: [
+      {
+        title: 'How it works',
+        items: [
+          { label: 'Retainer arrangements', text: 'A monthly retainer covers the range of your everyday legal needs, so a question about a contract or an employee is a phone call, not a new engagement.' },
+          { label: 'A lawyer who knows your business', text: 'You work with the same lawyer every time, who learns your contracts, your people and your priorities.' },
+          { label: 'Matter by matter, if you prefer', text: 'If a retainer isn’t the right fit, we also handle work one matter at a time.' },
+        ],
+      },
       {
         title: 'What we handle',
         items: [
@@ -114,7 +123,8 @@ export const practices: Practice[] = [
     who: 'Small and mid-sized, privately held companies, including consumer products and wholesale companies, licensing companies, technology companies, restaurants, apparel brands, and Amazon and e-commerce businesses.',
     faqs: [
       { q: 'What does outside general counsel do?', a: 'The same work as an in-house lawyer, on an as-needed basis: contracts, employment questions, compliance and advice on business decisions.' },
-      { q: 'How is it billed?', a: 'We offer different fee structures depending on your needs. Contact us for rates.' },
+      { q: 'Is that the same as a fractional general counsel?', a: 'Yes. "Fractional" general counsel is another name for the same arrangement: an outside lawyer who serves as your company’s general counsel part time, instead of a full-time in-house hire.' },
+      { q: 'How is it billed?', a: 'Many clients use a monthly retainer that covers their everyday legal needs; others work with us matter by matter. We offer different fee structures depending on your needs. Contact us for rates.' },
     ],
     cta: 'Need a lawyer who knows your business? Book a consultation.',
   },
@@ -122,7 +132,7 @@ export const practices: Practice[] = [
     slug: 'mergers-acquisitions',
     name: 'Mergers & Acquisitions',
     short:
-      'We represent buyers and sellers of businesses, from letter of intent and due diligence through the purchase agreement and closing.',
+      'We represent buyers and sellers of businesses, from letter of intent and due diligence through the purchase agreement, financing documents and closing.',
     seoTitle: 'M&A Lawyer for Buying & Selling a Business | NY & NJ',
     seoDescription:
       'Representation for buyers and sellers of privately held businesses: letters of intent, due diligence, purchase agreements and closing.',
@@ -136,7 +146,8 @@ export const practices: Practice[] = [
           { label: 'Deal structure', text: 'Asset purchases, stock or membership interest purchases, mergers and joint ventures.' },
           { label: 'Letters of intent', text: 'Negotiating price, structure and key terms before the deal is papered.' },
           { label: 'Due diligence', text: "Organizing a seller's records, or reviewing a target's contracts, liabilities and IP for a buyer." },
-          { label: 'Purchase agreements', text: 'Drafting and negotiating the purchase agreement and closing documents.' },
+          { label: 'Purchase agreements', text: 'Drafting and negotiating the purchase agreements, ancillary agreements and closing documents.' },
+          { label: 'Financing documents', text: 'Promissory notes, security agreements and other documents for seller-financed and lender-financed deals.' },
           { label: 'Closing and after', text: 'Employment, consulting and transition agreements for owners and key staff.' },
         ],
       },
@@ -152,10 +163,10 @@ export const practices: Practice[] = [
     slug: 'real-estate',
     name: 'Real Estate',
     short:
-      'Residential and commercial closings, purchases and sales, and lease and sublease reviews in New York, New Jersey and Pennsylvania.',
+      'Residential and commercial closings, purchases and sales, refinances and loans, and lease and sublease reviews in New York, New Jersey and Pennsylvania.',
     seoTitle: 'NJ & NY Real Estate Attorney: Closings & Leases',
     seoDescription:
-      'Residential and commercial real estate closings, purchase and sale contracts, and lease and sublease reviews in New Jersey, New York and Pennsylvania.',
+      'Residential and commercial real estate closings, purchase and sale contracts, refinances and loans, and lease and sublease reviews in New Jersey, New York and Pennsylvania.',
     h1: 'Real Estate Attorney for Residential & Commercial Transactions',
     intro:
       "Whether you're buying a home, selling a building or signing a lease for your business, we review the documents, negotiate the terms and see the deal through to closing. We represent buyers, sellers, landlords and tenants in New Jersey, New York and Pennsylvania.",
@@ -165,6 +176,7 @@ export const practices: Practice[] = [
         items: [
           { label: 'Residential', text: 'Purchase and sale contracts, attorney review and closings for buyers and sellers.' },
           { label: 'Commercial', text: 'Acquisitions and sales of single properties and portfolios, financing documents, and joint ventures.' },
+          { label: 'Refinances and loans', text: 'Refinances and loan closings for residential and commercial properties, including reviewing the loan documents before you sign.' },
           { label: 'Leases and subleases', text: 'Drafting, reviewing and negotiating leases for retail stores, office space, warehouses and residences, for landlords and tenants.' },
         ],
       },
