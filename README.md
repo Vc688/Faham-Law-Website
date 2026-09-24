@@ -3,7 +3,7 @@
 Custom website for Faham Law LLC. Built with [Astro](https://astro.build), hosted on **Netlify (Free plan)**.
 
 - Public site: static pages, fast, no database.
-- `/admin`: password-protected dashboard to write/publish Insights posts and read form inquiries.
+- `/admin`: password-protected dashboard to edit every page's content, write/publish Insights posts, and read form inquiries.
 - Forms (Contact, File a Trademark) are handled by Netlify Forms (free, unlimited submissions).
 
 ---
@@ -51,6 +51,7 @@ Redeploy once after adding variables (Deploys → Trigger deploy).
 ## Using the admin
 Go to `https://www.fahamlaw.com/admin` and sign in with `ADMIN_PASSWORD`.
 
+- **Site.** Every word, list and image on the public site: firm details and address, home page, practice areas (add, remove, reorder), fees page, about page, contact page, testimonials and lists. **Save & publish** commits one change to GitHub and the site rebuilds in about 1–2 minutes. Headings can italicize a phrase by wrapping it in `*asterisks*`.
 - **Posts → New post.** Write in the editor (pasting from Word/Google Docs keeps headings, bold and lists). Add a category, summary and optional cover image.
   - **Save draft**: private; does **not** rebuild the site (no Netlify credits used).
   - **Publish / Update**: the site rebuilds and the post is live in about 1–2 minutes (~15 Netlify credits).
@@ -62,13 +63,13 @@ Netlify Free includes 300 credits/month; each publish uses 15. If the site ever 
 ---
 
 ## Editing the site itself
-- Firm facts, practice-area copy, FAQs, testimonials: `src/data/site.ts`
-- Pages: `src/pages/` · Components: `src/components/` · Styles: `src/styles/global.css`
-- Hide testimonials site-wide: set `showTestimonials = false` in `src/data/site.ts`.
+- All copy, practice areas, fees, testimonials and settings: `src/content/site.json` (edit in `/admin → Site`, or in the file directly). `src/data/site.ts` loads it and `netlify/lib/site-content.mjs` validates saves.
+- Layout and design: `src/pages/` · `src/components/` · `src/styles/global.css`
+- Hide testimonials site-wide: `/admin → Site → Settings`.
 - David's headshot: `public/images/david-faham.jpg` (currently 500×750; replace with a larger export of the same photo, ~1000×1500, when available).
 - Logo files: `public/images/logo.png` (light backgrounds), `logo-light.png` (dark backgrounds), `logo-tagline.png`, `logo-mark.png`. Favicons in `public/` are cut from the same mark.
 
 Local preview: `npm install`, `npm run build`, then `ADMIN_PASSWORD=anything123 npm run preview` → http://localhost:4321 (admin runs in local test mode and saves to your computer, not GitHub).
 
-## Redirects kept from Squarespace
-`/new-page` → `/file-a-trademark`, `/contact-faham` → `/contact`, `/home` → `/` (see `netlify.toml`). All other URLs are unchanged.
+## Redirects
+`/new-page` → `/file-a-trademark`, `/contact-faham` → `/contact`, `/home` → `/` (kept from Squarespace) and `/corporate-counsel` → `/fractional-general-counsel` (see `netlify.toml`). If a practice area's web address is changed in the admin, add a redirect from the old address here.

@@ -1,7 +1,16 @@
-import { firm, practices } from '../data/site';
+import { firm, practices, settings, about } from '../data/site';
 
 export const orgId = `${firm.url}/#firm`;
 export const davidId = `${firm.url}/about#david-faham`;
+
+const postal = (o: { street: string; city: string; state: string; zip: string }) => ({
+  '@type': 'PostalAddress',
+  ...(o.street ? { streetAddress: o.street } : {}),
+  addressLocality: o.city,
+  addressRegion: o.state,
+  ...(o.zip ? { postalCode: o.zip } : {}),
+  addressCountry: 'US',
+});
 
 export const legalService = {
   '@context': 'https://schema.org',
@@ -12,19 +21,17 @@ export const legalService = {
   logo: `${firm.url}/images/logo.png`,
   image: `${firm.url}/images/og-default.png`,
   description: firm.blurb,
-  telephone: '+1-212-961-7503',
+  telephone: `+1-${firm.phone.replace(/\D/g, '').replace(/^1/, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}`,
   email: firm.email,
   foundingDate: String(firm.since),
   slogan: firm.tagline,
+  priceRange: `${firm.hourlyRate}/hour`,
   areaServed: [
     { '@type': 'State', name: 'New York' },
     { '@type': 'State', name: 'New Jersey' },
     { '@type': 'State', name: 'Pennsylvania' },
   ],
-  address: [
-    { '@type': 'PostalAddress', addressLocality: 'New York', addressRegion: 'NY', addressCountry: 'US' },
-    { '@type': 'PostalAddress', addressLocality: 'Oakhurst', addressRegion: 'NJ', addressCountry: 'US' },
-  ],
+  address: firm.offices.map(postal),
   knowsAbout: practices.map((p) => p.name),
   employee: { '@id': davidId },
   sameAs: [firm.linkedinFirm],
@@ -34,15 +41,12 @@ export const davidPerson = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': davidId,
-  name: 'David Faham',
-  jobTitle: 'Partner',
+  name: firm.partner,
+  jobTitle: firm.partnerTitle,
   worksFor: { '@id': orgId },
   url: `${firm.url}/about`,
-  image: `${firm.url}/images/david-faham.jpg`,
-  alumniOf: [
-    { '@type': 'CollegeOrUniversity', name: 'Fordham University School of Law' },
-    { '@type': 'CollegeOrUniversity', name: 'Brooklyn College, City University of New York' },
-  ],
+  image: `${firm.url}${settings.headshot}`,
+  alumniOf: about.education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
   sameAs: [firm.linkedinDavid],
 };
 

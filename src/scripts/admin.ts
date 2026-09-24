@@ -7,13 +7,13 @@ import { marked } from 'marked';
 import TurndownService from 'turndown';
 
 /* ---------------- Constants ---------------- */
-const CATEGORIES: Record<string, string> = {
-  'startups-small-business': 'Startups & Small Business',
-  'corporate-counsel': 'Corporate Counsel',
-  'mergers-acquisitions': 'Mergers & Acquisitions',
-  'real-estate': 'Real Estate',
-  'ip-trademarks': 'IP & Trademarks',
-};
+let CATEGORIES: Record<string, string> = {};
+async function loadCategories() {
+  try {
+    const { categories } = await api<{ categories: { slug: string; name: string }[] }>('categories');
+    CATEGORIES = Object.fromEntries(categories.map((c) => [c.slug, c.name]));
+  } catch { /* keep whatever we had */ }
+}
 const FORMS = {
   contact: {
     label: 'Contact',
@@ -139,6 +139,7 @@ function route() {
   if (a === 'posts' && b === 'new') return renderEditor(null);
   if (a === 'posts' && b === 'edit' && c) return renderEditor(decodeURIComponent(c));
   if (a === 'posts') return renderPosts();
+  if (a === 'site') return renderSite(b || '');
   if (a === 'inquiries') return renderInquiries((b as FormName) in FORMS ? (b as FormName) : 'contact');
   return renderDashboard();
 }
@@ -149,7 +150,7 @@ function shell(active: string, inner: string) {
     <header class="top"><div class="top-in">
       <a class="brand" href="#/"><span class="brand-mark" aria-hidden="true">F</span>FAHAM LAW <small>Admin</small></a>
       <nav class="tabs" aria-label="Admin">
-        ${tab('#/', 'Dashboard', 'dash')}${tab('#/posts', 'Posts', 'posts')}${tab('#/inquiries/contact', 'Inquiries', 'inq')}
+        ${tab('#/', 'Dashboard', 'dash')}${tab('#/site', 'Site', 'site')}${tab('#/posts', 'Posts', 'posts')}${tab('#/inquiries/contact', 'Inquiries', 'inq')}
       </nav>
       <div class="top-actions">
         <span id="site-pill" class="hide-sm"></span>
@@ -237,7 +238,7 @@ function setupWarnings() {
 async function renderDashboard() {
   shell('dash', `
     <div class="page-head"><div><h1>Dashboard</h1><p>${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p></div>
-    <a class="btn" href="#/posts/new">+ New post</a></div>
+    <div class="row" style="flex:0"><a class="btn btn-ghost" href="#/site">Edit site content</a><a class="btn" href="#/posts/new">+ New post</a></div></div>
     ${setupWarnings()}
     <div id="dash"><div class="loading"><span class="spinner"></span></div></div>`);
 
@@ -306,7 +307,9 @@ async function renderPosts() {
     <section class="card" id="plist"><div class="loading"><span class="spinner"></span></div></section>`);
   let posts: any[] = [];
   try {
-    posts = (await api<{ posts: any[] }>('posts')).posts;
+    const res = await api<{ posts: any[]; categories?: { slug: string; name: string }[] }>('posts');
+    posts = res.posts;
+    if (res.categories) CATEGORIES = Object.fromEntries(res.categories.map((c) => [c.slug, c.name]));
   } catch (e) {
     $('#plist').innerHTML = `<div class="empty">${esc((e as Error).message)}</div>`;
     return;
@@ -397,6 +400,7 @@ async function renderEditor(slug: string | null) {
     slug: '', title: '', description: '', date: today(), category: '', cover: '', coverAlt: '', draft: true, body: '',
   };
   let baseSha = '';
+  await loadCategories();
   if (!isNew) {
     try {
       const res = await api<{ post: any }>(`posts/${encodeURIComponent(slug!)}`);
@@ -500,6 +504,8 @@ async function renderEditor(slug: string | null) {
   const titleEl = $('#title') as HTMLTextAreaElement;
   const autosize = () => { titleEl.style.height = 'auto'; titleEl.style.height = titleEl.scrollHeight + 'px'; };
   autosize();
+  document.fonts?.ready.then(autosize);
+  window.addEventListener('resize', autosize);
 
   // Editor
   const editor = new Editor({
@@ -674,7 +680,7 @@ async function renderEditor(slug: string | null) {
       if (!data.category) return (errBox.innerHTML = `<div class="err">Choose a category before publishing.</div>`);
       if (!data.description) return (errBox.innerHTML = `<div class="err">Add a summary before publishing.</div>`), descEl.focus();
     } else {
-      data.category ||= 'startups-small-business';
+      data.category ||= Object.keys(CATEGORIES)[0] || '';
       data.description ||= data.title;
     }
     if (data.cover && !data.coverAlt && !asDraft) return (errBox.innerHTML = `<div class="err">Describe the cover image (alt text).</div>`);
@@ -821,3 +827,476 @@ async function renderInquiries(form: FormName) {
 }
 
 boot();
+
+/* ---------------- Site content editor ---------------- */
+type FieldType = 'text' | 'textarea' | 'bool' | 'number' | 'image' | 'select' | 'link' | 'object' | 'list' | 'strings';
+type Field = {
+  key: string;
+  label: string;
+  type: FieldType;
+  hint?: string;
+  big?: boolean;
+  fields?: Field[];
+  itemLabel?: (item: any, i: number) => string;
+  itemName?: string;
+  options?: () => { value: string; label: string }[];
+  optional?: boolean;
+};
+type Section = { id: string; label: string; path: string; intro?: string; fields: Field[] };
+
+const EMPH = 'Wrap a phrase in *asterisks* to show it in italic, in the brand color.';
+const t = (key: string, label: string, hint?: string): Field => ({ key, label, type: 'text', hint });
+const ta = (key: string, label: string, hint?: string, big = false): Field => ({ key, label, type: 'textarea', hint, big });
+const link = (key: string, label: string, hint?: string, optional = false): Field => ({
+  key, label, type: 'link', hint, optional,
+  fields: [t('label', 'Button text'), t('href', 'Link', 'A page on this site like /contact or /fees, or a full https:// address.')],
+});
+const seo = (): Field[] => [
+  t('seoTitle', 'Browser / Google title', 'Shown in the browser tab and as the headline in Google results. Aim for under 60 characters.'),
+  ta('seoDescription', 'Google description', 'The grey text under the title in search results. Aim for 120 to 160 characters.'),
+];
+const practiceOptions = () => ((siteModel?.practices as any[]) || []).map((p) => ({ value: p.slug, label: p.name }));
+
+const SITE_SECTIONS: Section[] = [
+  {
+    id: 'firm', label: 'Firm & contact details', path: 'firm',
+    intro: 'Used across the site: header, footer, contact page and the structured data Google reads.',
+    fields: [
+      t('name', 'Firm name'), t('shortName', 'Short name'), t('tagline', 'Tagline'),
+      t('partner', 'Partner name'), t('partnerTitle', 'Partner title'),
+      { key: 'since', label: 'Founded (year)', type: 'number' },
+      t('phone', 'Phone'), t('email', 'Email'), t('url', 'Website address', 'Used for links in search results and social previews.'),
+      t('hourlyRate', 'Hourly rate', 'Shown in structured data as the price range, e.g. $495'),
+      {
+        key: 'offices', label: 'Offices', type: 'list', itemName: 'office',
+        hint: 'The first office is the principal office shown in the footer. Leave street and ZIP empty to list a city only.',
+        itemLabel: (o) => o.label || o.city || 'Office',
+        fields: [t('label', 'Short label', 'e.g. Oakhurst, NJ'), t('street', 'Street address'), t('city', 'City'), t('state', 'State'), t('zip', 'ZIP')],
+      },
+      t('licensed', 'Licensing line', 'e.g. Licensed in New York, New Jersey & Pennsylvania'),
+      t('linkedinFirm', 'Firm LinkedIn URL'), t('linkedinDavid', "Partner's LinkedIn URL"),
+      ta('blurb', 'Firm description', 'One or two sentences, used in the footer and in search results.'),
+      ta('disclaimer', 'Legal disclaimer', 'Shown in the footer on every page.'),
+      ta('fees', 'Fee philosophy', 'Short paragraph about how fees work. Used where a general statement is needed.'),
+    ],
+  },
+  {
+    id: 'settings', label: 'Settings & images', path: 'settings',
+    fields: [
+      { key: 'showTestimonials', label: 'Show testimonials on the site', type: 'bool', hint: 'Turn off to hide the testimonials section and page. Before showing a testimonial, confirm you have the client\'s written permission (NY Rule 7.1).' },
+      { key: 'showInsights', label: 'Show the Insights link in the menu', type: 'bool', hint: 'Insights appears automatically once a post is published. Turn this on to show it earlier.' },
+      { key: 'headshot', label: "David's photo", type: 'image', hint: 'Portrait orientation works best (about 1000 × 1500 pixels).' },
+      t('headshotAlt', 'Photo description (alt text)'),
+      link('headerCta', 'Header button', 'The button at the top right of every page.'),
+    ],
+  },
+  {
+    id: 'home', label: 'Home page', path: 'home',
+    fields: [
+      ...seo(),
+      t('eyebrow', 'Small line above the headline'), t('kicker', 'Small line at the right'),
+      ta('title', 'Headline', EMPH), ta('lead', 'Intro paragraph'),
+      link('primaryCta', 'Main button'), link('secondaryCta', 'Second button'),
+      t('routerTitle', 'Title of the "Where is your business today?" box'),
+      {
+        key: 'stages', label: '"Where is your business today?" rows', type: 'list', itemName: 'row',
+        hint: 'The first row decides which practice area is featured in the big dark section below the headline.',
+        itemLabel: (s) => s.need || 'Row',
+        fields: [t('need', 'Situation', 'e.g. Growing without an in-house lawyer'), { key: 'slug', label: 'Practice area', type: 'select', options: practiceOptions }],
+      },
+      {
+        key: 'gc', label: 'Featured practice section (dark band)', type: 'object',
+        fields: [
+          t('eyebrow', 'Small line'), ta('title', 'Headline', EMPH), ta('lead', 'Intro'),
+          { key: 'points', label: 'Points', type: 'list', itemName: 'point', itemLabel: (p) => p.title || 'Point', fields: [t('title', 'Title'), ta('text', 'Text')] },
+          link('cta', 'Button'),
+        ],
+      },
+      t('practicesEyebrow', 'Practice areas: small line'), ta('practicesTitle', 'Practice areas: headline', EMPH),
+      t('industriesLabel', 'Industries label'),
+      {
+        key: 'trademark', label: 'Trademark strip', type: 'object',
+        fields: [t('eyebrow', 'Small line'), ta('title', 'Headline', EMPH), ta('text', 'Text'), link('primaryCta', 'Main button'), link('secondaryCta', 'Second button')],
+      },
+      {
+        key: 'about', label: 'Meet the partner', type: 'object',
+        fields: [
+          t('eyebrow', 'Small line'), ta('lead', 'Paragraph'),
+          { key: 'creds', label: 'Credentials', type: 'list', itemName: 'credential', itemLabel: (c) => c.label || 'Credential', fields: [t('label', 'Label'), t('value', 'Value')] },
+          t('cta', 'Link text'),
+        ],
+      },
+      t('testimonialsEyebrow', 'Testimonials: small line'), t('testimonialsTitle', 'Testimonials: headline', EMPH),
+      { key: 'contact', label: 'Contact section', type: 'object', fields: [t('eyebrow', 'Small line'), ta('title', 'Headline', EMPH), ta('lead', 'Text')] },
+    ],
+  },
+  {
+    id: 'practices', label: 'Practice areas', path: 'practices',
+    intro: 'Each practice area is its own page, listed in the menu, the footer and the practice areas page in this order. Drag order with the arrows.',
+    fields: [
+      {
+        key: '', label: 'Practice areas', type: 'list', itemName: 'practice area',
+        itemLabel: (p) => p.name || 'New practice area',
+        fields: [
+          t('name', 'Name'),
+          t('slug', 'Web address', 'Lowercase letters, numbers and hyphens. The page lives at fahamlaw.com/this-address. Changing it breaks old links.'),
+          ta('short', 'Short description', 'Shown on the home page and the practice areas list.'),
+          ...seo(),
+          ta('h1', 'Page headline', EMPH), ta('intro', 'Intro paragraph', undefined, true),
+          {
+            key: 'groups', label: 'Sections', type: 'list', itemName: 'section', itemLabel: (g) => g.title || 'Section',
+            fields: [
+              t('title', 'Section title', 'e.g. What we handle'), ta('note', 'Note under the title (optional)'),
+              { key: 'items', label: 'Items', type: 'list', itemName: 'item', itemLabel: (it) => it.label || (it.text || '').slice(0, 50) || 'Item', fields: [t('label', 'Label (optional)'), ta('text', 'Text')] },
+            ],
+          },
+          ta('who', 'Who we work with', 'Leave empty to hide this section.'),
+          { key: 'faqs', label: 'Common questions', type: 'list', itemName: 'question', itemLabel: (q) => q.q || 'Question', fields: [t('q', 'Question'), ta('a', 'Answer')] },
+          ta('cta', 'Call to action', 'The headline of the dark box at the bottom of the page.'),
+          link('ctaSecondary', 'Second button in the call to action', 'Leave both empty for a "Call" button instead.', true),
+        ],
+      },
+    ],
+  },
+  {
+    id: 'fees', label: 'Fees page', path: 'fees',
+    fields: [
+      ...seo(), t('eyebrow', 'Small line'), ta('title', 'Headline', EMPH), ta('lead', 'Intro'),
+      { key: 'hourly', label: 'Hourly card', type: 'object', fields: [t('label', 'Label'), t('value', 'Big text'), ta('text', 'Text')] },
+      { key: 'retainer', label: 'Retainer card', type: 'object', fields: [t('label', 'Label'), t('value', 'Big text'), ta('text', 'Text'), link('cta', 'Link')] },
+      { key: 'columns', label: 'Table column headings', type: 'strings', hint: 'Three headings: service, your fee, government fee.' },
+      {
+        key: 'sections', label: 'Fee tables', type: 'list', itemName: 'table', itemLabel: (s) => s.title || 'Table',
+        fields: [
+          t('title', 'Title', 'e.g. Trademarks'),
+          {
+            key: 'groups', label: 'Groups', type: 'list', itemName: 'group', itemLabel: (g) => g.title || 'Rows',
+            fields: [
+              t('title', 'Group title (optional)', 'e.g. Searching'),
+              { key: 'rows', label: 'Rows', type: 'list', itemName: 'row', itemLabel: (r) => r.service || 'Row', fields: [t('service', 'Service'), t('fee', 'Our fee'), t('gov', 'Government fee', 'Leave empty for a dash.')] },
+            ],
+          },
+        ],
+      },
+      ta('footnote', 'Footnote', undefined, true), ta('cta', 'Call to action headline'),
+    ],
+  },
+  {
+    id: 'about', label: 'About page', path: 'about',
+    fields: [
+      ...seo(), t('eyebrow', 'Small line'), t('title', 'Headline', EMPH), ta('lead', 'Intro'),
+      { key: 'bio', label: 'Biography paragraphs', type: 'strings', big: true, itemName: 'paragraph' },
+      ta('personal', 'Personal note', 'Shown as a pull quote. Leave empty to hide.'),
+      { key: 'education', label: 'Education', type: 'list', itemName: 'school', itemLabel: (e) => e.school || 'School', fields: [t('school', 'School'), t('degree', 'Degree and year')] },
+      { key: 'barAdmissions', label: 'Bar admissions', type: 'strings', itemName: 'state' },
+      { key: 'licenses', label: 'Licenses', type: 'list', itemName: 'license', itemLabel: (l) => l.label || 'License', fields: [t('label', 'License'), t('value', 'Where')] },
+    ],
+  },
+  {
+    id: 'services', label: 'Practice areas page', path: 'services',
+    fields: [...seo(), t('eyebrow', 'Small line'), t('title', 'Headline', EMPH), ta('lead', 'Intro'), t('notSureTitle', '"Not sure" box: title'), ta('notSureText', '"Not sure" box: text')],
+  },
+  {
+    id: 'contact', label: 'Contact page', path: 'contact',
+    fields: [
+      ...seo(), t('eyebrow', 'Small line'), t('title', 'Headline', EMPH), ta('lead', 'Intro'),
+      t('formHeading', 'Form heading'), t('formPill', 'Form badge'),
+      t('feesLabel', 'Fees box: label'), ta('feesText', 'Fees box: text'), link('feesCta', 'Fees box: link'),
+    ],
+  },
+  {
+    id: 'lists', label: 'Testimonials & lists', path: '',
+    fields: [
+      {
+        key: 'testimonials', label: 'Testimonials', type: 'list', itemName: 'testimonial', itemLabel: (x) => x.name || 'Testimonial',
+        hint: 'Get written permission from each client before publishing their name (NY Rule 7.1). The first one is featured on the home page.',
+        fields: [ta('quote', 'Quote', undefined, true), t('name', 'Name'), t('role', 'Title and company')],
+      },
+      { key: 'industries', label: 'Industries we serve', type: 'strings', itemName: 'industry' },
+      { key: 'inquiryReasons', label: 'Contact form: "Reason of inquiry" options', type: 'strings', itemName: 'option' },
+    ],
+  },
+];
+
+let siteModel: any = null;
+let siteSha = '';
+let siteDirty = false;
+let siteSaving = false;
+const siteUploads = new Map<string, { sha: string; url: string }>();
+const siteOpen = new Set<string>();
+
+const P = (path: string) => path.split('/').filter((x) => x !== '');
+function getAt(obj: any, path: string) { return P(path).reduce((o, k) => (o == null ? undefined : o[k]), obj); }
+function setAt(obj: any, path: string, value: any) {
+  const keys = P(path);
+  let o = obj;
+  for (const k of keys.slice(0, -1)) o = o[k] ??= {};
+  o[keys[keys.length - 1]] = value;
+}
+const joinPath = (a: string, b: string | number) => (a ? `${a}/${b}` : String(b));
+
+function defaultFor(f: Field): any {
+  switch (f.type) {
+    case 'bool': return false;
+    case 'number': return 0;
+    case 'list': case 'strings': return [];
+    case 'link': return { label: '', href: '' };
+    case 'object': return Object.fromEntries((f.fields || []).map((x) => [x.key, defaultFor(x)]));
+    default: return '';
+  }
+}
+const defaultItem = (f: Field) => (f.type === 'strings' ? '' : Object.fromEntries((f.fields || []).map((x) => [x.key, defaultFor(x)])));
+
+const siteImgSrc = (p: string) => siteUploads.get(p)?.url ?? (p.startsWith('/uploads/') ? `/api/media?path=${encodeURIComponent(p)}` : p);
+const idFor = (path: string) => 'f-' + path.replace(/[^a-z0-9]+/gi, '-');
+
+function fieldHtml(f: Field, value: any, path: string): string {
+  const id = idFor(path);
+  const hint = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
+  switch (f.type) {
+    case 'text':
+      return `<div class="field"><label for="${id}">${esc(f.label)}</label><input type="text" id="${id}" data-path="${esc(path)}" value="${esc(value ?? '')}" />${hint}</div>`;
+    case 'number':
+      return `<div class="field"><label for="${id}">${esc(f.label)}</label><input type="number" id="${id}" data-path="${esc(path)}" data-type="number" value="${esc(value ?? '')}" />${hint}</div>`;
+    case 'textarea':
+      return `<div class="field"><label for="${id}">${esc(f.label)}</label><textarea id="${id}" data-path="${esc(path)}" rows="${f.big ? 8 : 3}">${esc(value ?? '')}</textarea>${hint}</div>`;
+    case 'bool':
+      return `<div class="field"><label class="switch"><input type="checkbox" data-path="${esc(path)}" data-type="bool" ${value ? 'checked' : ''} /><span>${esc(f.label)}</span></label>${hint}</div>`;
+    case 'select': {
+      const opts = (f.options?.() || []).map((o) => `<option value="${esc(o.value)}" ${o.value === value ? 'selected' : ''}>${esc(o.label)}</option>`).join('');
+      return `<div class="field"><label for="${id}">${esc(f.label)}</label><select id="${id}" data-path="${esc(path)}">${opts}</select>${hint}</div>`;
+    }
+    case 'image':
+      return `<div class="field"><span class="label">${esc(f.label)}</span>
+        <div class="img-field">${value ? `<img src="${esc(siteImgSrc(value))}" alt="" />` : '<span class="muted">No image</span>'}
+          <div class="row" style="flex:0"><button type="button" class="btn btn-ghost btn-sm" data-img-pick="${esc(path)}">${value ? 'Replace image' : 'Upload image'}</button></div>
+        </div>${hint}</div>`;
+    case 'link': {
+      const v = value || { label: '', href: '' };
+      return `<fieldset class="obj obj-link"><legend>${esc(f.label)}</legend><div class="form-row">${(f.fields || []).map((x) => fieldHtml(x, v[x.key], joinPath(path, x.key))).join('')}</div>${hint}</fieldset>`;
+    }
+    case 'object':
+      return `<fieldset class="obj"><legend>${esc(f.label)}</legend>${hint}${(f.fields || []).map((x) => fieldHtml(x, value?.[x.key], joinPath(path, x.key))).join('')}</fieldset>`;
+    case 'strings': {
+      const arr: string[] = Array.isArray(value) ? value : [];
+      const rows = arr.map((s, i) => {
+        const p = joinPath(path, i);
+        const ctl = `<span class="row-ctl"><button type="button" title="Move up" data-act="up" data-list="${esc(path)}" data-i="${i}">↑</button><button type="button" title="Move down" data-act="down" data-list="${esc(path)}" data-i="${i}">↓</button><button type="button" title="Remove" data-act="remove" data-list="${esc(path)}" data-i="${i}">✕</button></span>`;
+        return `<div class="srow">${f.big ? `<textarea data-path="${esc(p)}" rows="5">${esc(s)}</textarea>` : `<input type="text" data-path="${esc(p)}" value="${esc(s)}" />`}${ctl}</div>`;
+      }).join('');
+      return `<div class="field"><span class="label">${esc(f.label)}</span>${hint}<div class="strings">${rows}</div><div><button type="button" class="btn btn-ghost btn-sm" data-add="${esc(path)}">+ Add ${esc(f.itemName || 'item')}</button></div></div>`;
+    }
+    case 'list': {
+      const arr: any[] = Array.isArray(value) ? value : [];
+      const items = arr.map((item, i) => {
+        const p = joinPath(path, i);
+        const label = f.itemLabel ? f.itemLabel(item, i) : `${f.itemName || 'Item'} ${i + 1}`;
+        return `<details class="item" data-item="${esc(p)}" ${siteOpen.has(p) ? 'open' : ''}>
+          <summary><span class="item-n">${i + 1}</span><span class="item-t">${esc(label)}</span>
+            <span class="row-ctl"><button type="button" title="Move up" data-act="up" data-list="${esc(path)}" data-i="${i}">↑</button><button type="button" title="Move down" data-act="down" data-list="${esc(path)}" data-i="${i}">↓</button><button type="button" title="Remove" data-act="remove" data-list="${esc(path)}" data-i="${i}">✕</button></span>
+          </summary>
+          <div class="item-b">${(f.fields || []).map((x) => fieldHtml(x, item?.[x.key], joinPath(p, x.key))).join('')}</div>
+        </details>`;
+      }).join('');
+      return `<div class="field list-field"><span class="label">${esc(f.label)}</span>${hint}<div class="items">${items || '<p class="muted" style="margin:0">None yet.</p>'}</div><div><button type="button" class="btn btn-ghost btn-sm" data-add="${esc(path)}">+ Add ${esc(f.itemName || 'item')}</button></div></div>`;
+    }
+  }
+}
+
+function findField(path: string): Field | null {
+  // Walks SITE_SECTIONS to find the field definition for a list path (used for adding items).
+  const keys = P(path);
+  for (const sec of SITE_SECTIONS) {
+    const base = P(sec.path);
+    if (base.some((k, i) => keys[i] !== k)) continue;
+    let rest = keys.slice(base.length);
+    let fields = sec.fields;
+    let found: Field | null = null;
+    while (fields) {
+      const f = fields.find((x) => x.key === '' || x.key === rest[0]) || null;
+      if (!f) break;
+      if (f.key !== '') rest = rest.slice(1);
+      found = f;
+      if (rest.length === 0) return f;
+      if (f.type === 'list') { rest = rest.slice(1); fields = f.fields!; if (rest.length === 0) return null; continue; }
+      if (f.type === 'object' || f.type === 'link') { fields = f.fields!; continue; }
+      break;
+    }
+    if (found && rest.length === 0) return found;
+  }
+  return null;
+}
+
+function normalizeSite(model: any) {
+  const m = JSON.parse(JSON.stringify(model));
+  m.firm.since = Number(m.firm.since) || m.firm.since;
+  for (const p of m.practices || []) {
+    if (p.ctaSecondary && !p.ctaSecondary.label?.trim() && !p.ctaSecondary.href?.trim()) p.ctaSecondary = null;
+    p.slug = slugify(p.slug || p.name || '');
+  }
+  return m;
+}
+
+async function renderSite(sectionId: string) {
+  const sec = SITE_SECTIONS.find((s) => s.id === sectionId) || SITE_SECTIONS[0];
+  if (sec.id !== sectionId) { location.hash = `#/site/${sec.id}`; return; }
+  shell('site', `<div class="loading"><span class="spinner"></span>Loading…</div>`);
+  if (session?.mode === 'unconfigured') { $('main.wrap').innerHTML = setupWarnings(); return; }
+  if (!siteModel || !siteDirty) {
+    try {
+      const res = await api<{ content: any; sha: string }>('site');
+      siteModel = res.content;
+      siteSha = res.sha;
+      siteDirty = false;
+    } catch (e) {
+      $('main.wrap').innerHTML = `<div class="empty">${esc((e as Error).message)}</div>`;
+      return;
+    }
+  }
+  leaveGuard = (silent?: boolean) => !siteDirty || siteSaving || location.hash.startsWith('#/site') || (silent === true ? false : confirm('You have unsaved site changes. Leave without saving?'));
+
+  $('main.wrap').innerHTML = `
+    <div class="page-head"><div><h1>Site content</h1><p>Every word, list and image on fahamlaw.com. Saving publishes in about 1–2 minutes.</p></div></div>
+    ${setupWarnings()}
+    <div class="site-layout">
+      <nav class="site-nav card" aria-label="Site sections"><ul>${SITE_SECTIONS.map((s) => `<li><a href="#/site/${s.id}" class="${s.id === sec.id ? 'on' : ''}">${esc(s.label)}</a></li>`).join('')}</ul></nav>
+      <div class="site-main">
+        <section class="card site-card">
+          <div class="panel-h"><h2>${esc(sec.label)}</h2>${sec.intro ? `<span class="muted" style="font-size:.85rem">${esc(sec.intro)}</span>` : ''}</div>
+          <form class="site-form" id="site-form" autocomplete="off"></form>
+        </section>
+      </div>
+    </div>
+    <div class="savebar" id="savebar">
+      <span id="site-dirty" class="muted">${siteDirty ? 'Unsaved changes' : 'All changes saved'}</span>
+      <input type="text" id="site-summary" placeholder="What changed? (optional, shown in the update history)" />
+      <div id="site-err"></div>
+      <button type="button" class="btn" id="site-save" ${siteDirty ? '' : 'disabled'}>Save &amp; publish</button>
+    </div>`;
+
+  const form = $('#site-form') as HTMLFormElement;
+  const draw = () => {
+    const scroll = window.scrollY;
+    const base = getAt(siteModel, sec.path) ?? siteModel;
+    form.innerHTML = sec.fields.map((f) => fieldHtml(f, f.key === '' ? base : base?.[f.key], f.key === '' ? sec.path : joinPath(sec.path, f.key))).join('');
+    window.scrollTo(0, scroll);
+  };
+  const setDirty = () => {
+    if (!siteDirty) { siteDirty = true; $('#site-dirty').textContent = 'Unsaved changes'; ($('#site-save') as HTMLButtonElement).disabled = false; }
+  };
+  draw();
+
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.addEventListener('input', (e) => {
+    const el = e.target as HTMLInputElement;
+    const path = el.dataset.path;
+    if (!path) return;
+    const v = el.dataset.type === 'bool' ? el.checked : el.dataset.type === 'number' ? Number(el.value) : el.value;
+    setAt(siteModel, path, v);
+    setDirty();
+    // keep the collapsed summary in sync for list items
+    const item = el.closest<HTMLElement>('details.item');
+    if (item) {
+      const f = findField(item.dataset.item!.replace(/\/\d+$/, ''));
+      const idx = Number(item.dataset.item!.split('/').pop());
+      const val = getAt(siteModel, item.dataset.item!);
+      if (f?.itemLabel) $('.item-t', item).textContent = f.itemLabel(val, idx);
+    }
+  });
+  form.addEventListener('toggle', (e) => {
+    const d = e.target as HTMLDetailsElement;
+    if (d.dataset.item) d.open ? siteOpen.add(d.dataset.item) : siteOpen.delete(d.dataset.item);
+  }, true);
+  form.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
+    if (!btn) return;
+    if (btn.dataset.add !== undefined) {
+      const path = btn.dataset.add;
+      const f = findField(path);
+      if (!f) { toast('Could not add here.', true); return; }
+      const arr = getAt(siteModel, path) || [];
+      arr.push(defaultItem(f));
+      setAt(siteModel, path, arr);
+      siteOpen.add(joinPath(path, arr.length - 1));
+      setDirty(); draw();
+      const last = $$(`[data-item="${CSS.escape(joinPath(path, arr.length - 1))}"] input, [data-item="${CSS.escape(joinPath(path, arr.length - 1))}"] textarea`, form)[0] || $$(`.strings input, .strings textarea`, form).pop();
+      (last as HTMLElement | undefined)?.focus();
+      return;
+    }
+    if (btn.dataset.act) {
+      const path = btn.dataset.list!;
+      const i = Number(btn.dataset.i);
+      const arr: any[] = getAt(siteModel, path) || [];
+      if (btn.dataset.act === 'remove') {
+        const f = findField(path);
+        const label = f?.itemLabel && typeof arr[i] === 'object' ? f.itemLabel(arr[i], i) : String(arr[i] ?? '').slice(0, 60);
+        if (!confirm(`Remove "${label || 'this item'}"?`)) return;
+        arr.splice(i, 1);
+      } else {
+        const j = btn.dataset.act === 'up' ? i - 1 : i + 1;
+        if (j < 0 || j >= arr.length) return;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        const a = joinPath(path, i), b = joinPath(path, j);
+        const oa = siteOpen.has(a), ob = siteOpen.has(b);
+        oa ? siteOpen.add(b) : siteOpen.delete(b);
+        ob ? siteOpen.add(a) : siteOpen.delete(a);
+      }
+      setAt(siteModel, path, arr);
+      setDirty(); draw();
+      return;
+    }
+    if (btn.dataset.imgPick !== undefined) {
+      const path = btn.dataset.imgPick;
+      const file = await pickFile();
+      if (!file) return;
+      try {
+        toast('Uploading image…');
+        const up = await fileToUpload(file);
+        const res = await api<{ path: string; sha: string }>('upload', { method: 'POST', body: { name: up.name, ext: up.ext, data: up.data } });
+        siteUploads.set(res.path, { sha: res.sha, url: URL.createObjectURL(up.blob) });
+        setAt(siteModel, path, res.path);
+        setDirty(); draw();
+        toast('Image added. It will be published with your next save.');
+      } catch (err) {
+        toast((err as Error).message, true);
+      }
+    }
+  });
+
+  async function saveSite() {
+    if (siteSaving || !siteDirty) return;
+    siteSaving = true;
+    const btn = $('#site-save') as HTMLButtonElement;
+    const errBox = $('#site-err');
+    errBox.innerHTML = '';
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span>`;
+    try {
+      const content = normalizeSite(siteModel);
+      const res = await api<{ sha: string }>('site', {
+        method: 'PUT',
+        body: { content, baseSha: siteSha, summary: ($('#site-summary') as HTMLInputElement).value, uploads: [...siteUploads].map(([path, u]) => ({ path, sha: u.sha })) },
+      });
+      siteModel = content;
+      siteSha = res.sha;
+      siteDirty = false;
+      siteUploads.clear();
+      $('#site-dirty').textContent = 'All changes saved';
+      ($('#site-summary') as HTMLInputElement).value = '';
+      toast('Published! The site will update in about 1–2 minutes.');
+      refreshSitePill();
+      draw();
+    } catch (e) {
+      errBox.innerHTML = `<div class="err">${esc((e as Error).message)}</div>`;
+      btn.disabled = false;
+    } finally {
+      siteSaving = false;
+      btn.innerHTML = 'Save &amp; publish';
+      btn.disabled = !siteDirty;
+    }
+  }
+  $('#site-save').addEventListener('click', saveSite);
+  const onKey = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveSite(); } };
+  document.addEventListener('keydown', onKey);
+  window.addEventListener('hashchange', () => document.removeEventListener('keydown', onKey), { once: true });
+}

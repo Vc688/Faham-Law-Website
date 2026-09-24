@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { testimonials, showTestimonials } from '../data/site';
+import { testimonials, showTestimonials, home, emph } from '../data/site';
 import { breadcrumbs } from '../lib/schema';
 if (!showTestimonials) return Astro.redirect('/about');
 ---
@@ -11,7 +11,7 @@ if (!showTestimonials) return Astro.redirect('/about');
   description="What business owners say about working with David Faham and Faham Law LLC."
   jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Testimonials', path: '/testimonials' }])]}
 >
-  <PageHero eyebrow="Client perspectives" title="In their <em>words.</em>" crumbs={[{ name: 'Home', href: '/' }, { name: 'Testimonials' }]} compact />
+  <PageHero eyebrow={home.testimonialsEyebrow} title={emph(home.testimonialsTitle)} crumbs={[{ name: 'Home', href: '/' }, { name: 'Testimonials' }]} compact />
   <section class="section-tight">
     <div class="container">
       <div class="masonry">

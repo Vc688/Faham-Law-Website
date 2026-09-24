@@ -29,6 +29,12 @@
   force = true
 
 [[redirects]]
+  from = "/corporate-counsel"
+  to = "/fractional-general-counsel"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/insights/category/*"
   to = "/insights"
   status = 302

@@ -9,7 +9,7 @@ process.env.ADMIN_PASSWORD ??= 'localpassword';
 const { default: api } = await import('../netlify/functions/api.mjs');
 const root = path.resolve('dist');
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.woff': 'font/woff', '.xml': 'application/xml', '.txt': 'text/plain', '.json': 'application/json', '.ico': 'image/x-icon' };
-const redirects = { '/new-page': '/file-a-trademark', '/contact-faham': '/contact', '/home': '/' };
+const redirects = { '/new-page': '/file-a-trademark', '/contact-faham': '/contact', '/home': '/', '/corporate-counsel': '/fractional-general-counsel' };
 
 async function tryFile(p) {
   try { const st = await fs.stat(p); if (st.isFile()) return p; } catch {}

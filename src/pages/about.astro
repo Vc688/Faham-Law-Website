@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { firm } from '../data/site';
+import { firm, about, settings, emph } from '../data/site';
 import { davidPerson, breadcrumbs } from '../lib/schema';
 ---
 <Base
-  title="David Faham, Corporate & IP Attorney"
-  description="David Faham, partner at Faham Law LLC, has advised businesses since 2011 on formation, contracts, M&A, real estate and trademarks. Licensed in NY, NJ and PA."
+  title={about.seoTitle}
+  description={about.seoDescription}
   jsonld={[davidPerson, breadcrumbs([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])]}
 >
   <section class="hero about-hero">
@@ -14,16 +14,16 @@ import { davidPerson, breadcrumbs } from '../lib/schema';
       <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">About</span></nav>
       <div class="ah-grid">
         <div class="ah-copy">
-          <p class="eyebrow">Partner · Faham Law LLC</p>
-          <h1 class="display">David <em>Faham</em></h1>
-          <p class="lead">A born-and-raised New Yorker and the partner of Faham Law LLC. Since {firm.since}, he has advised businesses of every size, from founders forming their first company to established companies, on the legal work that keeps them growing.</p>
+          <p class="eyebrow">{about.eyebrow}</p>
+          <h1 class="display" set:html={emph(about.title)} />
+          <p class="lead">{about.lead}</p>
           <div class="ah-links">
             <a class="btn" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href={firm.linkedinDavid} target="_blank" rel="noopener">LinkedIn profile</a>
           </div>
         </div>
         <div class="ah-photo">
-          <img src="/images/david-faham.jpg" alt="David Faham, partner at Faham Law LLC" width="500" height="750" fetchpriority="high" />
+          <img src={settings.headshot} alt={settings.headshotAlt} width="500" height="750" fetchpriority="high" />
           <p class="ah-cap"><span class="serif">{firm.tagline}</span></p>
         </div>
       </div>
@@ -33,29 +33,32 @@ import { davidPerson, breadcrumbs } from '../lib/schema';
   <section class="section-tight">
     <div class="container bio-grid">
       <div class="bio prose">
-        <p>David's practice covers five areas. He helps entrepreneurs start new businesses, handling entity formation, operating agreements, website terms, and SaaS and end-user agreements. He serves as outside corporate counsel to mid-sized companies, drafting, reviewing and negotiating their agreements. He represents buyers and sellers in mergers and acquisitions. He handles commercial and residential real estate transactions, including closings and lease and sublease reviews. And he protects intellectual property, from trademark searches and filings through registration, maintenance and renewals, including Amazon Brand Registry matters.</p>
-        <p>His transactions range from a few hundred thousand to a few million dollars. Clients include consumer products and wholesale companies, licensing companies, technology companies and startups, restaurants, apparel brands, Amazon and e-commerce sellers, and real estate clients. Having served as general counsel for companies large and small, David brings an in-house perspective to outside counsel work: practical advice that fits how a business actually runs.</p>
-        <blockquote>David is a father of four and when work and family are not the priority, enjoys bowling in a local league and considers himself a foodie and scotch and wine aficionado.</blockquote>
+        {about.bio.map((p) => <p>{p}</p>)}
+        {about.personal && <blockquote>{about.personal}</blockquote>}
       </div>
       <aside class="facts-card">
-        <div>
-          <h2 class="fc-title">Education</h2>
-          <ul role="list">
-            <li><strong>Fordham University School of Law</strong><span>Juris Doctor, Intellectual Property, 2011</span></li>
-            <li><strong>Brooklyn College, City University of New York</strong><span>B.S., Business Management and Finance, Economics, 2008</span></li>
-          </ul>
-        </div>
-        <div>
-          <h2 class="fc-title">Bar admissions</h2>
-          <ul role="list" class="chips"><li>New York</li><li>New Jersey</li><li>Pennsylvania</li></ul>
-        </div>
-        <div>
-          <h2 class="fc-title">Licenses</h2>
-          <ul role="list">
-            <li><strong>Notary</strong><span>New York, New Jersey</span></li>
-            <li><strong>Real Estate</strong><span>New York</span></li>
-          </ul>
-        </div>
+        {about.education.length > 0 && (
+          <div>
+            <h2 class="fc-title">Education</h2>
+            <ul role="list">
+              {about.education.map((e) => <li><strong>{e.school}</strong><span>{e.degree}</span></li>)}
+            </ul>
+          </div>
+        )}
+        {about.barAdmissions.length > 0 && (
+          <div>
+            <h2 class="fc-title">Bar admissions</h2>
+            <ul role="list" class="chips">{about.barAdmissions.map((b) => <li>{b}</li>)}</ul>
+          </div>
+        )}
+        {about.licenses.length > 0 && (
+          <div>
+            <h2 class="fc-title">Licenses</h2>
+            <ul role="list">
+              {about.licenses.map((l) => <li><strong>{l.label}</strong><span>{l.value}</span></li>)}
+            </ul>
+          </div>
+        )}
       </aside>
     </div>
   </section>

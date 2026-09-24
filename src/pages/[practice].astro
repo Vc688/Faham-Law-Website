@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
 import PostCard from '../components/PostCard.astro';
-import { practices, type Practice } from '../data/site';
+import { practices, emph, type Practice } from '../data/site';
 import { breadcrumbs, faqPage } from '../lib/schema';
 import { getPublishedPosts } from '../lib/posts';
 
@@ -32,7 +32,7 @@ const others = practices.filter((x) => x.slug !== p.slug);
 >
   <PageHero
     eyebrow={`Practice area ${idx + 1} of ${practices.length} · ${p.name}`}
-    title={p.h1}
+    title={emph(p.h1)}
     lead={p.intro}
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas', href: '/services' }, { name: p.name }]}
   >
@@ -70,10 +70,16 @@ const others = practices.filter((x) => x.slug !== p.slug);
             ))}
           </ul>
           {p.slug === 'ip-trademarks' && g.title === 'Trademarks' && (
-            <a class="tm-cta reveal" href="/file-a-trademark">
-              <span><strong>Ready to file?</strong> Start with our File a Trademark form.</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </a>
+            <div class="tm-ctas reveal">
+              <a class="tm-cta" href="/file-a-trademark">
+                <span><strong>Ready to file?</strong> Start with our File a Trademark form.</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="tm-cta tm-cta-light" href="/fees">
+                <span><strong>Flat fees.</strong> See the trademark and copyright fee schedule.</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           )}
         </section>
       ))}
@@ -142,6 +148,9 @@ const others = practices.filter((x) => x.slug !== p.slug);
   .item p { color: var(--ink-2); }
   .who { font-size: clamp(1.4rem, 2.4vw, 1.9rem); line-height: 1.35; color: var(--green-900); padding-left: 24px; border-left: 2px solid var(--brass); }
   .faq-note { font-size: 0.85rem; color: var(--muted); }
+  .tm-ctas { display: grid; gap: 10px; }
+  .tm-cta-light { background: var(--brass-wash) !important; color: var(--green-900) !important; box-shadow: var(--shadow-sm) !important; }
+  .tm-cta-light strong { color: var(--brass) !important; }
   .tm-cta { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; border-radius: var(--radius-md); background: var(--green-800); color: #fff; text-decoration: none; box-shadow: var(--shadow); }
   .tm-cta strong { color: var(--brass-soft); font-weight: 560; }
   .tm-cta:hover .arrow { transform: translateX(4px); }

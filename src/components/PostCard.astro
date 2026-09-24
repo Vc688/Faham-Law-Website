@@ -3,7 +3,7 @@ import { practiceBySlug } from '../data/site';
 import { formatDate, type Post } from '../lib/posts';
 interface Props { post: Post }
 const { post } = Astro.props;
-const cat = practiceBySlug[post.data.category];
+const cat = practiceBySlug[post.data.category] ?? { name: 'Insights' };
 ---
 <article class="post-card">
   <a href={`/insights/${post.id}`} class="pc-link">

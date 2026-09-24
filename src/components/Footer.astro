@@ -1,14 +1,15 @@
 ---
 import Logo from './Logo.astro';
-import { firm, practices, showTestimonials } from '../data/site';
+import { firm, practices, showTestimonials, officeLine } from '../data/site';
 interface Props { showInsights: boolean }
 const { showInsights } = Astro.props;
 const year = new Date().getFullYear();
+const [w1, w2, ...rest] = firm.tagline.split(' ');
 ---
 <footer class="footer">
   <div class="container">
     <div class="sign">
-      <p class="motto serif">Experience. <em>Diligence.</em> Results.</p>
+      <p class="motto serif">{w1} <em>{w2}</em> {rest.join(' ')}</p>
       <div class="sign-cta">
         <a class="btn btn-brass" href="/contact">Book a consultation <span class="arrow" aria-hidden="true">→</span></a>
         <a class="btn btn-ghost on-dark" href={firm.phoneHref}>{firm.phone}</a>
@@ -36,6 +37,7 @@ const year = new Date().getFullYear();
           <p class="col-title">Firm</p>
           <ul role="list">
             <li><a href="/about">About</a></li>
+            <li><a href="/fees">Fees</a></li>
             {showInsights && <li><a href="/insights">Insights</a></li>}
             {showTestimonials && <li><a href="/testimonials">Testimonials</a></li>}
             <li><a href="/contact">Contact</a></li>
@@ -47,7 +49,11 @@ const year = new Date().getFullYear();
           <ul role="list">
             <li><a href={firm.phoneHref}>{firm.phone}</a></li>
             <li><a href={`mailto:${firm.email}`}>{firm.email}</a></li>
-            {firm.offices.map((o) => <li class="muted">{o}</li>)}
+            {firm.offices.map((o) => (
+              <li class="muted addr">
+                {o.street ? <><span>{o.street}</span><span>{o.city}, {o.state} {o.zip}</span></> : <span>{o.city}, {o.state}</span>}
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
@@ -58,7 +64,7 @@ const year = new Date().getFullYear();
       <p>{firm.disclaimer}</p>
       <div class="bottom">
         <span>© {year} {firm.name}. {firm.licensed}.</span>
-        <span>Offices in New York, NY and Oakhurst, NJ</span>
+        <span>Principal office: {officeLine(firm.offices[0])}</span>
       </div>
     </div>
   </div>
@@ -93,6 +99,8 @@ const year = new Date().getFullYear();
   .cols a { text-decoration: none; color: rgba(255,255,255,0.88); overflow-wrap: anywhere; }
   .cols a:hover { color: #fff; text-decoration: underline; }
   .muted { color: rgba(232, 240, 236, 0.6); }
+  .addr { display: grid; gap: 2px; }
+  .addr + .addr { margin-top: 4px; }
   .legal { padding-top: 32px; display: grid; gap: 12px; font-size: 0.84rem; line-height: 1.6; color: rgba(232, 240, 236, 0.62); }
   .adv strong { color: rgba(255,255,255,0.92); font-weight: 560; }
   .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 16px; }

@@ -1,15 +1,17 @@
 ---
 import Logo from './Logo.astro';
-import { firm, practices } from '../data/site';
+import { firm, practices, settings } from '../data/site';
 interface Props { showInsights: boolean }
 const { showInsights } = Astro.props;
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
 const isPractice = path === '/services' || practices.some((p) => path === `/${p.slug}`);
 const links = [
   { href: '/about', label: 'About' },
+  { href: '/fees', label: 'Fees' },
   ...(showInsights ? [{ href: '/insights', label: 'Insights' }] : []),
   { href: '/contact', label: 'Contact' },
 ];
+const cta = settings.headerCta;
 ---
 <header class="site-header" data-header>
   <div class="shell">
@@ -56,7 +58,7 @@ const links = [
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
           {firm.phone}
         </a>
-        <a class="btn btn-sm cta" href="/file-a-trademark">File a Trademark</a>
+        <a class="btn btn-sm cta" href={cta.href}>{cta.label}</a>
         <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-burger>
           <span></span><span></span>
         </button>
@@ -76,8 +78,8 @@ const links = [
         <li><a href="/file-a-trademark">File a Trademark</a></li>
       </ul>
       <div class="m-contact">
-        <a class="btn" href={firm.phoneHref}>Call {firm.phone}</a>
-        <a class="btn btn-ghost" href={`mailto:${firm.email}`}>{firm.email}</a>
+        <a class="btn" href={cta.href}>{cta.label}</a>
+        <a class="btn btn-ghost" href={firm.phoneHref}>Call {firm.phone}</a>
       </div>
     </div>
   </div>
@@ -192,8 +194,8 @@ const links = [
   .m-links a { display: block; padding: 12px 0; font-weight: 500; font-size: 1.1rem; text-decoration: none; border-bottom: 1px solid var(--line); }
   .m-contact { display: grid; gap: 10px; margin-top: 8px; }
 
-  @media (max-width: 1120px) { .phone { display: none; } }
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) { .phone { display: none; } }
+  @media (max-width: 960px) {
     .nav, .cta { display: none; }
     .burger { display: inline-block; }
     .actions { margin-left: auto; }

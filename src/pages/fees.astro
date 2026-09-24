@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { fees, firm, emph } from '../data/site';
+import { breadcrumbs } from '../lib/schema';
+const [colService, colFee, colGov] = fees.columns;
+---
+<Base
+  title={fees.seoTitle}
+  description={fees.seoDescription}
+  jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Fees', path: '/fees' }])]}
+>
+  <PageHero eyebrow={fees.eyebrow} title={emph(fees.title)} lead={fees.lead} crumbs={[{ name: 'Home', href: '/' }, { name: 'Fees' }]} compact />
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="summary reveal">
+        <div class="sum-card">
+          <p class="kicker">{fees.hourly.label}</p>
+          <p class="sum-v serif">{fees.hourly.value}</p>
+          <p class="sum-t">{fees.hourly.text}</p>
+        </div>
+        <div class="sum-card sum-dark">
+          <p class="kicker">{fees.retainer.label}</p>
+          <p class="sum-v serif">{fees.retainer.value}</p>
+          <p class="sum-t">{fees.retainer.text}</p>
+          <a class="link-arrow" href={fees.retainer.cta.href}>{fees.retainer.cta.label} <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      {fees.sections.map((sec) => (
+        <section class="fee-sec">
+          <h2 class="h2 reveal">{sec.title}</h2>
+          {sec.groups.map((g) => (
+            <div class="fee-group reveal">
+              {g.title && <h3 class="fee-gt">{g.title}</h3>}
+              <table class="fee-table">
+                <thead><tr><th scope="col">{colService}</th><th scope="col">{colFee}</th><th scope="col">{colGov}</th></tr></thead>
+                <tbody>
+                  {g.rows.map((r) => (
+                    <tr>
+                      <td data-label={colService}>{r.service}</td>
+                      <td data-label={colFee} class="fee">{r.fee}</td>
+                      <td data-label={colGov} class="gov">{r.gov || <span class="dash" aria-label="none">—</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </section>
+      ))}
+
+      <p class="footnote">{fees.footnote}</p>
+    </div>
+  </section>
+
+  <CtaBand title={fees.cta} text={`Or call ${firm.phone}.`} secondary={{ label: 'File a trademark', href: '/file-a-trademark' }} />
+</Base>
+
+<style>
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: clamp(48px, 6vw, 80px); }
+  .sum-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px, 3vw, 36px); display: grid; gap: 10px; align-content: start; box-shadow: var(--shadow-sm); }
+  .sum-v { font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1; color: var(--green-900); letter-spacing: -0.02em; }
+  .sum-t { color: var(--ink-2); max-width: 520px; }
+  .sum-dark { background: var(--green-800); border-color: transparent; color: #e8f0ec; }
+  .sum-dark .kicker { color: var(--brass-soft); }
+  .sum-dark .sum-v { color: #f4f1e8; }
+  .sum-dark .sum-t { color: rgba(232, 240, 236, 0.8); }
+  .sum-dark .link-arrow { color: var(--brass-soft); margin-top: 6px; }
+
+  .fee-sec { display: grid; gap: 22px; margin-bottom: clamp(48px, 6vw, 72px); }
+  .fee-group { display: grid; gap: 12px; }
+  .fee-gt { font-family: var(--sans); font-size: 0.78rem; font-weight: 560; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-700); padding-top: 8px; }
+  .fee-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .fee-table th { text-align: left; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 560; padding: 14px 20px; background: var(--surface-warm); border-bottom: 1px solid var(--line); }
+  .fee-table td { padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+  .fee-table tr:last-child td { border-bottom: 0; }
+  .fee-table th:nth-child(1) { width: 52%; }
+  .fee-table th:nth-child(2) { width: 22%; }
+  .fee { font-family: var(--serif); font-size: 1.15rem; color: var(--green-900); white-space: nowrap; }
+  .gov { font-size: 0.95rem; }
+  .dash { color: var(--line-strong); }
+  .footnote { font-size: 0.88rem; line-height: 1.6; color: var(--muted); max-width: 820px; padding-top: 8px; border-top: 1px solid var(--line-strong); }
+
+  @media (max-width: 760px) {
+    .summary { grid-template-columns: 1fr; }
+    .fee-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    .fee-table tr { display: grid; gap: 4px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+    .fee-table tr:last-child { border-bottom: 0; }
+    .fee-table td { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 2px 0; border: 0; }
+    .fee-table td::before { content: attr(data-label); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 560; padding-top: 4px; }
+    .fee-table td:first-child { grid-template-columns: 1fr; font-weight: 500; color: var(--ink); }
+    .fee-table td:first-child::before { display: none; }
+    .fee { white-space: normal; font-size: 1.05rem; }
+  }
+</style>

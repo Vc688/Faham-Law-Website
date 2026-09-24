@@ -2,18 +2,18 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { practices } from '../data/site';
+import { practices, services, emph } from '../data/site';
 import { breadcrumbs } from '../lib/schema';
 ---
 <Base
-  title="Practice Areas: Business, Real Estate, M&A & Trademark Law"
-  description="Entity formation, outside corporate counsel, mergers and acquisitions, real estate closings and leases, and trademark services for businesses in NY, NJ and PA."
+  title={services.seoTitle}
+  description={services.seoDescription}
   jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Practice Areas', path: '/services' }])]}
 >
   <PageHero
-    eyebrow="What we do"
-    title="Practice <em>Areas</em>"
-    lead="Legal services for privately held businesses, from the day you form your company to the day you sell it. Choose an area below, or contact us if you're not sure where your question fits."
+    eyebrow={services.eyebrow}
+    title={emph(services.title)}
+    lead={services.lead}
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Practice Areas' }]}
   />
   <section class="section-tight">
@@ -36,8 +36,8 @@ import { breadcrumbs } from '../lib/schema';
       <a class="row row-dark reveal" href="/contact">
         <span class="r-num serif">?</span>
         <div class="r-main">
-          <h2 class="r-name serif">Not sure where your question fits?</h2>
-          <p class="r-sum">Tell us what's going on and we'll point you in the right direction.</p>
+          <h2 class="r-name serif">{services.notSureTitle}</h2>
+          <p class="r-sum">{services.notSureText}</p>
         </div>
         <span></span>
         <span class="r-go" aria-hidden="true">

@@ -2,27 +2,27 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactForm from '../components/ContactForm.astro';
-import { firm } from '../data/site';
+import { firm, contact, emph } from '../data/site';
 import { breadcrumbs } from '../lib/schema';
 ---
 <Base
-  title="Contact a NY & NJ Business Attorney"
-  description="Contact Faham Law LLC in New York and New Jersey. Tell us about your legal matter and we'll call you back to schedule a consultation."
+  title={contact.seoTitle}
+  description={contact.seoDescription}
   jsonld={[breadcrumbs([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])]}
 >
   <PageHero
-    eyebrow="Contact"
-    title="Let's <em>chat.</em>"
-    lead="Use the form to tell us about your legal inquiry, and we'll call you back to schedule an appointment. To help us serve you best, describe the issue you're having first, then what you want to achieve."
+    eyebrow={contact.eyebrow}
+    title={emph(contact.title)}
+    lead={contact.lead}
     crumbs={[{ name: 'Home', href: '/' }, { name: 'Contact' }]}
     compact
   />
-  <section class="section-tight">
+  <section class="section-tight tight-top">
     <div class="container grid">
       <div class="card form-card">
         <div class="fc-head">
-          <h2 class="h3">Book an appointment</h2>
-          <span class="pill">We'll call you back</span>
+          <h2 class="h3">{contact.formHeading}</h2>
+          <span class="pill">{contact.formPill}</span>
         </div>
         <ContactForm />
       </div>
@@ -36,16 +36,18 @@ import { breadcrumbs } from '../lib/schema';
           <a class="v serif" href={`mailto:${firm.email}`}>{firm.email}</a>
         </div>
         <div class="info-block">
-          <p class="k">Locations</p>
-          <p class="v serif">New York, NY<br />Oakhurst, NJ</p>
-        </div>
-        <div class="info-block">
-          <p class="k">Office hours</p>
-          <p class="v serif">On demand</p>
+          <p class="k">Offices</p>
+          {firm.offices.map((o) => (
+            <p class="v serif addr">
+              {o.street && <><span>{o.street}</span><br /></>}
+              <span>{o.city}, {o.state} {o.zip}</span>
+            </p>
+          ))}
         </div>
         <div class="fees">
-          <p class="k">Contact us for rates</p>
-          <p>{firm.fees}</p>
+          <p class="k">{contact.feesLabel}</p>
+          <p>{contact.feesText}</p>
+          <a class="link-arrow" href={contact.feesCta.href}>{contact.feesCta.label} <span class="arrow" aria-hidden="true">→</span></a>
         </div>
         <p class="lic">{firm.licensed}</p>
       </aside>
@@ -53,6 +55,7 @@ import { breadcrumbs } from '../lib/schema';
   </section>
 </Base>
 <style>
+  .tight-top { padding-top: clamp(24px, 4vw, 48px); }
   .grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
   .form-card { display: grid; gap: 24px; }
   .fc-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -61,9 +64,12 @@ import { breadcrumbs } from '../lib/schema';
   .info-block { padding: 20px 0; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
   .k { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 560; color: var(--muted); }
   .v { font-size: 1.6rem; line-height: 1.2; text-decoration: none; overflow-wrap: anywhere; color: var(--green-900); }
+  .addr { font-size: 1.25rem; }
+  .addr + .addr { margin-top: 10px; }
   a.v:hover { color: var(--green-700); text-decoration: underline; }
   .fees { margin-top: 22px; padding: 22px; border-radius: var(--radius-md); background: var(--brass-wash); color: var(--ink-2); display: grid; gap: 8px; }
   .fees .k { color: var(--brass); }
+  .fees .link-arrow { margin-top: 4px; }
   .lic { margin-top: 18px; font-size: 0.88rem; color: var(--muted); }
   @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 </style>

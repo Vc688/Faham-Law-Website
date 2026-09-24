@@ -1,12 +1,12 @@
 // Admin API for fahamlaw.com (/api/*). Netlify Functions v2.
 import matter from 'gray-matter';
 import { checkPassword, isAuthed, sessionCookie, clearCookie, adminPassword } from '../lib/auth.mjs';
-import { storeMode, listDir, readText, readFile, readBlob, createBlob, commit, POSTS_DIR, UPLOADS_DIR } from '../lib/store.mjs';
+import { storeMode, listDir, readText, readFile, readTextWithSha, readBlob, createBlob, commit, POSTS_DIR, UPLOADS_DIR } from '../lib/store.mjs';
+import { validateSite, SITE_FILE } from '../lib/site-content.mjs';
 import { netlifyConfigured, getSubmissions, getDeploys } from '../lib/netlify-api.mjs';
 
 export const config = { path: '/api/*' };
 
-const CATEGORIES = ['startups-small-business', 'corporate-counsel', 'mergers-acquisitions', 'real-estate', 'ip-trademarks'];
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const UPLOAD_RE = /^\/uploads\/\d{4}\/\d{2}\/[a-z0-9][a-z0-9-]*\.(?:webp|jpe?g|png|gif)$/;
@@ -82,13 +82,24 @@ async function getPost(slug) {
   return text ? parsePost(slug, text, f.sha) : null;
 }
 
-function validatePost(p) {
+async function getCategories() {
+  const f = await readTextWithSha(SITE_FILE).catch(() => null);
+  if (!f) return [];
+  try {
+    const site = JSON.parse(f.text);
+    return (site.practices || []).map((p) => ({ slug: p.slug, name: p.name }));
+  } catch {
+    return [];
+  }
+}
+
+function validatePost(p, categories) {
   if (!p || typeof p !== 'object') return 'Missing post.';
   if (!SLUG_RE.test(p.slug || '') || p.slug.length > 90) return 'The URL must use lowercase letters, numbers and hyphens.';
   if (!p.title?.trim() || p.title.length > 200) return 'Add a title (up to 200 characters).';
   if (!p.description?.trim() || p.description.length > 320) return 'Add a short summary (up to 320 characters).';
   if (!DATE_RE.test(p.date || '')) return 'Add a valid date.';
-  if (!CATEGORIES.includes(p.category)) return 'Choose a category.';
+  if (!categories.some((c) => c.slug === p.category)) return 'Choose a category.';
   if (p.cover && !UPLOAD_RE.test(p.cover)) return 'Cover image is invalid.';
   if (typeof p.body !== 'string' || p.body.length > 200_000) return 'The article body is too long.';
   if (!p.draft && p.body.trim().length < 20) return 'The article is empty. Add content before publishing.';
@@ -123,12 +134,43 @@ async function handle(req, context) {
     return json({ ok: true, mode: storeMode(), netlify: netlifyConfigured() });
   }
 
-  if (storeMode() === 'unconfigured' && (route.startsWith('posts') || route === 'upload' || route === 'media')) {
+  if (storeMode() === 'unconfigured' && (route.startsWith('posts') || route === 'upload' || route === 'media' || route === 'site' || route === 'categories')) {
     return fail('Publishing is not configured yet. Add GITHUB_TOKEN and GITHUB_REPO in Netlify.', 503);
   }
 
+  if (route === 'categories' && method === 'GET') return json({ categories: await getCategories() });
+
+  // Site content (everything editable outside of posts): one JSON file, one commit per save.
+  if (route === 'site' && method === 'GET') {
+    const f = await readTextWithSha(SITE_FILE);
+    if (!f) return fail('Site content file not found.', 404);
+    return json({ content: JSON.parse(f.text), sha: f.sha });
+  }
+  if (route === 'site' && method === 'PUT') {
+    const body = await req.json().catch(() => null);
+    const err = validateSite(body?.content);
+    if (err) return fail(err);
+    const current = await readTextWithSha(SITE_FILE);
+    if (current && body.baseSha && current.sha !== body.baseSha) {
+      return fail('The site content was changed somewhere else since you opened it. Reload and try again.', 409);
+    }
+    const text = JSON.stringify(body.content, null, 2) + '\n';
+    const referenced = text;
+    const uploads = (Array.isArray(body.uploads) ? body.uploads : []).filter(
+      (u) => UPLOAD_RE.test(u?.path || '') && /^[a-f0-9]{40}$/.test(u?.sha || '') && referenced.includes(u.path),
+    );
+    const changes = [
+      { path: SITE_FILE, content: text },
+      ...uploads.map((u) => ({ path: `${UPLOADS_DIR}${u.path.replace(/^\/uploads/, '')}`, sha: u.sha })),
+    ];
+    const summary = String(body.summary || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 80);
+    await commit(changes, `Update site content${summary ? ': ' + summary : ''}`);
+    const saved = await readTextWithSha(SITE_FILE);
+    return json({ ok: true, sha: saved?.sha, deploys: true });
+  }
+
   // Posts
-  if (route === 'posts' && method === 'GET') return json({ posts: await listPosts() });
+  if (route === 'posts' && method === 'GET') return json({ posts: await listPosts(), categories: await getCategories() });
 
   const postMatch = route.match(/^posts\/([a-z0-9-]+)$/);
   if (postMatch && method === 'GET') {
@@ -139,7 +181,7 @@ async function handle(req, context) {
   if (route === 'posts' && method === 'PUT') {
     const body = await req.json().catch(() => null);
     const p = body?.post;
-    const err = validatePost(p);
+    const err = validatePost(p, await getCategories());
     if (err) return fail(err);
     const existing = await getPost(p.slug);
     if (body.isNew && existing) return fail('A post with this URL already exists. Change the URL.', 409);

@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props as { post: Post };
 const { Content } = await render(post);
-const cat = practiceBySlug[post.data.category];
+const cat = practiceBySlug[post.data.category] ?? { name: 'Insights', slug: '' };
 const mins = readingTime(post.body);
 const related = (await getPublishedPosts()).filter((p) => p.id !== post.id && p.data.category === post.data.category).slice(0, 2);
 const url = `${firm.url}/insights/${post.id}`;
@@ -40,7 +40,7 @@ const article = {
 >
   <section class="hero post-hero">
     <div class="container narrow">
-      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/insights">Insights</a><span aria-hidden="true">/</span><a href={`/insights/category/${post.data.category}`}>{cat?.name}</a></nav>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/insights">Insights</a><span aria-hidden="true">/</span>{cat.slug ? <a href={`/insights/category/${cat.slug}`}>{cat.name}</a> : <span>{cat.name}</span>}</nav>
       <p class="eyebrow">{cat?.name}</p>
       <h1 class="post-title serif">{post.data.title}</h1>
       <p class="lead">{post.data.description}</p>

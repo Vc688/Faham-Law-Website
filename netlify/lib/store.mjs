@@ -169,6 +169,20 @@ export async function readFile(filePath) {
   return ghReadBlob(meta.sha);
 }
 
+/** Reads a text file and its sha, for optimistic-concurrency saves. Returns null if missing. */
+export async function readTextWithSha(filePath) {
+  if (storeMode() === 'mock') {
+    try {
+      const buf = await fs.readFile(path.join(MOCK_ROOT(), filePath));
+      return { text: buf.toString('utf8'), sha: blobSha(buf) };
+    } catch { return null; }
+  }
+  const meta = await ghFileMeta(filePath);
+  if (!meta || Array.isArray(meta)) return null;
+  const buf = meta.content ? Buffer.from(meta.content, 'base64') : await ghReadBlob(meta.sha);
+  return buf ? { text: buf.toString('utf8'), sha: meta.sha } : null;
+}
+
 export async function readBlob(sha) {
   return storeMode() === 'mock' ? mockReadBlob(sha) : ghReadBlob(sha);
 }
